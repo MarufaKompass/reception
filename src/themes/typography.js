@@ -33,7 +33,7 @@ const Typography = (fontFamily) => ({
     lineHeight: 1.5
   },
   h6: {
-    fontWeight: 400,
+    fontWeight: 800,
     fontSize: '1rem',
     lineHeight: 1.57
   },
