@@ -34,7 +34,7 @@ const NavItem = ({ item, level }) => {
   };
 
   const Icon = item.icon;
-  const itemIcon = item.icon ? <Icon style={{ fontSize: drawerOpen ? '1rem' : '1.25rem' }} /> : false;
+  const itemIcon = item.icon ? <Icon style={{ fontSize: drawerOpen ? '1.4rem' : '1.4rem' }} /> : false;
 
   const isSelected = openItem.findIndex((id) => id === item.id) > -1;
   // active menu item on page load
@@ -57,11 +57,14 @@ const NavItem = ({ item, level }) => {
         selected={isSelected}
         sx={{
           zIndex: 1201,
-          pl: drawerOpen ? `${level * 28}px` : 1.5,
-          py: !drawerOpen && level === 1 ? 1.25 : 1,
+          pl: drawerOpen ? `${level * 28}px` : 1.25,
+          py: !drawerOpen && level === 1.25 ? 1.25 : 1.25,
           ...(drawerOpen && {
             '&:hover': {
-              bgcolor: 'primary.lighter'
+              bgcolor: '#0a9ba4',
+              marginLeft: '10px',
+              marginRight: '10px',
+              borderRadius: '10px'
             },
             '&.Mui-selected': {
               bgcolor: '#0f8990',
@@ -107,6 +110,7 @@ const NavItem = ({ item, level }) => {
               ...(!drawerOpen &&
                 isSelected && {
                   bgcolor: 'primary.lighter',
+
                   '&:hover': {
                     bgcolor: 'primary.lighter'
                   }

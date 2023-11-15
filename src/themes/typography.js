@@ -34,7 +34,7 @@ const Typography = (fontFamily) => ({
   },
   h6: {
     fontWeight: 400,
-    fontSize: '0.875rem',
+    fontSize: '1rem',
     lineHeight: 1.57
   },
   caption: {
