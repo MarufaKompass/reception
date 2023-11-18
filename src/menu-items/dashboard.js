@@ -1,9 +1,9 @@
 // assets
-import { DashboardOutlined } from '@ant-design/icons';
+import dashboardIcon from '../components/svg/Dashboard';
 
 // icons
 const icons = {
-  DashboardOutlined
+  dashboardIcon
 };
 
 // ==============================|| MENU ITEMS - DASHBOARD ||============================== //
@@ -18,7 +18,7 @@ const dashboard = {
       title: 'Dashboard',
       type: 'item',
       url: '/dashboard',
-      icon: icons.DashboardOutlined,
+      icon: icons.dashboardIcon,
       breadcrumbs: false
     }
   ]

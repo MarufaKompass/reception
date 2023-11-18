@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Price](https://img.shields.io/badge/price-FREE-0098f7.svg)](https://github.com/codedthemes/mantis-free-react-admin-template/blob/main/LICENSE)
-[![GitHub package version](https://img.shields.io/github/package-json/v/codedthemes/mantis-free-react-admin-template)](https://github.com/codedthemes/mantis-free-react-admin-template/)
+
 
 Mantis is a free and open source React redux dashboard template made using the Material UI React component library with aim of flexibility and better customizability.
 
@@ -47,21 +47,18 @@ Mantis offers everything needed to build an advanced dashboard application. In t
 
 #### Preview
 
-- [Demo](https://mantisdashboard.io/free)
 
 #### Download
-
-- [Download from GitHub](https://github.com/codedthemes/mantis-free-react-admin-template)
 
 ## Mantis Pro version
 
 #### Preview
 
-- [Demo](https://mantisdashboard.io)
+
 
 #### Purchase
 
-- [Buy now](https://mui.com/store/items/mantis-react-admin-dashboard-template/)
+
 
 ## Table of contents
 
