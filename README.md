@@ -47,11 +47,8 @@ Mantis offers everything needed to build an advanced dashboard application. In t
 
 #### Preview
 
-- [Demo](https://mantisdashboard.io/free)
 
 #### Download
-
-- [Download from GitHub](https://github.com/codedthemes/mantis-free-react-admin-template)
 
 ## Mantis Pro version
 
