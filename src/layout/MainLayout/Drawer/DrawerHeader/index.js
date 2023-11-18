@@ -17,7 +17,7 @@ const DrawerHeader = ({ open }) => {
     // only available in paid version
     <DrawerHeaderStyled theme={theme} open={open}>
       <Stack direction="row" spacing={1} alignItems="center" marginTop="10px">
-        <img src={logo} alt="logo" width="180px"></img>
+        <img src={logo} alt="logo" width="160px"></img>
       </Stack>
     </DrawerHeaderStyled>
   );

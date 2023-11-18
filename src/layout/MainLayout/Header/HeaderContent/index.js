@@ -1,26 +1,19 @@
 // material-ui
-import { Box } from '@mui/material';
+import { Box, useMediaQuery } from '@mui/material';
 
+import Profile from './Profile';
 
-// project import
-// import Search from './Search';
-// import Profile from './Profile';
-
-// import MobileSection from './MobileSection';
+import MobileSection from './MobileSection';
 
 // ==============================|| HEADER - CONTENT ||============================== //
 
 const HeaderContent = () => {
-  // const matchesXs = useMediaQuery((theme) => theme.breakpoints.down('md'));
+  const matchesXs = useMediaQuery((theme) => theme.breakpoints.down('md'));
 
   return (
     <Box>
-      {/* {!matchesXs && <Search />}
-      {matchesXs && <Box sx={{ width: '100%', ml: 1 }} />} */}
-
-
-      {/* {!matchesXs && <Profile />}
-      {matchesXs && <MobileSection />} */}
+      {!matchesXs && <Profile />}
+      {matchesXs && <MobileSection />}
     </Box>
   );
 };
