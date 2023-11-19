@@ -5,7 +5,7 @@ import MainCard from 'components/MainCard';
 export default function InstantMeeting() {
   return (
     <Box>
-      <MainCard>Instant Meeting</MainCard>
+      <MainCard>Meeting</MainCard>
     </Box>
   );
 }
