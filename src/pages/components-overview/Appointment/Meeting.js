@@ -2,19 +2,19 @@ import React from 'react';
 import { Box, Typography, Chip, Button, OutlinedInput, InputAdornment, IconButton } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import MainCard from 'components/MainCard';
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+import Search from 'components/svg/Search';
 
 const columns = [
-  { field: 'id', headerName: 'SL' },
-  { field: 'hostName', headerName: 'Host name', width: 150 },
-  { field: 'guestName', headerName: 'Guest name', width: 150 },
-  { field: 'date', headerName: 'Date', width: 150 },
-  { field: 'time', headerName: 'Time', width: 150 },
-  { field: 'status', headerName: 'Status', width: 150, renderCell: (params) => <Chip label={params.value} color="primary" /> },
+  { field: 'id', headerName: 'SL', width: 150 },
+  { field: 'hostName', headerName: 'Host name', width: 250 },
+  { field: 'guestName', headerName: 'Guest name', width: 250 },
+  { field: 'date', headerName: 'Date', width: 240 },
+  { field: 'time', headerName: 'Time', width: 240 },
+  { field: 'status', headerName: 'Status', width: 250, renderCell: (params) => <Chip label={params.value} color="primary" /> },
   {
     field: 'action',
     headerName: 'Action',
-    width: 150,
+    width: 200,
     renderCell: (params) => (
       <Button variant="outlined" size="small" sx={{ color: '#12A9B2', borderColor: '#12A9B2', '&:focus': { border: 'none' } }}>
         {params.value}
@@ -68,14 +68,14 @@ export default function Meeting() {
             endAdornment={
               <InputAdornment position="end">
                 <IconButton>
-                  <SearchOutlinedIcon sx={{ color: '#12A9B2', mr: -2 }} />
+                  <Search></Search>
                 </IconButton>
               </InputAdornment>
             }
           />
         </Box>
         <Box>
-          <Box style={{ width: '100%' }}>
+          <Box>
             <DataGrid
               rows={rows}
               columns={columns}
