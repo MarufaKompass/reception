@@ -12,11 +12,12 @@ export default function MeetingCode() {
     width: 220
   };
 
-  const [result, setResult] = useState('Meeting Code');
+  const [resultQR, setResultQR] = useState('');
 
   const handleScan = (result) => {
     if (result) {
-      setResult(result);
+      const { text } = result;
+      setResultQR(text);
     }
   };
 
@@ -61,7 +62,7 @@ export default function MeetingCode() {
                     placeholder="Search"
                     sx={{ border: 1, borderColor: '#12A9B2', width: '100%', my: 1 }}
                     size="small"
-                    value={result}
+                    value={resultQR}
                   />
                   <Box sx={{ display: 'flex', justifyContent: 'end' }}>
                     <Button

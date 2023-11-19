@@ -1,17 +1,10 @@
 import React from 'react';
 import { Box, Typography, Chip, OutlinedInput, InputAdornment, IconButton } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
+import { useTheme } from '@mui/material/styles';
+import { useMediaQuery } from '@mui/material';
 import MainCard from 'components/MainCard';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-
-const columns = [
-  { field: 'id', headerName: 'SL' },
-  { field: 'receiverName', headerName: 'Receiver name', width: 180 },
-  { field: 'personName', headerName: 'Person name', width: 180 },
-  { field: 'parcelType', headerName: 'Parcel Type', width: 180 },
-  { field: 'status', headerName: 'Status', width: 180, renderCell: (params) => <Chip label={params.value} color="primary" /> },
-  { field: 'message', headerName: 'Message', width: 180 }
-];
 
 const rows = [
   {
@@ -25,6 +18,28 @@ const rows = [
 ];
 
 export default function CourierList() {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const adjustColumnWidths = () => {
+    const columns = [
+      { field: 'id', headerName: 'SL' },
+      { field: 'receiverName', headerName: 'Receiver name', flex: isSmallScreen ? 0 : 1 },
+      { field: 'personName', headerName: 'Person name', flex: isSmallScreen ? 0 : 1 },
+      { field: 'parcelType', headerName: 'Parcel Type', flex: isSmallScreen ? 0 : 1 },
+      {
+        field: 'status',
+        headerName: 'Status',
+        flex: isSmallScreen ? 0 : 1,
+        renderCell: (params) => <Chip label={params.value} color="primary" />
+      },
+      { field: 'message', headerName: 'Message', flex: isSmallScreen ? 0 : 1 }
+    ];
+    return columns;
+  };
+
+  // Usage in your component
+  const adjustedColumns = adjustColumnWidths();
   return (
     <Box>
       <MainCard>
@@ -58,7 +73,7 @@ export default function CourierList() {
           <Box style={{ width: '100%' }}>
             <DataGrid
               rows={rows}
-              columns={columns}
+              columns={adjustedColumns}
               initialState={{
                 pagination: {
                   paginationModel: { page: 0, pageSize: 10 }

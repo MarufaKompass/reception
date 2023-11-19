@@ -11,11 +11,12 @@ export default function CheckEvent() {
     width: 220
   };
 
-  const [result, setResult] = useState('Event Code');
+  const [resultQR, setResultQR] = useState('');
 
   const handleScan = (result) => {
     if (result) {
-      setResult(result);
+      const { text } = result;
+      setResultQR(text);
     }
   };
 
@@ -46,10 +47,9 @@ export default function CheckEvent() {
             <OutlinedInput
               id="outlined-adornment-weight"
               aria-describedby="outlined-weight-helper-text"
-              placeholder="Search"
               sx={{ border: 1, borderColor: '#12A9B2', width: '100%', my: 1 }}
               size="small"
-              value={result}
+              value={resultQR}
             />
             <Box sx={{ display: 'flex', justifyContent: 'end' }}>
               <Button
