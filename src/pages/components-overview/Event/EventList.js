@@ -3,23 +3,8 @@ import { Box, Typography, Button, OutlinedInput, InputAdornment, IconButton } fr
 import { DataGrid } from '@mui/x-data-grid';
 import MainCard from 'components/MainCard';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-
-const columns = [
-  { field: 'id', headerName: 'SL' },
-  { field: 'receiverName', headerName: 'Event name', width: 200 },
-  { field: 'date', headerName: 'Date', width: 200 },
-  { field: 'time', headerName: 'Time', width: 200 },
-  {
-    field: 'action',
-    headerName: 'Action',
-    width: 200,
-    renderCell: (params) => (
-      <Button variant="outlined" size="small" sx={{ color: '#12A9B2', borderColor: '#12A9B2', '&:focus': { border: 'none' } }}>
-        {params.value}
-      </Button>
-    )
-  }
-];
+import { useTheme } from '@mui/material/styles';
+import { useMediaQuery } from '@mui/material';
 
 const rows = [
   {
@@ -32,6 +17,31 @@ const rows = [
 ];
 
 export default function EventList() {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const adjustColumnWidths = () => {
+    const columns = [
+      { field: 'id', headerName: 'SL' },
+      { field: 'receiverName', headerName: 'Event name', flex: isSmallScreen ? 0 : 1 },
+      { field: 'date', headerName: 'Date', flex: isSmallScreen ? 0 : 1 },
+      { field: 'time', headerName: 'Time', flex: isSmallScreen ? 0 : 1 },
+      {
+        field: 'action',
+        headerName: 'Action',
+        flex: isSmallScreen ? 0 : 1,
+        renderCell: (params) => (
+          <Button variant="outlined" size="small" sx={{ color: '#12A9B2', borderColor: '#12A9B2', '&:focus': { border: 'none' } }}>
+            {params.value}
+          </Button>
+        )
+      }
+    ];
+    return columns;
+  };
+
+  // Usage in your component
+  const adjustedColumns = adjustColumnWidths();
   return (
     <Box>
       <MainCard>
@@ -65,7 +75,7 @@ export default function EventList() {
           <Box style={{ width: '100%' }}>
             <DataGrid
               rows={rows}
-              columns={columns}
+              columns={adjustedColumns}
               initialState={{
                 pagination: {
                   paginationModel: { page: 0, pageSize: 10 }

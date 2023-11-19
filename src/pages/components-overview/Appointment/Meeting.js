@@ -1,27 +1,10 @@
 import React from 'react';
 import { Box, Typography, Chip, Button, OutlinedInput, InputAdornment, IconButton } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
+import { useTheme } from '@mui/material/styles';
+import { useMediaQuery } from '@mui/material';
 import MainCard from 'components/MainCard';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-
-const columns = [
-  { field: 'id', headerName: 'SL' },
-  { field: 'hostName', headerName: 'Host name', width: 150 },
-  { field: 'guestName', headerName: 'Guest name', width: 150 },
-  { field: 'date', headerName: 'Date', width: 150 },
-  { field: 'time', headerName: 'Time', width: 150 },
-  { field: 'status', headerName: 'Status', width: 150, renderCell: (params) => <Chip label={params.value} color="primary" /> },
-  {
-    field: 'action',
-    headerName: 'Action',
-    width: 150,
-    renderCell: (params) => (
-      <Button variant="outlined" size="small" sx={{ color: '#12A9B2', borderColor: '#12A9B2', '&:focus': { border: 'none' } }}>
-        {params.value}
-      </Button>
-    )
-  }
-];
 
 const rows = [
   {
@@ -45,6 +28,38 @@ const rows = [
 ];
 
 export default function Meeting() {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const adjustColumnWidths = () => {
+    const columns = [
+      { field: 'id', headerName: 'SL' },
+      { field: 'hostName', headerName: 'Host name', flex: isSmallScreen ? 0 : 1 },
+      { field: 'guestName', headerName: 'Guest name', flex: isSmallScreen ? 0 : 1 },
+      { field: 'date', headerName: 'Date', flex: isSmallScreen ? 0 : 1 },
+      { field: 'time', headerName: 'Time', flex: isSmallScreen ? 0 : 1 },
+      {
+        field: 'status',
+        headerName: 'Status',
+        flex: isSmallScreen ? 0 : 1,
+        renderCell: (params) => <Chip label={params.value} color="primary" />
+      },
+      {
+        field: 'action',
+        headerName: 'Action',
+        flex: isSmallScreen ? 0 : 1,
+        renderCell: (params) => (
+          <Button variant="outlined" size="small" sx={{ color: '#12A9B2', borderColor: '#12A9B2', '&:focus': { border: 'none' } }}>
+            {params.value}
+          </Button>
+        )
+      }
+    ];
+    return columns;
+  };
+
+  // Usage in your component
+  const adjustedColumns = adjustColumnWidths();
   return (
     <Box>
       <MainCard>
@@ -78,7 +93,7 @@ export default function Meeting() {
           <Box style={{ width: '100%' }}>
             <DataGrid
               rows={rows}
-              columns={columns}
+              columns={adjustedColumns}
               initialState={{
                 pagination: {
                   paginationModel: { page: 0, pageSize: 10 }

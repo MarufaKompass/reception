@@ -3,17 +3,8 @@ import { Box, Typography, Chip, OutlinedInput, InputAdornment, IconButton } from
 import { DataGrid } from '@mui/x-data-grid';
 import MainCard from 'components/MainCard';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-
-const columns = [
-  { field: 'id', headerName: 'SL' },
-  { field: 'hostName', headerName: 'Host name', width: 130 },
-  { field: 'visitorName', headerName: 'Visitor name', width: 130 },
-  { field: 'extraVisitors', headerName: 'Extra visitors', width: 130 },
-  { field: 'visitorsCount', headerName: 'Visitors count', width: 130 },
-  { field: 'date', headerName: 'Date', width: 130 },
-  { field: 'time', headerName: 'Time', width: 130 },
-  { field: 'status', headerName: 'Status', width: 130, renderCell: (params) => <Chip label={params.value} color="primary" /> }
-];
+import { useTheme } from '@mui/material/styles';
+import { useMediaQuery } from '@mui/material';
 
 const rows = [
   {
@@ -29,6 +20,30 @@ const rows = [
 ];
 
 export default function Visitors() {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const adjustColumnWidths = () => {
+    const columns = [
+      { field: 'id', headerName: 'SL' },
+      { field: 'hostName', headerName: 'Host name', flex: isSmallScreen ? 0 : 1 },
+      { field: 'visitorName', headerName: 'Visitor name', flex: isSmallScreen ? 0 : 1 },
+      { field: 'extraVisitors', headerName: 'Extra visitors', flex: isSmallScreen ? 0 : 1 },
+      { field: 'visitorsCount', headerName: 'Visitors count', flex: isSmallScreen ? 0 : 1 },
+      { field: 'date', headerName: 'Date', flex: isSmallScreen ? 0 : 1 },
+      { field: 'time', headerName: 'Time', flex: isSmallScreen ? 0 : 1 },
+      {
+        field: 'status',
+        headerName: 'Status',
+        flex: isSmallScreen ? 0 : 1,
+        renderCell: (params) => <Chip label={params.value} color="primary" />
+      }
+    ];
+    return columns;
+  };
+
+  // Usage in your component
+  const adjustedColumns = adjustColumnWidths();
   return (
     <Box>
       <MainCard>
@@ -67,7 +82,7 @@ export default function Visitors() {
           <Box style={{ width: '100%' }}>
             <DataGrid
               rows={rows}
-              columns={columns}
+              columns={adjustedColumns}
               initialState={{
                 pagination: {
                   paginationModel: { page: 0, pageSize: 10 }
