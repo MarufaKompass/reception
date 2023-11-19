@@ -53,7 +53,7 @@ export default function MeetingCode() {
             <Box
               backgroundColor="#fff"
               sx={{
-                height: '80%',
+                height: { xs: '80%', xl: '50%' },
                 width: { md: '70%', lg: '70%', xl: '50%' },
                 mt: -8,
                 p: 2,
