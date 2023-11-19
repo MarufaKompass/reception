@@ -46,42 +46,42 @@ export default function MeetingCode() {
               Enter Meeting Code
             </Typography>
           </Box>
-           <Box display="flex" justifyContent="center" alignItems="center" height="80vh">
-          <Box backgroundColor="blue" width="60%">
-           <Box sx={{ display: { sm: 'flex' }, justifyContent: 'center', alignItems: 'center', my: 2 }} height="450px">
-              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <QrReader delay={delay} style={previewStyle} onError={handleError} onScan={handleScan} />
-              </Box>
-              <Box sx={{ mx: 2 }}>
-                <Typography variant="h6">Meeting Code *</Typography>
+          <Box display="flex" justifyContent="center" alignItems="center" height="80vh">
+            <Box backgroundColor="blue" width="60%">
+              <Box sx={{ display: { sm: 'flex' }, justifyContent: 'center', alignItems: 'center', my: 2 }} height="450px">
+                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                  <QrReader delay={delay} style={previewStyle} onError={handleError} onScan={handleScan} />
+                </Box>
+                <Box sx={{ mx: 2 }}>
+                  <Typography variant="h6">Meeting Code *</Typography>
 
-                <OutlinedInput
-                  id="outlined-adornment-weight"
-                  aria-describedby="outlined-weight-helper-text"
-                  placeholder="Search"
-                  sx={{ border: 1, borderColor: '#12A9B2', width: '100%', my: 1 }}
-                  size="small"
-                  value={result}
-                />
-                <Box sx={{ display: 'flex', justifyContent: 'end' }}>
-                  <Button
-                    variant="outlined"
+                  <OutlinedInput
+                    id="outlined-adornment-weight"
+                    aria-describedby="outlined-weight-helper-text"
+                    placeholder="Search"
+                    sx={{ border: 1, borderColor: '#12A9B2', width: '100%', my: 1 }}
                     size="small"
-                    sx={{ color: '#12A9B2', borderColor: '#12A9B2', '&:hover': { color: '#12A9B2', borderColor: '#12A9B2' }, mr: 1 }}
-                  >
-                    Submit
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    sx={{ color: '#FF0000', borderColor: '#FF0000', '&:hover': { color: '#FF0000', borderColor: '#FF0000' } }}
-                  >
-                    Cancel
-                  </Button>
+                    value={result}
+                  />
+                  <Box sx={{ display: 'flex', justifyContent: 'end' }}>
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      sx={{ color: '#12A9B2', borderColor: '#12A9B2', '&:hover': { color: '#12A9B2', borderColor: '#12A9B2' }, mr: 1 }}
+                    >
+                      Submit
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      sx={{ color: '#FF0000', borderColor: '#FF0000', '&:hover': { color: '#FF0000', borderColor: '#FF0000' } }}
+                    >
+                      Cancel
+                    </Button>
+                  </Box>
                 </Box>
               </Box>
             </Box>
-           </Box>
           </Box>
         </Paper>
       </MainCard>
