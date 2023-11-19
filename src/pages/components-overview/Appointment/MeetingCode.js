@@ -2,14 +2,19 @@ import MainCard from 'components/MainCard';
 import React, { useState } from 'react';
 import QrReader from 'react-qr-scanner';
 import { Box, OutlinedInput, Typography, Button, Paper } from '@mui/material';
-import Image from '../../../assets/images/img/reception_background.png'; // Import using relative path
+import Image from '../../../assets/images/img/reception_background.png';
+import { useTheme } from '@mui/material/styles';
+import { useMediaQuery } from '@mui/material';
 
 export default function MeetingCode() {
   const delay = 500;
 
+  const theme = useTheme();
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up('xl'));
+
   const previewStyle = {
-    height: 240,
-    width: 220
+    height: isLargeScreen ? '400px' : '240px',
+    width: '100%'
   };
 
   const [resultQR, setResultQR] = useState('');
@@ -48,9 +53,12 @@ export default function MeetingCode() {
             </Typography>
           </Box>
           <Box display="flex" justifyContent="center" alignItems="center" height="80vh">
-            <Box backgroundColor="blue" width="60%">
-              <Box sx={{ display: { sm: 'flex' }, justifyContent: 'center', alignItems: 'center', my: 2 }} height="450px">
-                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Box
+              backgroundColor="#fff"
+              sx={{ height: '80%', width: { md: '70%', lg: '70%' }, mt: -8, p: 2, border: 1, borderColor: '#fff', borderRadius: 3, pb: 2 }}
+            >
+              <Box sx={{ display: { sm: 'flex', md: 'flex' }, justifyContent: 'center', alignItems: 'center', my: 2 }}>
+                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                   <QrReader delay={delay} style={previewStyle} onError={handleError} onScan={handleScan} />
                 </Box>
                 <Box sx={{ mx: 2 }}>
@@ -64,7 +72,7 @@ export default function MeetingCode() {
                     size="small"
                     value={resultQR}
                   />
-                  <Box sx={{ display: 'flex', justifyContent: 'end' }}>
+                  <Box sx={{ display: 'flex', justifyContent: 'end', mb: 2 }}>
                     <Button
                       variant="outlined"
                       size="small"
