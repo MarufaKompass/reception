@@ -19,7 +19,7 @@ import {
 } from '@mui/material';
 
 // third party
-import * as Yup from 'yup';
+import * as yup from 'yup';
 import { Formik } from 'formik';
 
 // project import
@@ -51,9 +51,9 @@ const AuthLogin = () => {
           password: '123456',
           submit: null
         }}
-        validationSchema={Yup.object().shape({
-          email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-          password: Yup.string().max(255).required('Password is required')
+        validationSchema={yup.object().shape({
+          email: yup.string().email('Must be a valid email').max(255).required('Email is required'),
+          password: yup.string().max(255).required('Password is required')
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
