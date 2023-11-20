@@ -6,6 +6,8 @@ import AnimateButton from 'components/@extended/AnimateButton';
 import InvisibleEye from 'components/svg/InvisibleEye';
 import VisibleEye from 'components/svg/VisibleEye';
 import { useForm } from 'react-hook-form';
+import { useAppContextReception } from 'AppContextReception';
+
 const AuthLogin = () => {
   // const [checked, setChecked] = useState(false);
   const { register, handleSubmit } = useForm();
@@ -19,8 +21,10 @@ const AuthLogin = () => {
     }
   });
   const [showPassword, setShowPassword] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false); // State to track submission status
-  // const [isFetching, setIsFetching] = useState(false); // State to track the fetch status
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  // const [isFetching, setIsFetching] = useState(false);
+  const { setUser } = useAppContextReception();
+
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
   };
@@ -34,12 +38,13 @@ const AuthLogin = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await axios.post('https://api.hellokompass.com/user/login', data);
+      const response = await axios.post('https://api.hellokompass.com/reception/login', data);
 
       if (response.data.code === 200) {
         sessionStorage.setItem('token', JSON.stringify(response.data.data.token));
         setUser(response.data.data.token);
-        navigate('/');
+        console.log(response.data.data.token);
+        // navigate('/');
       }
     } catch (error) {
       console.error('Error:', error);
@@ -56,20 +61,20 @@ const AuthLogin = () => {
               <Grid item xs={12}>
                 <Grid item xs={12}>
                   <Typography variant="p" component="div" sx={{ mb: 0, mt: 1 }}>
-                    Phone Number
+                    Email Address
                   </Typography>
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
-                    type="number"
-                    name="phone"
-                    label="Phone"
+                    type="email"
+                    name="email"
+                    label="email"
                     id="outlined"
                     size="small"
-                    placeholder="Phone number"
+                    placeholder="Enter Email"
                     sx={{ mt: 2 }}
-                    {...register('phone')}
+                    {...register('email')}
                   />
                 </Grid>
               </Grid>
