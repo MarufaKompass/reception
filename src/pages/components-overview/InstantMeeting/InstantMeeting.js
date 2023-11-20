@@ -11,8 +11,9 @@ import {
   FormControl,
   FormHelperText,
   OutlinedInput,
-  TextField
-} from '@mui/material/index';
+  TextField,
+  InputLabel
+} from '@mui/material';
 import MainCard from 'components/MainCard';
 import Webcam from 'react-webcam';
 import { useForm } from 'react-hook-form';
@@ -396,7 +397,7 @@ export default function InstantMeeting() {
                   <Grid item xs={12} sm={6} md={6} lg={6} xl={6} sx={{ pr: 3 }}>
                     <Box>
                       <FormHelperText>
-                        <Typography variant="h6" component="h2" color="#4e4d4e">
+                        <Typography variant="h5" component="h5" color="#4e4d4e">
                           Title
                         </Typography>
                       </FormHelperText>
@@ -414,15 +415,17 @@ export default function InstantMeeting() {
                   <Grid item xs={12} sm={6} md={6} lg={6} xl={6} sx={{ pr: 3 }}>
                     <Box sx={{ mt: { xs: 2, sm: 0 } }}>
                       <FormHelperText>
-                        <Typography variant="h6" component="h2" color="#4e4d4e">
+                        <Typography variant="h5" component="h5" color="#4e4d4e">
                           Phone
                         </Typography>
                       </FormHelperText>
                       <Box sx={{ display: 'flex' }}>
                         <FormControl size="small">
                           <Select displayEmpty inputProps={{ 'aria-label': 'Without label' }} size="medium" sx={{ mt: 1, mr: 2 }}>
-                            <MenuItem value="">
-                              <em>Country Code</em>
+                            <MenuItem>
+                              <InputLabel selected htmlFor="outlined-adornment">
+                                Country Code
+                              </InputLabel>
                             </MenuItem>
                             <MenuItem value={10}>Ten</MenuItem>
                             <MenuItem value={20}>Twenty</MenuItem>
@@ -447,7 +450,7 @@ export default function InstantMeeting() {
                   <Grid item xs={12} sm={6} md={6} lg={6} xl={6} sx={{ mt: 1, pr: 3 }}>
                     <Box>
                       <FormHelperText>
-                        <Typography variant="h6" component="h2" color="#4e4d4e">
+                        <Typography variant="h5" component="h5" color="#4e4d4e">
                           Email
                         </Typography>
                       </FormHelperText>
@@ -458,7 +461,7 @@ export default function InstantMeeting() {
                   <Grid item xs={12} sm={6} md={6} lg={6} xl={6} sx={{ pr: 3, mt: 1 }}>
                     <Box>
                       <FormHelperText>
-                        <Typography variant="h6" component="h2" color="#4e4d4e">
+                        <Typography variant="h5" component="h5" color="#4e4d4e">
                           Gender
                         </Typography>
                       </FormHelperText>
@@ -469,8 +472,10 @@ export default function InstantMeeting() {
                           size="medium"
                           sx={{ mt: 1, mr: 2, width: '100%' }}
                         >
-                          <MenuItem value="">
-                            <em>Gender</em>
+                          <MenuItem>
+                            <InputLabel selected htmlFor="outlined-adornments">
+                              Gender
+                            </InputLabel>
                           </MenuItem>
                           <MenuItem value={10}>Ten</MenuItem>
                           <MenuItem value={20}>Twenty</MenuItem>
@@ -486,7 +491,7 @@ export default function InstantMeeting() {
                   <Grid item xs={12} sm={6} md={6} lg={6} xl={6} sx={{ mt: 1, pr: 3 }}>
                     <Box>
                       <FormHelperText>
-                        <Typography variant="h6" component="h2" color="#4e4d4e">
+                        <Typography variant="h5" component="h5" color="#4e4d4e">
                           Company
                         </Typography>
                       </FormHelperText>
@@ -497,7 +502,7 @@ export default function InstantMeeting() {
                   <Grid item xs={12} sm={6} md={6} lg={6} xl={6} sx={{ mt: 1, pr: 3 }}>
                     <Box>
                       <FormHelperText>
-                        <Typography variant="h6" component="h2" color="#4e4d4e">
+                        <Typography variant="h5" component="h5" color="#4e4d4e">
                           Employee
                         </Typography>
                       </FormHelperText>
@@ -525,7 +530,7 @@ export default function InstantMeeting() {
                   <Grid item xs={12} sm={6} md={6} lg={6} xl={6} sx={{ mt: 1, pr: 3 }}>
                     <Box>
                       <FormHelperText>
-                        <Typography variant="h6" component="h2" color="#4e4d4e">
+                        <Typography variant="h5" component="h5" color="#4e4d4e">
                           Purpose
                         </Typography>
                       </FormHelperText>
@@ -536,8 +541,10 @@ export default function InstantMeeting() {
                           size="medium"
                           sx={{ mt: 1, mr: 2, width: '100%' }}
                         >
-                          <MenuItem value="">
-                            <em>Purpose</em>
+                           <MenuItem>
+                            <InputLabel selected htmlFor="outlined-adornments">
+                              Purpose
+                            </InputLabel>
                           </MenuItem>
                           <MenuItem value={10}>Ten</MenuItem>
                           <MenuItem value={20}>Twenty</MenuItem>
@@ -549,7 +556,7 @@ export default function InstantMeeting() {
                   <Grid item xs={12} sm={6} md={6} lg={6} xl={6} sx={{ mt: 1 }}>
                     <Box>
                       <FormHelperText>
-                        <Typography variant="h6" component="h2" color="#4e4d4e">
+                        <Typography variant="h5" component="h5" color="#4e4d4e">
                           Date
                         </Typography>
                       </FormHelperText>
@@ -580,7 +587,7 @@ export default function InstantMeeting() {
                   <Grid item xs={12} sm={6} md={6} lg={6} xl={6} sx={{ mt: 1 }}>
                     <Box>
                       <FormHelperText>
-                        <Typography variant="h6" component="h2" color="#4e4d4e">
+                        <Typography variant="h5" component="h5" color="#4e4d4e">
                           Time
                         </Typography>
                       </FormHelperText>
@@ -603,7 +610,7 @@ export default function InstantMeeting() {
                   <Grid item xs={12} sm={6} md={6} lg={6} xl={6} sx={{ pr: 3 }}>
                     <Box>
                       <FormHelperText sx={{ mt: 2, mb: 1 }}>
-                        <Typography variant="h6" component="h2" color="#4e4d4e">
+                        <Typography variant="h5" component="h5" color="#4e4d4e">
                           Additional Visitor No
                         </Typography>
                       </FormHelperText>
@@ -633,7 +640,7 @@ export default function InstantMeeting() {
                           <Grid item xs={12} sm={6} sx={{ pr: { xs: 0, sm: 2 } }}>
                             <Box>
                               <FormHelperText>
-                                <Typography variant="h6" component="h2" color="#4e4d4e">
+                                <Typography variant="h5" component="h5" color="#4e4d4e">
                                   Visitor(1) Name
                                 </Typography>
                               </FormHelperText>
@@ -651,7 +658,7 @@ export default function InstantMeeting() {
                           <Grid item xs={12} sm={6}>
                             <Box>
                               <FormHelperText>
-                                <Typography variant="h6" component="h2" color="#4e4d4e">
+                                <Typography variant="h5" component="h5" color="#4e4d4e">
                                   Visitor(1) Phone
                                 </Typography>
                               </FormHelperText>
