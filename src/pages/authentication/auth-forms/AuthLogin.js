@@ -1,7 +1,6 @@
+import axios from 'axios';
 import { React, useState } from 'react';
-// material-ui
 import { Button, Grid, IconButton, InputAdornment, Typography, TextField } from '@mui/material';
-
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AnimateButton from 'components/@extended/AnimateButton';
 import InvisibleEye from 'components/svg/InvisibleEye';
@@ -20,13 +19,33 @@ const AuthLogin = () => {
     }
   });
   const [showPassword, setShowPassword] = useState(false);
-
+  const [isSubmitting, setIsSubmitting] = useState(false); // State to track submission status
+  // const [isFetching, setIsFetching] = useState(false); // State to track the fetch status
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
   };
 
   const onSubmit = async (data) => {
     console.log(data);
+    if (isSubmitting) {
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await axios.post('https://api.hellokompass.com/user/login', data);
+
+      if (response.data.code === 200) {
+        sessionStorage.setItem('token', JSON.stringify(response.data.data.token));
+        setUser(response.data.data.token);
+        navigate('/');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+      setIsSubmitting(false); // Reset the submission flag after the request is complete
+    }
   };
   return (
     <>
@@ -85,24 +104,7 @@ const AuthLogin = () => {
                 />
               </Grid>
             </Grid>
-
-            {/* <Grid item xs={12} sx={{ mt: -1 }}>
-              <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={checked}
-                      onChange={(event) => setChecked(event.target.checked)}
-                      name="checked"
-                      color="primary"
-                      size="small"
-                    />
-                  }
-                />
-              </Stack>
-            </Grid> */}
-
-            <Grid item xs={12} sx={{ mt:2 }}>
+            <Grid item xs={12} sx={{ mt: 2 }}>
               <AnimateButton>
                 <Button fullWidth size="large" type="submit" variant="contained" color="anger">
                   Login
