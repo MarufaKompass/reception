@@ -541,7 +541,7 @@ export default function InstantMeeting() {
                           size="medium"
                           sx={{ mt: 1, mr: 2, width: '100%' }}
                         >
-                           <MenuItem>
+                          <MenuItem>
                             <InputLabel selected htmlFor="outlined-adornments">
                               Purpose
                             </InputLabel>
