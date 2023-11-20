@@ -1,44 +1,73 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Typography, Button, OutlinedInput, InputAdornment, IconButton } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import MainCard from 'components/MainCard';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import { useTheme } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
-
-const rows = [
-  {
-    id: 1,
-    receiverName: 'Snow',
-    date: '1 Nov,2023',
-    time: '3.30pm',
-    action: 'Guest List'
-  }
-];
+import axiosInstance from 'utils/axios.config';
+import { useAppContextReception } from 'AppContextReception';
 
 export default function EventList() {
+  const { comId } = useAppContextReception();
   const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    const fetchData = () => {
+      axiosInstance
+        .get(`https://api.hellokompass.com/reception/event/${comId}`)
+        .then((res) => {
+          setEvents(res.data.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+
+    fetchData();
+  }, [comId]);
 
   const adjustColumnWidths = () => {
     const columns = [
       { field: 'id', headerName: 'SL' },
-      { field: 'receiverName', headerName: 'Event name', flex: isSmallScreen ? 0 : 1 },
+      { field: 'evntname', headerName: 'Event name', flex: isSmallScreen ? 0 : 1 },
       { field: 'date', headerName: 'Date', flex: isSmallScreen ? 0 : 1 },
-      { field: 'time', headerName: 'Time', flex: isSmallScreen ? 0 : 1 },
+      {
+        field: 'starttime',
+        headerName: 'Time',
+        width: 200,
+        renderCell: (params) => (
+          <Box>
+            <Typography variant="body2">
+              {params.row.starttime} to {params.row.endtime}
+            </Typography>
+          </Box>
+        )
+      },
       {
         field: 'action',
         headerName: 'Action',
         flex: isSmallScreen ? 0 : 1,
-        renderCell: (params) => (
-          <Button variant="outlined" size="small" sx={{ color: '#12A9B2', borderColor: '#12A9B2', '&:focus': { border: 'none' } }}>
-            {params.value}
+        renderCell: () => (
+          <Button
+            variant="outlined"
+            size="small"
+            sx={{ color: '#12A9B2', borderColor: '#12A9B2', borderRadius: 5, '&:focus': { border: 'none' } }}
+          >
+            Guest List
           </Button>
         )
       }
     ];
     return columns;
   };
+
+  const rowsWithCount = events.map((event, index) => ({
+    ...event,
+    id: index + 1
+  }));
 
   // Usage in your component
   const adjustedColumns = adjustColumnWidths();
@@ -72,9 +101,9 @@ export default function EventList() {
           />
         </Box>
         <Box>
-          <Box style={{ width: '100%' }}>
+          <Box style={{ width: '95%' }}>
             <DataGrid
-              rows={rows}
+              rows={rowsWithCount}
               columns={adjustedColumns}
               initialState={{
                 pagination: {

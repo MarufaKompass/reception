@@ -1,59 +1,85 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Typography, Chip, Button, OutlinedInput, InputAdornment, IconButton } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { useTheme } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
 import MainCard from 'components/MainCard';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-
-const rows = [
-  {
-    id: 1,
-    hostName: 'Snow',
-    guestName: 'Jon',
-    date: '1 Nov,2023',
-    time: '3.30pm',
-    status: 'Complete',
-    message: 'Complete',
-    action: 'Checkin'
-  },
-  {
-    id: 2,
-    hostName: 'Snow',
-    guestName: 'Jon',
-    time: '3.30pm',
-    date: '1 Nov,2023',
-    status: 'Complete',
-    message: 'Complete',
-    action: 'Checkin'
-  }
-];
+import { useAppContextReception } from 'AppContextReception';
+import axiosInstance from 'utils/axios.config';
 
 export default function Waiting() {
+  const { comId } = useAppContextReception();
   const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const [waiting, setWaiting] = useState([]);
+
+  useEffect(() => {
+    const fetchData = () => {
+      axiosInstance
+        .get(`https://api.hellokompass.com/reception/waiting/${comId}`)
+        .then((res) => {
+          setWaiting(res.data.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+
+    fetchData();
+  }, [comId]);
 
   const adjustColumnWidths = () => {
     const columns = [
-      { field: 'id', headerName: 'SL', flex: isSmallScreen ? 0 : 1 },
-      { field: 'hostName', headerName: 'Host name', flex: isSmallScreen ? 0 : 1 },
-      { field: 'guestName', headerName: 'Guest name', flex: isSmallScreen ? 0 : 1 },
+      { field: 'id', headerName: 'SL', width: 30 },
+      {
+        field: 'host_name',
+        headerName: 'Host name',
+        width: 150,
+        renderCell: (params) => (
+          <Box>
+            <Typography variant="body2">{params.row.guest_name}</Typography>
+            <Typography variant="body2">{params.row.guest_phone}</Typography>
+          </Box>
+        )
+      },
+      {
+        field: 'guest_name',
+        headerName: 'Guest name',
+        width: 150,
+        renderCell: (params) => (
+          <Box>
+            <Typography variant="body2">{params.row.host_name}</Typography>
+            <Typography variant="body2">{params.row.host_phone}</Typography>
+          </Box>
+        )
+      },
       { field: 'date', headerName: 'Date', flex: isSmallScreen ? 0 : 1 },
       { field: 'time', headerName: 'Time', flex: isSmallScreen ? 0 : 1 },
       {
         field: 'status',
         headerName: 'Status',
         flex: isSmallScreen ? 0 : 1,
-        renderCell: (params) => <Chip label={params.value} color="primary" />
+        renderCell: (params) => {
+          return params.value === 'Cancel' ? (
+            <Chip label={params.value} sx={{ backgroundColor: '#ff0000', color: '#fff', borderRadius: 5 }} />
+          ) : (
+            <Chip label={params.value} sx={{ backgroundColor: '#12A9B2', color: '#fff', borderRadius: 5 }} />
+          );
+        }
       },
       { field: 'message', headerName: 'Message', flex: isSmallScreen ? 0 : 1 },
       {
         field: 'action',
         headerName: 'Action',
         flex: isSmallScreen ? 0 : 1,
-        renderCell: (params) => (
-          <Button variant="outlined" size="small" sx={{ color: '#12A9B2', borderColor: '#12A9B2', '&:focus': { border: 'none' } }}>
-            {params.value}
+        renderCell: () => (
+          <Button
+            variant="outlined"
+            size="small"
+            sx={{ color: '#12A9B2', borderColor: '#12A9B2', borderRadius: 5, '&:focus': { border: 'none' } }}
+          >
+            Checkin
           </Button>
         )
       }
@@ -61,6 +87,11 @@ export default function Waiting() {
 
     return columns;
   };
+
+  const rowsWithCount = waiting.map((wait, index) => ({
+    ...wait,
+    id: index + 1
+  }));
 
   // Usage in your component
   const adjustedColumns = adjustColumnWidths();
@@ -95,9 +126,9 @@ export default function Waiting() {
           />
         </Box>
         <Box>
-          <Box style={{ width: '100%' }}>
+          <Box style={{ width: '95%' }}>
             <DataGrid
-              rows={rows}
+              rows={rowsWithCount}
               columns={adjustedColumns}
               initialState={{
                 pagination: {
