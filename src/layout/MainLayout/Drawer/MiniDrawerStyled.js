@@ -15,7 +15,7 @@ const openedMixin = (theme) => ({
   overflowX: 'hidden',
   boxShadow: 'none',
   borderRadius: '20px',
-  backgroundColor:'#12a9b2',
+  backgroundColor: '#12a9b2',
   margin: '20px'
 });
 

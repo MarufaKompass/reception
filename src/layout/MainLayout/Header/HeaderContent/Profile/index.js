@@ -1,4 +1,4 @@
-import {  Box, ButtonBase, Stack, Typography } from '@mui/material';
+import { Box, ButtonBase, Stack, Typography } from '@mui/material';
 
 // import avatar1 from 'assets/images/users/avatar-1.png';
 
