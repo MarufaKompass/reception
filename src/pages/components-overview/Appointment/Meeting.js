@@ -7,12 +7,15 @@ import MainCard from 'components/MainCard';
 import Search from 'components/svg/Search';
 import { useAppContextReception } from 'AppContextReception';
 import axiosInstance from 'utils/axios.config';
+import MeetingModal from 'components/modal/MeetingModal';
 
 export default function Meeting() {
   const { comId } = useAppContextReception();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
   const [meetings, setMeetings] = useState([]);
+  const [selectedMeetingId, setSelectedMeetingId] = useState(null);
+  const [showMeetingModal, setShowMeetingModal] = useState(false);
 
   useEffect(() => {
     const fetchData = () => {
@@ -31,7 +34,7 @@ export default function Meeting() {
 
   const adjustColumnWidths = () => {
     const columns = [
-      { field: 'id', headerName: 'SL', width: 30 },
+      { field: 'originalId', headerName: 'SL', width: 30 },
       {
         field: 'host_name',
         headerName: 'Host name',
@@ -72,10 +75,11 @@ export default function Meeting() {
         field: 'action',
         headerName: 'Action',
         flex: isSmallScreen ? 0 : 1,
-        renderCell: () => (
+        renderCell: (params) => (
           <Button
             variant="outlined"
             size="small"
+            onClick={() => handleMeetingShow(params.row.id)}
             sx={{ color: '#12A9B2', borderColor: '#12A9B2', borderRadius: 5, '&:focus': { border: 'none' } }}
           >
             View
@@ -88,8 +92,13 @@ export default function Meeting() {
 
   const rowsWithCount = meetings.map((meeting, index) => ({
     ...meeting,
-    id: index + 1
+    originalId: index + 1
   }));
+
+  const handleMeetingShow = (id) => {
+    setSelectedMeetingId(id);
+    setShowMeetingModal(true);
+  };
 
   // Usage in your component
   const adjustedColumns = adjustColumnWidths();
@@ -136,6 +145,13 @@ export default function Meeting() {
             />
           </Box>
         </Box>
+        {selectedMeetingId && (
+          <MeetingModal
+            selectedMeetingId={selectedMeetingId}
+            showMeetingModal={showMeetingModal}
+            handleClose={() => setShowMeetingModal(false)}
+          />
+        )}
       </MainCard>
     </Box>
   );
