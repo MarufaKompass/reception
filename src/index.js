@@ -14,6 +14,7 @@ import 'assets/third-party/apex-chart.css';
 import App from './App';
 import { store } from 'store';
 import reportWebVitals from './reportWebVitals';
+import AppContextReception from 'AppContextReception';
 
 // ==============================|| MAIN - REACT DOM RENDER  ||============================== //
 
@@ -23,7 +24,9 @@ root.render(
   <StrictMode>
     <ReduxProvider store={store}>
       <BrowserRouter basename="/">
-        <App />
+        <AppContextReception>
+          <App />
+        </AppContextReception>
       </BrowserRouter>
     </ReduxProvider>
   </StrictMode>
