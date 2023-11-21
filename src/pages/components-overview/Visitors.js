@@ -56,15 +56,17 @@ export default function Visitors() {
       },
       { field: 'ex_visitor_no', headerName: 'Extra visitors', flex: isSmallScreen ? 0 : 1 },
       { field: 'visitorsCount', headerName: 'Visitors count', flex: isSmallScreen ? 0 : 1 },
-      { field: 'date', headerName: 'Date', flex: isSmallScreen ? 0 : 1 },
+      { field: 'date', headerName: 'Date', width: 150 },
       { field: 'time', headerName: 'Time', flex: isSmallScreen ? 0 : 1 },
       {
         field: 'status',
         headerName: 'Status',
-        flex: isSmallScreen ? 0 : 1,
+        width: 150,
         renderCell: (params) => {
           return params.value === 'Cancel' ? (
             <Chip label={params.value} sx={{ backgroundColor: '#ff0000', color: '#fff', borderRadius: 5 }} />
+          ) : params.value === 'Waiting' ? (
+            <Chip label={params.value} sx={{ backgroundColor: '#ffc107', color: '#fff', borderRadius: 5 }} />
           ) : (
             <Chip label={params.value} sx={{ backgroundColor: '#12A9B2', color: '#fff', borderRadius: 5 }} />
           );

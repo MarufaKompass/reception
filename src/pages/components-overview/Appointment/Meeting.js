@@ -66,6 +66,8 @@ export default function Meeting() {
         renderCell: (params) => {
           return params.value === 'Cancel' ? (
             <Chip label={params.value} sx={{ backgroundColor: '#ff0000', color: '#fff', borderRadius: 5 }} />
+          ) : params.value === 'Waiting' ? (
+            <Chip label={params.value} sx={{ backgroundColor: '#ffc107', color: '#fff', borderRadius: 5 }} />
           ) : (
             <Chip label={params.value} sx={{ backgroundColor: '#12A9B2', color: '#fff', borderRadius: 5 }} />
           );

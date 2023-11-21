@@ -7,12 +7,18 @@ import { useTheme } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
 import axiosInstance from 'utils/axios.config';
 import { useAppContextReception } from 'AppContextReception';
+import { useNavigate } from 'react-router-dom';
 
 export default function EventList() {
   const { comId } = useAppContextReception();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
   const [events, setEvents] = useState([]);
+  const navigate = useNavigate();
+
+  const handleGuestList = (idxe) => {
+    navigate(`/event/guestlist/${idxe}`);
+  };
 
   useEffect(() => {
     const fetchData = () => {
@@ -50,10 +56,11 @@ export default function EventList() {
         field: 'action',
         headerName: 'Action',
         flex: isSmallScreen ? 0 : 1,
-        renderCell: () => (
+        renderCell: (params) => (
           <Button
             variant="outlined"
             size="small"
+            onClick={() => handleGuestList(params.row.idxe)}
             sx={{ color: '#12A9B2', borderColor: '#12A9B2', borderRadius: 5, '&:focus': { border: 'none' } }}
           >
             Guest List

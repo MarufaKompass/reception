@@ -12,6 +12,7 @@ import MeetingCode from 'pages/components-overview/Appointment/MeetingCode';
 import CheckEvent from 'pages/components-overview/Event/CheckEvent';
 import Courier from 'pages/components-overview/Courier/Courier';
 import InstantMeeting from 'pages/components-overview/InstantMeeting/InstantMeeting';
+import GuestList from 'pages/components-overview/Event/GuestList';
 
 // render - dashboard
 const DashboardDefault = Loadable(lazy(() => import('pages/dashboard')));
@@ -59,6 +60,10 @@ const MainRoutes = {
     {
       path: 'checkEvent',
       element: <CheckEvent />
+    },
+    {
+      path: 'event/guestlist/:idxe',
+      element: <GuestList />
     },
     {
       path: 'instantMeeting',
