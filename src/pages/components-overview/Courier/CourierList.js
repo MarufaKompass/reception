@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, Chip, OutlinedInput, InputAdornment, IconButton } from '@mui/material';
+import { Box, Typography, OutlinedInput, InputAdornment, IconButton } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { useTheme } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
@@ -7,6 +7,7 @@ import MainCard from 'components/MainCard';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import axiosInstance from 'utils/axios.config';
 import { useAppContextReception } from 'AppContextReception';
+import TableChip from 'components/chips/chip';
 
 export default function CourierList() {
   const { comId } = useAppContextReception();
@@ -59,15 +60,7 @@ export default function CourierList() {
         field: 'status',
         headerName: 'Status',
         flex: isSmallScreen ? 0 : 1,
-        renderCell: (params) => {
-          return params.value === 'Cancel' ? (
-            <Chip label={params.value} sx={{ backgroundColor: '#ff0000', color: '#fff', borderRadius: 5 }} />
-          ) : params.value === 'waiting' ? (
-            <Chip label={params.value} sx={{ backgroundColor: '#ffc107', color: '#fff', borderRadius: 5 }} />
-          ) : (
-            <Chip label={params.value} sx={{ backgroundColor: '#12A9B2', color: '#fff', borderRadius: 5 }} />
-          );
-        }
+        renderCell: (params) => <TableChip>{params.value}</TableChip>
       },
       { field: 'message', headerName: 'Message', flex: isSmallScreen ? 0 : 1 }
     ];

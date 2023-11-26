@@ -5,6 +5,8 @@ import { useForm } from 'react-hook-form';
 import axiosInstance from 'utils/axios.config';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import CloseButton from 'components/Button/CloseButton';
+import SubmitButton from 'components/Button/SubmitButton';
 
 const videoConstraints = {
   width: 150,
@@ -199,14 +201,10 @@ export default function ImageModal(props) {
                 )}
               </Box>
             </Grid>
-            <Divider variant="middle" />
+            <Divider sx={{ color: '#12A9B2', border: 1, opacity: 0.3 }} />
             <Box sx={{ display: 'flex', justifyContent: 'end', alignItems: 'center', width: '100%', px: 5 }}>
-              <Button variant="outlined" type="submit" size="medium" sx={{ mx: 2, color: '#12A9B2' }}>
-                Submit
-              </Button>
-              <Button onClick={handleClose} variant="contained" size="medium" sx={{ color: '#fff', backgroundColor: '#6c757d' }}>
-                Cancel
-              </Button>
+              <SubmitButton>Submit</SubmitButton>
+              <CloseButton handleClose={handleClose}>Cancel</CloseButton>
             </Box>
           </Grid>
         </form>

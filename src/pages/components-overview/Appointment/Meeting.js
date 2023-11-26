@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, Chip, Button, OutlinedInput, InputAdornment, IconButton } from '@mui/material';
+import { Box, Typography, Button, OutlinedInput, InputAdornment, IconButton } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { useTheme } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
@@ -8,6 +8,7 @@ import Search from 'components/svg/Search';
 import { useAppContextReception } from 'AppContextReception';
 import axiosInstance from 'utils/axios.config';
 import MeetingModal from 'components/modal/MeetingModal';
+import TableChip from '../../../components/chips/chip';
 
 export default function Meeting() {
   const { comId } = useAppContextReception();
@@ -63,15 +64,7 @@ export default function Meeting() {
         field: 'status',
         headerName: 'Status',
         flex: isSmallScreen ? 0 : 1,
-        renderCell: (params) => {
-          return params.value === 'Cancel' ? (
-            <Chip label={params.value} sx={{ backgroundColor: '#ff0000', color: '#fff', borderRadius: 5 }} />
-          ) : params.value === 'Waiting' ? (
-            <Chip label={params.value} sx={{ backgroundColor: '#ffc107', color: '#fff', borderRadius: 5 }} />
-          ) : (
-            <Chip label={params.value} sx={{ backgroundColor: '#12A9B2', color: '#fff', borderRadius: 5 }} />
-          );
-        }
+        renderCell: (params) => <TableChip>{params.value}</TableChip>
       },
       {
         field: 'action',
@@ -82,7 +75,7 @@ export default function Meeting() {
             variant="outlined"
             size="small"
             onClick={() => handleMeetingShow(params.row.id)}
-            sx={{ color: '#12A9B2', borderColor: '#12A9B2', borderRadius: 5, '&:focus': { border: 'none' } }}
+            sx={{ color: '#12A9B2', borderColor: '#12A9B2', borderRadius: 1, '&:focus': { border: 'none' } }}
           >
             View
           </Button>

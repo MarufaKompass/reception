@@ -5,6 +5,8 @@ import { useAppContextReception } from 'AppContextReception';
 
 import user from '../../assets/images/img/user.jpg';
 import ImageModal from './ImageModal';
+import CloseButton from 'components/Button/CloseButton';
+import TableChip from 'components/chips/chip';
 
 export default function MeetingModal(props) {
   const { selectedMeetingId, showMeetingModal, handleClose } = props;
@@ -13,7 +15,6 @@ export default function MeetingModal(props) {
   const [meetingShow, setMeetingShow] = useState([]);
   const [extraVisitors, setExtraVisitors] = useState([]);
   const [extraVisitorId, setExtraVisitorsId] = useState([]);
-  console.log(extraVisitors);
 
   const handleVisitor = (id) => {
     setImageModal(true);
@@ -70,21 +71,18 @@ export default function MeetingModal(props) {
           borderRadius: 2,
           backgroundColor: 'background.paper',
           boxShadow: 24,
-          overflow: { xs: 'scroll', sm: 'scroll', md: 'scroll', lg: 'scroll', xl: 'scroll' },
-          height: '100%',
+          height: { xs: '630px', sm: 'auto' },
+          overflow: 'auto',
           maxHeight: { xs: 500, sm: 500, md: 500, lg: 500, xl: 600 },
           display: 'block'
         }}
       >
-        <Box sx={{ display: 'flex', width: '100%', justifyContent: 'space-between', px: 3, py: 1, color: '#7e8790' }}>
-          <Typography variant="h4" component="h2">
+        <Box id="modal-modal-title" sx={{ px: 2, py: 1, color: '#7e8790' }}>
+          <Typography variant="h4" component="h2" sx={{ color: 'black' }}>
             Meeting Details
           </Typography>
-          <Typography onClick={handleClose} sx={{ cursor: 'pointer' }} variant="h4" component="h2">
-            Close
-          </Typography>
         </Box>
-        <Divider variant="middle" />
+        <Divider sx={{ color: '#12A9B2', border: 1, opacity: 0.3 }} />
         <Box
           sx={{
             pb: 1,
@@ -123,7 +121,7 @@ export default function MeetingModal(props) {
                     </Typography>
                   </Grid>
                   <Grid xs={7} sm={9} lg={7}>
-                    <Typography sx={{ color: '#a2a2a2' }} variant="p" component="div">
+                    <Typography sx={{ color: '#000' }} variant="p" component="div">
                       {purpose}
                     </Typography>
                   </Grid>
@@ -144,9 +142,7 @@ export default function MeetingModal(props) {
                     </Typography>
                   </Grid>
                   <Grid xs={7} sm={9} lg={9}>
-                    <Typography sx={{ color: '#a2a2a2' }} variant="p" component="div">
-                      {status}
-                    </Typography>
+                    <TableChip>{status}</TableChip>
                   </Grid>
                 </Grid>
               </ListItem>
@@ -167,7 +163,7 @@ export default function MeetingModal(props) {
                     </Typography>
                   </Grid>
                   <Grid xs={7} sm={9} lg={7}>
-                    <Typography sx={{ color: '#a2a2a2' }} variant="p" component="div">
+                    <Typography sx={{ color: '#000' }} variant="p" component="div">
                       {host_name}
                     </Typography>
                   </Grid>
@@ -188,7 +184,7 @@ export default function MeetingModal(props) {
                     </Typography>
                   </Grid>
                   <Grid xs={7} sm={9} lg={9}>
-                    <Typography sx={{ color: '#a2a2a2' }} variant="p" component="div">
+                    <Typography sx={{ color: '#000' }} variant="p" component="div">
                       {host_phone}
                     </Typography>
                   </Grid>
@@ -219,7 +215,7 @@ export default function MeetingModal(props) {
                     </Typography>
                   </Grid>
                   <Grid xs={7} sm={7} lg={7}>
-                    <Typography sx={{ color: '#a2a2a2' }} variant="p" component="div">
+                    <Typography sx={{ color: '#000' }} variant="p" component="div">
                       {guest_name}
                     </Typography>
                   </Grid>
@@ -238,7 +234,7 @@ export default function MeetingModal(props) {
                     </Typography>
                   </Grid>
                   <Grid xs={7} sm={7} lg={7}>
-                    <Typography sx={{ color: '#a2a2a2' }} variant="p" component="div">
+                    <Typography sx={{ color: '#000' }} variant="p" component="div">
                       {guest_phone}
                     </Typography>
                   </Grid>
@@ -257,7 +253,7 @@ export default function MeetingModal(props) {
                     </Typography>
                   </Grid>
                   <Grid xs={7} sm={7} lg={7}>
-                    <Typography sx={{ color: '#a2a2a2' }} variant="p" component="div">
+                    <Typography sx={{ color: '#000' }} variant="p" component="div">
                       {guest_email}
                     </Typography>
                   </Grid>
@@ -276,7 +272,7 @@ export default function MeetingModal(props) {
                     </Typography>
                   </Grid>
                   <Grid xs={7} sm={7} lg={7}>
-                    <Typography sx={{ color: '#a2a2a2' }} variant="p" component="div">
+                    <Typography sx={{ color: '#000' }} variant="p" component="div">
                       {guest_company}
                     </Typography>
                   </Grid>
@@ -288,12 +284,14 @@ export default function MeetingModal(props) {
                 <Grid container>
                   <Grid item xs={12} sm={12} md={6}>
                     {guest_image ? (
-                      <Avatar
-                        alt="Captured"
-                        src={guest_image}
-                        variant="square"
-                        sx={{ width: '130px', height: '130px', border: 1, color: '#12A9B2', borderRadius: 1 }}
-                      />
+                      <>
+                        <Avatar
+                          alt="Captured"
+                          src={guest_image}
+                          variant="square"
+                          sx={{ width: '130px', height: '130px', border: 1, color: '#12A9B2', borderRadius: 1 }}
+                        />
+                      </>
                     ) : (
                       <>
                         <Avatar
@@ -314,7 +312,7 @@ export default function MeetingModal(props) {
               </ListItem>
               <ImageModal imageModal={imageModal} handleClose={() => setImageModal(false)} />
             </Grid>
-            {ex_visitor_no && (
+            {ex_visitor_no > 0 && (
               <>
                 <Grid xs={12} sm={12}>
                   <Typography sx={{ pl: 2, mt: 1, color: '#12a9b2' }} variant="h5" component="div">
@@ -326,7 +324,7 @@ export default function MeetingModal(props) {
                     Total Visitors : {ex_visitor_no}
                   </Typography>
                 </Grid>
-                {extraVisitors.map((visitors) => (
+                {extraVisitors?.map((visitors) => (
                   <>
                     <Grid items xs={12} sm={6}>
                       <ListItem sx={{ mb: -1 }}>
@@ -342,7 +340,7 @@ export default function MeetingModal(props) {
                             </Typography>
                           </Grid>
                           <Grid xs={7} sm={7} lg={7}>
-                            <Typography sx={{ color: '#a2a2a2' }} variant="p" component="div">
+                            <Typography sx={{ color: '#000' }} variant="p" component="div">
                               {visitors.name}
                             </Typography>
                           </Grid>
@@ -361,7 +359,7 @@ export default function MeetingModal(props) {
                             </Typography>
                           </Grid>
                           <Grid xs={7} sm={7} lg={7}>
-                            <Typography sx={{ color: '#a2a2a2' }} variant="p" component="div">
+                            <Typography sx={{ color: '#000' }} variant="p" component="div">
                               {visitors.phone}
                             </Typography>
                           </Grid>
@@ -407,6 +405,13 @@ export default function MeetingModal(props) {
             )}
           </Grid>
         </List>
+        <Divider sx={{ color: '#12A9B2', border: 1, opacity: 0.3, mt: 2 }} />
+        <Box sx={{ display: { xs: 'block', sm: 'flex' }, justifyContent: 'space-between', alignItems: 'center', px: 2, my: 1 }}>
+          <Typography variant="h5" color="#ff0000">
+            To close this screen press
+          </Typography>
+          <CloseButton handleClose={handleClose}>Close</CloseButton>
+        </Box>
       </Box>
     </Modal>
   );

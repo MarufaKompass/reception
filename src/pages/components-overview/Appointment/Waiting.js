@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, Chip, Button, OutlinedInput, InputAdornment, IconButton } from '@mui/material';
+import { Box, Typography, Button, OutlinedInput, InputAdornment, IconButton } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { useTheme } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
@@ -7,12 +7,21 @@ import MainCard from 'components/MainCard';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import { useAppContextReception } from 'AppContextReception';
 import axiosInstance from 'utils/axios.config';
+import WaitingModal from 'components/modal/WaitingModal';
+import TableChip from 'components/chips/chip';
 
 export default function Waiting() {
   const { comId } = useAppContextReception();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
   const [waiting, setWaiting] = useState([]);
+  const [waitingId, setWaitingId] = useState('');
+  const [waitingModal, setWaitingModal] = useState(false);
+
+  const handleWaitingList = (id) => {
+    setWaitingModal(true);
+    setWaitingId(id);
+  };
 
   useEffect(() => {
     const fetchData = () => {
@@ -31,7 +40,7 @@ export default function Waiting() {
 
   const adjustColumnWidths = () => {
     const columns = [
-      { field: 'id', headerName: 'SL', width: 30 },
+      { field: 'originalId', headerName: 'SL', width: 30 },
       {
         field: 'host_name',
         headerName: 'Host name',
@@ -60,24 +69,19 @@ export default function Waiting() {
         field: 'status',
         headerName: 'Status',
         flex: isSmallScreen ? 0 : 1,
-        renderCell: (params) => {
-          return params.value === 'Cancel' ? (
-            <Chip label={params.value} sx={{ backgroundColor: '#ff0000', color: '#fff', borderRadius: 5 }} />
-          ) : (
-            <Chip label={params.value} sx={{ backgroundColor: '#12A9B2', color: '#fff', borderRadius: 5 }} />
-          );
-        }
+        renderCell: (params) => <TableChip>{params.value}</TableChip>
       },
       { field: 'message', headerName: 'Message', flex: isSmallScreen ? 0 : 1 },
       {
         field: 'action',
         headerName: 'Action',
         flex: isSmallScreen ? 0 : 1,
-        renderCell: () => (
+        renderCell: (params) => (
           <Button
+            onClick={() => handleWaitingList(params.id)}
             variant="outlined"
             size="small"
-            sx={{ color: '#12A9B2', borderColor: '#12A9B2', borderRadius: 5, '&:focus': { border: 'none' } }}
+            sx={{ color: '#12A9B2', borderColor: '#12A9B2', borderRadius: 1, '&:focus': { border: 'none' } }}
           >
             Checkin
           </Button>
@@ -90,7 +94,7 @@ export default function Waiting() {
 
   const rowsWithCount = waiting.map((wait, index) => ({
     ...wait,
-    id: index + 1
+    originalId: index + 1
   }));
 
   // Usage in your component
@@ -139,6 +143,7 @@ export default function Waiting() {
             />
           </Box>
         </Box>
+        <WaitingModal waitingModal={waitingModal} waitingId={waitingId} handleClose={() => setWaitingModal(false)} />
       </MainCard>
     </Box>
   );
