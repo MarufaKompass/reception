@@ -9,11 +9,11 @@ const parcelTypeValidation = yup.string().required('Parcel type is required');
 const employeeValidation = yup.string().required('Employee is required');
 
 export const meetingCodeSchema = yup.object().shape({
-  meetingCode: meetingCodeValidation
+  code: meetingCodeValidation
 });
 
 export const eventCodeSchema = yup.object().shape({
-  eventCode: eventCodeValidation
+  code: eventCodeValidation
 });
 
 export const courierSchema = yup.object().shape({

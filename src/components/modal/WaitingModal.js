@@ -13,11 +13,34 @@ import SubmitButton from 'components/Button/SubmitButton';
 export default function WaitingModal(props) {
   const { waitingModal, handleClose, waitingId } = props;
   const [imageModal, setImageModal] = useState(false);
-  const [items, setItems] = useState([]);
   const [meetingShow, setMeetingShow] = useState([]);
   const [extraVisitors, setExtraVisitors] = useState([]);
   const { comId } = useAppContextReception();
   const [extraVisitorId, setExtraVisitorsId] = useState([]);
+  const [items, setItems] = useState([]);
+
+  const handleAddItem = () => {
+    setItems([...items, { belongs: [], qty: [] }]);
+  };
+
+  const handleDeleteItem = (index) => {
+    const updatedItems = [...items];
+    updatedItems.splice(index, 1);
+    setItems(updatedItems);
+  };
+
+  const handleInputChange = (event, index, type) => {
+    const { value } = event.target;
+    const updatedItems = [...items];
+
+    if (type === 'belongs') {
+      updatedItems[index].belongs.push(value);
+    } else if (type === 'qty') {
+      updatedItems[index].qty.push(value);
+    }
+
+    setItems(updatedItems);
+  };
 
   const handleVisitor = (id) => {
     setImageModal(true);
@@ -27,33 +50,9 @@ export default function WaitingModal(props) {
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data, items);
-  };
-
-  const handleAddItem = () => {
-    const newItem = {
-      belongs: [],
-      qty: []
-    };
-    setItems([...items, newItem]);
-  };
-
-  const handleDeleteItem = (index) => {
-    const updatedItems = [...items];
-    updatedItems.splice(index, 1);
-    setItems(updatedItems);
-  };
-
-  const handleBelongsChange = (event, index) => {
-    const updatedItems = [...items];
-    updatedItems[index].belongs = event.target.value;
-    setItems(updatedItems);
-  };
-
-  const handleQtyChange = (event, index) => {
-    const updatedItems = [...items];
-    updatedItems[index].qty = event.target.value;
-    setItems(updatedItems);
+    data.belongs = items[0].belongs;
+    data.qty = items.qty;
+    console.log(items);
   };
 
   const {
@@ -71,8 +70,6 @@ export default function WaitingModal(props) {
     guest_image,
     ex_visitor_no
   } = meetingShow;
-
-  console.log(waitingId, comId);
 
   useEffect(() => {
     const fetchData = () => {
@@ -517,7 +514,7 @@ export default function WaitingModal(props) {
                             </Grid>
                             <Grid xs={7} sm={9} lg={9}>
                               <OutlinedInput
-                                onChange={(event) => handleBelongsChange(event)}
+                                onChange={(event) => handleInputChange(event, 'belongs')}
                                 name="belongs"
                                 sx={{ border: 1, borderColor: '#12A9B2', width: '100%', mt: 1 }}
                                 size="small"
@@ -539,7 +536,8 @@ export default function WaitingModal(props) {
                             </Grid>
                             <Grid xs={7} sm={9} lg={9}>
                               <OutlinedInput
-                                onChange={(event) => handleQtyChange(event)}
+                                onChange={(event) => handleInputChange(event, 'qty')}
+                                type="number"
                                 name="qty"
                                 sx={{ border: 1, borderColor: '#12A9B2', width: '100%', mt: 1 }}
                                 size="small"
@@ -578,7 +576,7 @@ export default function WaitingModal(props) {
                                 </Grid>
                                 <Grid xs={7} sm={9} lg={9}>
                                   <OutlinedInput
-                                    onChange={(event) => handleBelongsChange(event, index)}
+                                    onChange={(event) => handleInputChange(event, index, 'belongs')}
                                     name="belongs"
                                     sx={{ border: 1, borderColor: '#12A9B2', width: '100%', mt: 1 }}
                                     size="small"
@@ -600,8 +598,9 @@ export default function WaitingModal(props) {
                                 </Grid>
                                 <Grid xs={7} sm={9} lg={9}>
                                   <OutlinedInput
-                                    onChange={(event) => handleQtyChange(event, index)}
+                                    onChange={(event) => handleInputChange(event, index, 'qty')}
                                     name="qty"
+                                    type="number"
                                     sx={{ border: 1, borderColor: '#12A9B2', width: '100%', mt: 1 }}
                                     size="small"
                                   />

@@ -1,14 +1,18 @@
 import MainCard from 'components/MainCard';
 import React, { useState } from 'react';
 import QrReader from 'react-qr-scanner';
-import { Box, OutlinedInput, Typography, Button, Paper } from '@mui/material';
+import { Box, OutlinedInput, FormControl, Typography, Button, Paper } from '@mui/material';
 import Image from '../../../assets/images/img/reception_background.png';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { eventCodeSchema } from 'components/validation/validation';
+import { useAppContextReception } from 'AppContextReception';
+import axiosInstance from 'utils/axios.config';
+import { toast } from 'react-toastify';
 
 export default function CheckEvent() {
+  const { comId } = useAppContextReception();
   const delay = 500;
   const navigate = useNavigate();
 
@@ -26,11 +30,33 @@ export default function CheckEvent() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors }
   } = useForm({ resolver: yupResolver(eventCodeSchema) });
 
   const onSubmit = (data) => {
-    console.log(data);
+    axiosInstance
+      .post('https://api.hellokompass.com/reception/eventcheck', data)
+      .then((res) => {
+        if (res.data.code === 200) {
+          toast.success(res.data.message);
+          navigate('/event');
+          reset();
+        } else {
+          toast.error(res.data.message);
+          navigate('/dashboard');
+          reset();
+        }
+      })
+      .catch((error) => {
+        if (error.response.status === 400) {
+          toast.error(error.response.data.message);
+          navigate('/dashboard');
+          reset();
+        } else {
+          console.error(error);
+        }
+      });
   };
 
   const [resultQR, setResultQR] = useState('');
@@ -92,25 +118,39 @@ export default function CheckEvent() {
                   </Box>
                   <Box sx={{ mx: { xs: 0, sm: 2 }, mt: { xs: 2, sm: 0 }, width: { xs: '100%', sm: '40%' } }}>
                     <Typography variant="h6">Event Code *</Typography>
-                    {resultQR ? (
-                      <OutlinedInput
-                        {...register('eventCode', { required: true })}
-                        id="outlined-adornment-weight"
-                        aria-describedby="outlined-weight-helper-text"
-                        sx={{ border: 1, borderColor: '#12A9B2', width: '100%', mt: 1 }}
-                        size="small"
-                        value={resultQR}
-                      />
-                    ) : (
-                      <OutlinedInput
-                        {...register('eventCode', { required: true })}
-                        id="outlined-adornment-weight"
-                        aria-describedby="outlined-weight-helper-text"
-                        sx={{ border: 1, borderColor: '#12A9B2', width: '100%', mt: 1 }}
-                        size="small"
-                      />
-                    )}
-                    <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.eventCode?.message}</Typography>
+                    <FormControl>
+                      {resultQR && (
+                        <OutlinedInput
+                          {...register('code', { required: true })}
+                          id="outlined-adornment-weight"
+                          aria-describedby="outlined-weight-helper-text"
+                          sx={{ border: 1, borderColor: '#12A9B2', width: '100%', mt: 1 }}
+                          size="small"
+                          name="code"
+                          value={resultQR}
+                        />
+                      )}
+                      {!resultQR && (
+                        <OutlinedInput
+                          {...register('code', { required: true })}
+                          id="outlined-adornment-weight"
+                          aria-describedby="outlined-weight-helper-text"
+                          name="code"
+                          sx={{ border: 1, borderColor: '#12A9B2', width: '100%', mt: 1 }}
+                          size="small"
+                        />
+                      )}
+                      <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.code?.message}</Typography>
+                    </FormControl>
+                    <OutlinedInput
+                      {...register('company_id', { required: true })}
+                      id="outlined-adornment-weight"
+                      aria-describedby="outlined-weight-helper-text"
+                      name="company_id"
+                      sx={{ display: 'none' }}
+                      value={comId}
+                      size="small"
+                    />
                     <Box sx={{ display: 'flex', justifyContent: 'end', mb: 2 }}>
                       <Button
                         variant="outlined"
