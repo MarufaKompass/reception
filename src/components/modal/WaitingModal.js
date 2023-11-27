@@ -8,6 +8,7 @@ import { useAppContextReception } from 'AppContextReception';
 import axiosInstance from 'utils/axios.config';
 import ImageModal from './ImageModal';
 import { useForm } from 'react-hook-form';
+import user from '../../assets/images/img/user.jpg';
 import SubmitButton from 'components/Button/SubmitButton';
 
 export default function WaitingModal(props) {
@@ -19,26 +20,9 @@ export default function WaitingModal(props) {
   const [extraVisitorId, setExtraVisitorsId] = useState([]);
   const [items, setItems] = useState([]);
 
-  const handleAddItem = () => {
-    setItems([...items, { belongs: [], qty: [] }]);
-  };
-
   const handleDeleteItem = (index) => {
     const updatedItems = [...items];
     updatedItems.splice(index, 1);
-    setItems(updatedItems);
-  };
-
-  const handleInputChange = (event, index, type) => {
-    const { value } = event.target;
-    const updatedItems = [...items];
-
-    if (type === 'belongs') {
-      updatedItems[index].belongs.push(value);
-    } else if (type === 'qty') {
-      updatedItems[index].qty.push(value);
-    }
-
     setItems(updatedItems);
   };
 
@@ -49,10 +33,26 @@ export default function WaitingModal(props) {
 
   const { register, handleSubmit } = useForm();
 
+  const handleAddItem = () => {
+    setItems([...items, { belongs: [], qty: [] }]);
+  };
+
   const onSubmit = (data) => {
-    data.belongs = items[0].belongs;
-    data.qty = items.qty;
-    console.log(items);
+    const { vcard, com_id, meeting_id, ...rest } = data;
+
+    const itemsPayload = items.map((item) => ({
+      belongs: item.belongs,
+      qty: item.qty
+    }));
+
+    const payload = {
+      vcard,
+      com_id,
+      meeting_id,
+      ...rest
+    };
+
+    console.log(payload, itemsPayload);
   };
 
   const {
@@ -136,7 +136,7 @@ export default function WaitingModal(props) {
           </Typography>
           <Typography align="center" variant="h6" component="h2">
             <Box sx={{ display: 'inline', color: '#12a9b2' }}>Date:</Box>
-            <Box sx={{ display: 'inline' }}> {date}</Box> <Box sx={{ display: 'inline', color: '#12a9b2' }}>Time:</Box>
+            <Box sx={{ display: 'inline' }}> {date}</Box> <Box sx={{ display: 'inline', color: '#12a9b2', ml: 1 }}>Time:</Box>
             <Box sx={{ display: 'inline' }}> {time}</Box>
           </Typography>
         </Box>
@@ -354,6 +354,7 @@ export default function WaitingModal(props) {
                           <Avatar
                             alt="Captured"
                             variant="square"
+                            src={user}
                             sx={{ width: '130px', height: '130px', border: 1, color: '#12A9B2', borderRadius: 1 }}
                           />
                           <Grid item xs={12} sm={12} md={12} lg={12} xl={12} sx={{ pr: 3 }}>
@@ -432,23 +433,36 @@ export default function WaitingModal(props) {
                         <ListItem>
                           <Grid container>
                             <Grid item xs={12} sm={12} md={6}>
-                              <Avatar
-                                alt="Captured"
-                                src={visitors.image}
-                                variant="square"
-                                sx={{ width: '100px', height: '100px', border: 1, color: '#12A9B2', borderRadius: 1 }}
-                              />
+                              {visitors.image ? (
+                                <>
+                                  <Avatar
+                                    alt="Captured"
+                                    src={visitors.image}
+                                    variant="square"
+                                    sx={{ width: '100px', height: '100px', border: 1, color: '#12A9B2', borderRadius: 1 }}
+                                  />
+                                </>
+                              ) : (
+                                <>
+                                  <Avatar
+                                    alt="Captured"
+                                    src={user}
+                                    variant="square"
+                                    sx={{ width: '100px', height: '100px', border: 1, color: '#12A9B2', borderRadius: 1 }}
+                                  />
 
-                              <Grid item xs={12} sm={12} md={12} lg={12} xl={12} sx={{ pr: 3 }}>
-                                <Button
-                                  onClick={() => handleVisitor(visitors.id)}
-                                  variant="outlined"
-                                  size="small"
-                                  sx={{ my: 2, color: '#12A9B2' }}
-                                >
-                                  Update
-                                </Button>
-                              </Grid>
+                                  <Grid item xs={12} sm={12} md={12} lg={12} xl={12} sx={{ pr: 3 }}>
+                                    <Button
+                                      onClick={() => handleVisitor(visitors.id)}
+                                      variant="outlined"
+                                      size="small"
+                                      sx={{ my: 2, color: '#12A9B2' }}
+                                    >
+                                      Update
+                                    </Button>
+                                  </Grid>
+                                </>
+                              )}
                             </Grid>
                           </Grid>
                         </ListItem>
@@ -499,7 +513,7 @@ export default function WaitingModal(props) {
                   </Grid>
                   <Grid container>
                     <Grid xs={12} sm={8}>
-                      <Grid container>
+                      {/* <Grid container>
                         <Grid xs={12} sm={6} sx={{ m: 0, p: 0, pr: { xs: 0, sm: 1 } }}>
                           <Grid container>
                             <Grid xs={4} sm={2} lg={2} sx={{ display: 'flex', alignItems: 'center' }}>
@@ -514,8 +528,8 @@ export default function WaitingModal(props) {
                             </Grid>
                             <Grid xs={7} sm={9} lg={9}>
                               <OutlinedInput
-                                onChange={(event) => handleInputChange(event, 'belongs')}
-                                name="belongs"
+                                {...register(`items[${index}].belongs`, { required: false })}
+                                name={`items[${index}].belongs`}
                                 sx={{ border: 1, borderColor: '#12A9B2', width: '100%', mt: 1 }}
                                 size="small"
                               />
@@ -536,16 +550,16 @@ export default function WaitingModal(props) {
                             </Grid>
                             <Grid xs={7} sm={9} lg={9}>
                               <OutlinedInput
-                                onChange={(event) => handleInputChange(event, 'qty')}
-                                type="number"
-                                name="qty"
+                                {...register(`items[${index}].qty`, { required: false })}
+                                type="qty"
+                                name={`items[${index}].qty`}
                                 sx={{ border: 1, borderColor: '#12A9B2', width: '100%', mt: 1 }}
                                 size="small"
                               />
                             </Grid>
                           </Grid>
                         </Grid>
-                      </Grid>
+                      </Grid> */}
                     </Grid>
                     <Grid xs={12} sm={4}>
                       <Button
@@ -576,8 +590,8 @@ export default function WaitingModal(props) {
                                 </Grid>
                                 <Grid xs={7} sm={9} lg={9}>
                                   <OutlinedInput
-                                    onChange={(event) => handleInputChange(event, index, 'belongs')}
-                                    name="belongs"
+                                    {...register(`items[${index}].belongs`, { required: false })}
+                                    name={`items[${index}].belongs`}
                                     sx={{ border: 1, borderColor: '#12A9B2', width: '100%', mt: 1 }}
                                     size="small"
                                   />
@@ -598,8 +612,8 @@ export default function WaitingModal(props) {
                                 </Grid>
                                 <Grid xs={7} sm={9} lg={9}>
                                   <OutlinedInput
-                                    onChange={(event) => handleInputChange(event, index, 'qty')}
-                                    name="qty"
+                                    {...register(`items[${index}].qty`, { required: false })}
+                                    name={`items[${index}].qty`}
                                     type="number"
                                     sx={{ border: 1, borderColor: '#12A9B2', width: '100%', mt: 1 }}
                                     size="small"

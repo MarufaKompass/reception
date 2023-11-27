@@ -22,7 +22,7 @@ export default function ImageModal(props) {
   const onSubmit = (data) => {
     data.extra_visitor_id = extraVisitorId;
     data.extra_visitor_image = uploadedPhoto;
-
+    console.log(data);
     axiosInstance
       .put('https://api.hellokompass.com/reception/visitorupdate', data)
       .then((res) => {
@@ -117,14 +117,11 @@ export default function ImageModal(props) {
         }}
       >
         <Box sx={{ display: 'flex', width: '100%', justifyContent: 'space-between', px: 3, py: 1, color: '#7e8790' }}>
-          <Typography variant="h5" component="h6">
-            Image
-          </Typography>
-          <Typography onClick={handleClose} sx={{ cursor: 'pointer' }} variant="h5" component="h2">
-            Close
+          <Typography variant="h4" component="h2" sx={{ color: 'black' }}>
+            Update
           </Typography>
         </Box>
-        <Divider variant="middle" />
+        <Divider sx={{ color: '#12A9B2', border: 1, opacity: 0.3 }} />
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box sx={{ px: 2 }}>
             <Box sx={{ my: 2 }}>
@@ -201,7 +198,7 @@ export default function ImageModal(props) {
                 )}
               </Box>
             </Grid>
-            <Divider sx={{ color: '#12A9B2', border: 1, opacity: 0.3 }} />
+            <Divider variant="middle" />
             <Box sx={{ display: 'flex', justifyContent: 'end', alignItems: 'center', width: '100%', px: 5 }}>
               <SubmitButton>Submit</SubmitButton>
               <CloseButton handleClose={handleClose}>Cancel</CloseButton>

@@ -41,7 +41,8 @@ export default function MeetingModal(props) {
       axiosInstance
         .get(`https://api.hellokompass.com/reception/meetingview?meeting_id=${selectedMeetingId}&com_id=${comId}`)
         .then((res) => {
-          setMeetingShow(res.data.data.meeting), setExtraVisitors(res.data.data.extravisitors);
+          setMeetingShow(res.data.data.meeting);
+          setExtraVisitors(res.data.data.extravisitors);
         })
         .catch((err) => console.error(err));
     };
@@ -101,7 +102,8 @@ export default function MeetingModal(props) {
           </Typography>
           <Typography align="center" variant="h6" component="h2">
             <Box sx={{ display: 'inline', color: '#12a9b2' }}>Date:</Box>
-            <Box sx={{ display: 'inline' }}> {date}</Box> <Box sx={{ display: 'inline', color: '#12a9b2' }}>Time:</Box>
+            <Box sx={{ display: 'inline' }}> {date}</Box>
+            <Box sx={{ display: 'inline', color: '#12a9b2', ml: 0.5 }}> Time:</Box>
             <Box sx={{ display: 'inline' }}> {time}</Box>
           </Typography>
         </Box>
@@ -370,23 +372,36 @@ export default function MeetingModal(props) {
                       <ListItem>
                         <Grid container>
                           <Grid item xs={12} sm={12} md={6}>
-                            <Avatar
-                              alt="Captured"
-                              src={visitors.image}
-                              variant="square"
-                              sx={{ width: '100px', height: '100px', border: 1, color: '#12A9B2', borderRadius: 1 }}
-                            />
+                            {visitors.image ? (
+                              <>
+                                <Avatar
+                                  alt="Captured"
+                                  src={visitors.image}
+                                  variant="square"
+                                  sx={{ width: '100px', height: '100px', border: 1, color: '#12A9B2', borderRadius: 1 }}
+                                />
+                              </>
+                            ) : (
+                              <>
+                                <Avatar
+                                  alt="Captured"
+                                  src={user}
+                                  variant="square"
+                                  sx={{ width: '100px', height: '100px', border: 1, color: '#12A9B2', borderRadius: 1 }}
+                                />
 
-                            <Grid item xs={12} sm={12} md={12} lg={12} xl={12} sx={{ pr: 3 }}>
-                              <Button
-                                onClick={() => handleVisitor(visitors.id)}
-                                variant="outlined"
-                                size="small"
-                                sx={{ my: 2, color: '#12A9B2' }}
-                              >
-                                Update
-                              </Button>
-                            </Grid>
+                                <Grid item xs={12} sm={12} md={12} lg={12} xl={12} sx={{ pr: 3 }}>
+                                  <Button
+                                    onClick={() => handleVisitor(visitors.id)}
+                                    variant="outlined"
+                                    size="small"
+                                    sx={{ my: 2, color: '#12A9B2' }}
+                                  >
+                                    Update
+                                  </Button>
+                                </Grid>
+                              </>
+                            )}
                           </Grid>
                         </Grid>
                       </ListItem>
