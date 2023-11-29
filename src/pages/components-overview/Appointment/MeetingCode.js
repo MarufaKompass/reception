@@ -50,7 +50,7 @@ export default function MeetingCode() {
       })
       .catch((error) => {
         if (error.response.status === 400) {
-          toast.error(error.response.data.message);
+          toast.success(error.response.data.message);
           navigate('/dashboard');
           reset();
         } else {
