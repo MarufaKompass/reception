@@ -683,7 +683,7 @@ export default function InstantMeeting() {
                           </MenuItem>
                           {employeeList.map((employee) => (
                             <MenuItem key={employee.id} value={employee.person_id}>
-                              {employee.dname}
+                              {employee.pname} ({employee.dname})
                             </MenuItem>
                           ))}
                         </Select>

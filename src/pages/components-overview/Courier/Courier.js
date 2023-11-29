@@ -29,9 +29,9 @@ export default function Courier() {
     axiosInstance
       .post('https://api.hellokompass.com/courier/add', data)
       .then((res) => {
-        if (res.data.code) {
+        if (res.data.code === 200) {
           toast.success(res.data.message);
-          navigate('/courierList');
+          // navigate('/courierList');
           reset();
         } else if (res.data.code === 400) {
           toast.error(res.data.message);
@@ -52,6 +52,7 @@ export default function Courier() {
     };
     fetchData();
   }, []);
+
   return (
     <Box>
       <MainCard>
@@ -155,7 +156,7 @@ export default function Courier() {
                 </MenuItem>
                 {employeeList.map((employee) => (
                   <MenuItem key={employee.id} value={employee.person_id}>
-                    {employee.dname}
+                    {employee.pname} ({employee.dname})
                   </MenuItem>
                 ))}
               </Select>
