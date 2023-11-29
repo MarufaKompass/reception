@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Box,
   Typography,
@@ -16,17 +16,22 @@ import {
 } from '@mui/material';
 import MainCard from 'components/MainCard';
 import Webcam from 'react-webcam';
-import { useForm } from 'react-hook-form';
-// import dayjs from 'dayjs';
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { instantMeetingSchema } from 'components/validation/validation';
+import dayjs from 'dayjs';
 // eslint-disable-next-line no-restricted-imports
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { MobileTimePicker } from '@mui/x-date-pickers/MobileTimePicker';
 import '../../../assets/styles.css';
 
 import 'react-datepicker/dist/react-datepicker.css';
+import axiosInstance from 'utils/axios.config';
+import { useAppContextReception } from 'AppContextReception';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const videoConstraints = {
   width: 150,
@@ -35,11 +40,23 @@ const videoConstraints = {
 };
 
 export default function InstantMeeting() {
+  const { comId } = useAppContextReception();
   const ariaLabel = { 'aria-label': 'description' };
   const [selectedValue, setSelectedValue] = useState(0);
-  const [days, setDays] = React.useState('');
+  const [days, setDays] = useState('');
+  const navigate = useNavigate();
 
-  const { register, handleSubmit } = useForm();
+  const handleCancelButton = () => {
+    navigate('/');
+  };
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors }
+  } = useForm({ resolver: yupResolver(instantMeetingSchema) });
 
   const handleChange = (event) => {
     setDays(event.target.value);
@@ -47,10 +64,61 @@ export default function InstantMeeting() {
   };
 
   const onSubmit = (data) => {
-    data.image = uploadedPhoto;
-    data.extra_visitor_image = [visitor1Upload, visitor2Upload, visitor3Upload, visitor4Upload, visitor5Upload];
-    data.extra_visitor_phone = [visitor1Phone, visitor2Phone, visitor3Phone, visitor4Phone, visitor5Phone];
-    data.extra_visitor_name = [visitor1Name, visitor2Name, visitor3Name, visitor4Name, visitor5Name];
+    data.guest_image = uploadedPhoto;
+    if (visitor1Upload) {
+      data.extra_visitor_image = [visitor1Upload];
+    } else if (visitor2Upload) {
+      data.extra_visitor_image = [visitor1Upload, visitor2Upload];
+    } else if (visitor3Upload) {
+      data.extra_visitor_image = [visitor1Upload, visitor2Upload, visitor3Upload];
+    } else if (visitor4Upload) {
+      data.extra_visitor_image = [visitor1Upload, visitor2Upload, visitor3Upload, visitor4Upload];
+    } else if (visitor5Upload) {
+      data.extra_visitor_image = [visitor1Upload, visitor2Upload, visitor3Upload, visitor4Upload, visitor5Upload];
+    } else {
+      data.extra_visitor_image = [];
+    }
+
+    if (visitor1Phone) {
+      data.extra_visitor_phone = [visitor1Phone];
+    } else if (visitor2Phone) {
+      data.extra_visitor_phone = [visitor1Phone, visitor2Phone];
+    } else if (visitor3Phone) {
+      data.extra_visitor_phone = [visitor1Phone, visitor2Phone, visitor3Phone];
+    } else if (visitor4Phone) {
+      data.extra_visitor_phone = [visitor1Phone, visitor2Phone, visitor3Phone, visitor4Phone];
+    } else if (visitor5Phone) {
+      data.extra_visitor_phone = [visitor1Phone, visitor2Phone, visitor3Phone, visitor4Phone, visitor5Phone];
+    } else {
+      data.extra_visitor_phone = [];
+    }
+
+    if (visitor1Name) {
+      data.extra_visitor_name = [visitor1Name];
+    } else if (visitor2Name) {
+      data.extra_visitor_name = [visitor1Name, visitor2Name];
+    } else if (visitor3Name) {
+      data.extra_visitor_name = [visitor1Name, visitor2Name, visitor3Name];
+    } else if (visitor4Name) {
+      data.extra_visitor_name = [visitor1Name, visitor2Name, visitor3Name, visitor4Name];
+    } else if (visitor5Name) {
+      data.extra_visitor_name = [visitor1Name, visitor2Name, visitor3Name, visitor4Name, visitor5Name];
+    } else {
+      data.extra_visitor_name = [];
+    }
+    console.log(data);
+    axiosInstance.post('https://api.hellokompass.com/reception/addmeeting', data).then((res) => {
+      if (res.data.code === 200) {
+        toast.success(res.data.message);
+        navigate('/meeting');
+        reset();
+      } else if (res.data.code === 400) {
+        toast.error(res.data.message);
+        reset();
+      } else {
+        <></>;
+      }
+    });
   };
 
   function dataURItoBlob(dataURI) {
@@ -92,7 +160,7 @@ export default function InstantMeeting() {
       const capturedPhoto = await capture(); // Capture the image
 
       const requestData = new FormData();
-      requestData.append('module_name', 'images');
+      requestData.append('module_name', 'visitorimage');
       requestData.append('file', capturedPhoto, 'captured_image.png');
       console.log(capturedPhoto);
       const response = await axiosInstance.post('https://api.hellokompass.com/upload/image', requestData, {
@@ -131,7 +199,7 @@ export default function InstantMeeting() {
       const capturedPhoto = await capture1(); // Capture the image
 
       const requestData = new FormData();
-      requestData.append('module_name', 'images');
+      requestData.append('module_name', 'visitorimage');
       requestData.append('file', capturedPhoto, 'captured_image.png');
 
       axiosInstance
@@ -186,7 +254,7 @@ export default function InstantMeeting() {
       const capturedPhoto = await capture2(); // Capture the image
 
       const requestData = new FormData();
-      requestData.append('module_name', 'images');
+      requestData.append('module_name', 'visitorimage');
       requestData.append('file', capturedPhoto, 'captured_image.png');
 
       axiosInstance
@@ -238,7 +306,7 @@ export default function InstantMeeting() {
       const capturedPhoto = await capture3(); // Capture the image
 
       const requestData = new FormData();
-      requestData.append('module_name', 'images');
+      requestData.append('module_name', 'visitorimage');
       requestData.append('file', capturedPhoto, 'captured_image.png');
 
       axiosInstance
@@ -290,7 +358,7 @@ export default function InstantMeeting() {
       const capturedPhoto = await capture4(); // Capture the image
 
       const requestData = new FormData();
-      requestData.append('module_name', 'images');
+      requestData.append('module_name', 'visitorimage');
       requestData.append('file', capturedPhoto, 'captured_image.png');
 
       axiosInstance
@@ -345,7 +413,7 @@ export default function InstantMeeting() {
       const capturedPhoto = await capture5(); // Capture the image
 
       const requestData = new FormData();
-      requestData.append('module_name', 'images');
+      requestData.append('module_name', 'visitorimage');
       requestData.append('file', capturedPhoto, 'captured_image.png');
 
       axiosInstance
@@ -376,6 +444,53 @@ export default function InstantMeeting() {
     setVisitor5Phone(phone);
   };
 
+  //Country Code
+  const [countryCode, setCountryCode] = useState([]);
+  const [defaultCountryCode, setDefaultCountryCode] = useState('88');
+
+  useEffect(() => {
+    axiosInstance
+      .get('https://api.hellokompass.com/country/')
+      .then((res) => {
+        setCountryCode(res.data.data);
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
+  const handleCountryChange = (e) => {
+    setDefaultCountryCode(e.target.value);
+  };
+
+  //Employee list
+
+  const [employeeList, setEmployeeList] = useState([]);
+
+  useEffect(() => {
+    const fetchData = () => {
+      axiosInstance
+        .get(`https://api.hellokompass.com/reception/employee/${comId}`)
+        .then((res) => setEmployeeList(res.data.data))
+        .catch((err) => console.error(err));
+    };
+    fetchData();
+  }, []);
+
+  //Purpose
+  const [purpose, setPurpose] = useState([]);
+  useEffect(() => {
+    const fetchData = () => {
+      axiosInstance
+        .get('https://api.hellokompass.com/purpose')
+        .then((res) => {
+          setPurpose(res.data.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+
+    fetchData();
+  }, []);
   return (
     <Box>
       <MainCard>
@@ -398,20 +513,30 @@ export default function InstantMeeting() {
                     <Box>
                       <FormHelperText>
                         <Typography variant="h5" component="h5" color="#4e4d4e">
-                          Title
+                          Name
                         </Typography>
                       </FormHelperText>
 
                       <TextField
-                        {...register('title', { required: true })}
+                        {...register('guest_name', { required: true })}
                         fullWidth
                         id="standard-basic"
                         sx={{ mt: '9px' }}
-                        name="title"
-                        placeholder="title"
+                        name="guest_name"
+                        placeholder="Guest Name"
                       />
                     </Box>
+                    <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.guest_name?.message}</Typography>
                   </Grid>
+                  <TextField
+                    {...register('company_id', { required: true })}
+                    fullWidth
+                    id="standard-basic"
+                    sx={{ display: 'none' }}
+                    name="company_id"
+                    placeholder="Guest Name"
+                    value={comId}
+                  />
                   <Grid item xs={12} sm={6} md={6} lg={6} xl={6} sx={{ pr: 3 }}>
                     <Box sx={{ mt: { xs: 2, sm: 0 } }}>
                       <FormHelperText>
@@ -419,27 +544,47 @@ export default function InstantMeeting() {
                           Phone
                         </Typography>
                       </FormHelperText>
-                      <Box sx={{ display: 'flex' }}>
-                        <FormControl size="small">
-                          <Select displayEmpty inputProps={{ 'aria-label': 'Without label' }} size="medium" sx={{ mt: 1, mr: 2 }}>
-                            <MenuItem>
-                              <InputLabel selected htmlFor="outlined-adornment">
-                                Country Code
-                              </InputLabel>
-                            </MenuItem>
-                            <MenuItem value={10}>Ten</MenuItem>
-                            <MenuItem value={20}>Twenty</MenuItem>
-                            <MenuItem value={30}>Thirty</MenuItem>
-                          </Select>
-                        </FormControl>
-
-                        <TextField
-                          id="standard-basic"
-                          fullWidth
-                          sx={{ mt: 1, color: '#4e4d4e', pr: 1 }}
-                          inputProps={ariaLabel}
-                          type="number"
-                        />
+                      <Box fullWidth>
+                        <Grid container>
+                          <Grid items xs={12}>
+                            <FormControl>
+                              <Grid container>
+                                <Grid item xs={5} sm={5} md={5}>
+                                  <Select
+                                    {...register('guest_country_code', { required: true })}
+                                    name="guest_country_code"
+                                    onChange={handleCountryChange}
+                                    value={defaultCountryCode}
+                                    inputProps={{ 'aria-label': 'Without label' }}
+                                    size="medium"
+                                    sx={{ mt: 1, mr: 2 }}
+                                  >
+                                    <MenuItem value="">
+                                      <em>Select Country Code</em>
+                                    </MenuItem>
+                                    {countryCode.map((country) => (
+                                      <MenuItem key={country.id} value={country.pcode}>
+                                        {country.name}({country.pcode})
+                                      </MenuItem>
+                                    ))}
+                                  </Select>
+                                </Grid>
+                                <Grid items xs={7}>
+                                  <TextField
+                                    {...register('guest_phone', { required: true })}
+                                    id="standard-basic"
+                                    name="guest_phone"
+                                    fullWidth
+                                    sx={{ mt: 1, color: '#4e4d4e', pr: 1 }}
+                                    inputProps={ariaLabel}
+                                    type="number"
+                                  />
+                                </Grid>
+                              </Grid>
+                              <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.guest_phone?.message}</Typography>
+                            </FormControl>
+                          </Grid>
+                        </Grid>
                       </Box>
                     </Box>
                   </Grid>
@@ -455,7 +600,16 @@ export default function InstantMeeting() {
                         </Typography>
                       </FormHelperText>
 
-                      <TextField fullWidth id="standard-basic" sx={{ mt: '9px' }} name="Email" placeholder="email" />
+                      <TextField
+                        {...register('guest_email', { required: true })}
+                        fullWidth
+                        id="standard-basic"
+                        sx={{ mt: '9px' }}
+                        name="guest_email"
+                        type="email"
+                        placeholder="email"
+                      />
+                      <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.guest_email?.message}</Typography>
                     </Box>
                   </Grid>
                   <Grid item xs={12} sm={6} md={6} lg={6} xl={6} sx={{ pr: 3, mt: 1 }}>
@@ -467,9 +621,10 @@ export default function InstantMeeting() {
                       </FormHelperText>
                       <FormControl size="small" sx={{ width: '100%' }}>
                         <Select
-                          displayEmpty
+                          {...register('guest_gender', { register: true })}
                           inputProps={{ 'aria-label': 'Without label' }}
                           size="medium"
+                          name="guest_gender"
                           sx={{ mt: 1, mr: 2, width: '100%' }}
                         >
                           <MenuItem>
@@ -477,10 +632,11 @@ export default function InstantMeeting() {
                               Gender
                             </InputLabel>
                           </MenuItem>
-                          <MenuItem value={10}>Ten</MenuItem>
-                          <MenuItem value={20}>Twenty</MenuItem>
-                          <MenuItem value={30}>Thirty</MenuItem>
+                          <MenuItem value="male">Male</MenuItem>
+                          <MenuItem value="female">Female</MenuItem>
+                          <MenuItem value="others">Others</MenuItem>
                         </Select>
+                        <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.guest_gender?.message}</Typography>
                       </FormControl>
                     </Box>
                   </Grid>
@@ -496,7 +652,15 @@ export default function InstantMeeting() {
                         </Typography>
                       </FormHelperText>
 
-                      <TextField fullWidth id="standard-basic" sx={{ mt: '9px' }} name="Company" placeholder="Company" />
+                      <TextField
+                        {...register('guest_company', { required: true })}
+                        fullWidth
+                        id="standard-basic"
+                        sx={{ mt: '9px' }}
+                        name="guest_company"
+                        placeholder="Company Name"
+                      />
+                      <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.guest_company?.message}</Typography>
                     </Box>
                   </Grid>
                   <Grid item xs={12} sm={6} md={6} lg={6} xl={6} sx={{ mt: 1, pr: 3 }}>
@@ -506,20 +670,24 @@ export default function InstantMeeting() {
                           Employee
                         </Typography>
                       </FormHelperText>
-                      <FormControl size="small" sx={{ width: '100%' }}>
+                      <FormControl sx={{ width: '100%' }}>
                         <Select
-                          displayEmpty
+                          {...register('emp_person_id', { required: true })}
+                          name="emp_person_id"
                           inputProps={{ 'aria-label': 'Without label' }}
-                          size="medium"
                           sx={{ mt: 1, mr: 2, width: '100%' }}
+                          size="medium"
                         >
                           <MenuItem value="">
-                            <em>Employee</em>
+                            <em>Select Employee Type</em>
                           </MenuItem>
-                          <MenuItem value={10}>Ten</MenuItem>
-                          <MenuItem value={20}>Twenty</MenuItem>
-                          <MenuItem value={30}>Thirty</MenuItem>
+                          {employeeList.map((employee) => (
+                            <MenuItem key={employee.id} value={employee.person_id}>
+                              {employee.dname}
+                            </MenuItem>
+                          ))}
                         </Select>
+                        <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.emp_person_id?.message}</Typography>
                       </FormControl>
                     </Box>
                   </Grid>
@@ -534,56 +702,29 @@ export default function InstantMeeting() {
                           Purpose
                         </Typography>
                       </FormHelperText>
-                      <FormControl size="small" sx={{ width: '100%' }}>
+                      <FormControl sx={{ width: '100%' }}>
                         <Select
-                          displayEmpty
+                          name="meeting_purpose_id"
+                          sx={{ mt: 1, mr: 2, width: '100%' }}
+                          {...register('meeting_purpose_id', { required: true })}
                           inputProps={{ 'aria-label': 'Without label' }}
                           size="medium"
-                          sx={{ mt: 1, mr: 2, width: '100%' }}
                         >
-                           <MenuItem>
-                            <InputLabel selected htmlFor="outlined-adornments">
-                              Purpose
+                          <MenuItem>
+                            <InputLabel selected htmlFor="outlined-adornment">
+                              Select Purpose
                             </InputLabel>
                           </MenuItem>
-                          <MenuItem value={10}>Ten</MenuItem>
-                          <MenuItem value={20}>Twenty</MenuItem>
-                          <MenuItem value={30}>Thirty</MenuItem>
+                          {purpose.map((purpo) => (
+                            <MenuItem key={purpo.PURPO_ID} sx={{ color: '#a7a7a7' }} value={purpo.PURPO_ID}>
+                              {purpo.PURPO_NAME}
+                            </MenuItem>
+                          ))}
                         </Select>
+                        <Typography sx={{ color: '#FF0000', fontSize: '12px' }}>{errors.meeting_purpose_id?.message}</Typography>
                       </FormControl>
                     </Box>
                   </Grid>
-                  <Grid item xs={12} sm={6} md={6} lg={6} xl={6} sx={{ mt: 1 }}>
-                    <Box>
-                      <FormHelperText>
-                        <Typography variant="h5" component="h5" color="#4e4d4e">
-                          Date
-                        </Typography>
-                      </FormHelperText>
-                      <FormControl className="maxWidth">
-                        <Box>
-                          <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DemoContainer components={['DesktopDatePicker']}>
-                              <DemoItem>
-                                <DatePicker
-                                  sx={{
-                                    overflow: 'hidden',
-                                    width: '100%',
-                                    display: 'flex',
-                                    alignitem: 'spaceBetween'
-                                  }}
-                                />
-                              </DemoItem>
-                            </DemoContainer>
-                          </LocalizationProvider>
-                        </Box>
-                      </FormControl>
-                    </Box>
-                  </Grid>
-                </Grid>
-              </Box>
-              <Box>
-                <Grid container>
                   <Grid item xs={12} sm={6} md={6} lg={6} xl={6} sx={{ mt: 1 }}>
                     <Box>
                       <FormHelperText>
@@ -592,19 +733,55 @@ export default function InstantMeeting() {
                         </Typography>
                       </FormHelperText>
                       <FormControl sx={{ mt: 0 }} fullWidth className="maxWidth">
-                        <Box className="maxWidth">
+                        <Box>
                           <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DemoContainer components={['MobileTimePicker']}>
                               <DemoItem>
-                                <MobileTimePicker
+                                <Controller
                                   className="maxWidth"
-                                  renderInput={(params) => <TextField {...params} value={params.value} />}
+                                  name="time"
+                                  control={control}
+                                  defaultValue={null}
+                                  render={({ field }) => (
+                                    <MobileTimePicker
+                                      value={field.value}
+                                      onChange={(newValue) => {
+                                        const formattedTime12Hour = dayjs(newValue, 'h:mm A');
+                                        const formattedTime24Hour = formattedTime12Hour.format('HH:mm');
+                                        field.onChange(formattedTime24Hour);
+                                      }}
+                                      renderInput={(params) => <TextField {...params} value={params.value} />}
+                                    />
+                                  )}
                                 />
                               </DemoItem>
                             </DemoContainer>
                           </LocalizationProvider>
                         </Box>
+                        <Typography sx={{ color: '#FF0000', fontSize: '12px' }}>{errors.time?.message}</Typography>
                       </FormControl>
+                    </Box>
+                  </Grid>
+                </Grid>
+              </Box>
+              <Box>
+                <Grid container>
+                  <Grid item xs={12} sm={6} md={6} lg={6} xl={6} sx={{ mt: 1, pr: 3 }}>
+                    <Box>
+                      <FormHelperText sx={{ mt: 1, mb: 1 }}>
+                        <Typography variant="h5" component="h5" color="#4e4d4e">
+                          Short Note
+                        </Typography>
+                      </FormHelperText>
+                      <TextField
+                        id="standard-basic"
+                        minRows={1.4}
+                        name="note"
+                        multiline
+                        placeholder="Enter your text here"
+                        style={{ width: '100%' }}
+                        {...register('note', { required: false })}
+                      />
                     </Box>
                   </Grid>
                   <Grid item xs={12} sm={6} md={6} lg={6} xl={6} sx={{ pr: 3 }}>
@@ -615,7 +792,12 @@ export default function InstantMeeting() {
                         </Typography>
                       </FormHelperText>
                       <FormControl fullWidth>
-                        <Select displayEmpty inputProps={{ 'aria-label': 'Without label' }} value={days} onChange={handleChange}>
+                        <Select
+                          {...register('ex_visitor_no', { required: false })}
+                          inputProps={{ 'aria-label': 'Without label' }}
+                          value={days}
+                          onChange={handleChange}
+                        >
                           <MenuItem value={0} selected>
                             0
                           </MenuItem>
@@ -1633,9 +1815,10 @@ export default function InstantMeeting() {
 
               <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
                 <Button
-                  variant="contained"
-                  size="small"
-                  sx={{ backgroundColor: '#12A9B2', width: 100, mr: 2, '&:hover': { backgroundColor: '#12A9B2' } }}
+                  onClick={handleCancelButton}
+                  variant="outlined"
+                  size="large"
+                  sx={{ mr: 2, color: '#FF0000', borderColor: '#FF0000', '&:hover': { color: '#FF0000', borderColor: '#FF0000' } }}
                 >
                   Cancel
                 </Button>

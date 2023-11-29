@@ -1,42 +1,76 @@
-import React from 'react';
-import { Box, Typography, Chip, OutlinedInput, InputAdornment, IconButton } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Box, Typography, OutlinedInput, InputAdornment, IconButton } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { useTheme } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
 import MainCard from 'components/MainCard';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-
-const rows = [
-  {
-    id: 1,
-    receiverName: 'Snow',
-    personName: 'Jon',
-    parcelType: 'Box',
-    status: 'Complete',
-    message: 'Delivered'
-  }
-];
+import axiosInstance from 'utils/axios.config';
+import { useAppContextReception } from 'AppContextReception';
+import TableChip from 'components/chips/chip';
 
 export default function CourierList() {
+  const { comId } = useAppContextReception();
   const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const [courier, setCourier] = useState([]);
+
+  useEffect(() => {
+    const fetchData = () => {
+      axiosInstance
+        .get(`https://api.hellokompass.com/reception/courier/${comId}`)
+        .then((res) => {
+          setCourier(res.data.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+
+    fetchData();
+  }, [comId]);
 
   const adjustColumnWidths = () => {
     const columns = [
       { field: 'id', headerName: 'SL' },
-      { field: 'receiverName', headerName: 'Receiver name', flex: isSmallScreen ? 0 : 1 },
-      { field: 'personName', headerName: 'Person name', flex: isSmallScreen ? 0 : 1 },
-      { field: 'parcelType', headerName: 'Parcel Type', flex: isSmallScreen ? 0 : 1 },
+      {
+        field: 'receiver_name',
+        headerName: 'Receiver name',
+        width: 150,
+        renderCell: (params) => (
+          <Box>
+            <Typography variant="body2">{params.row.receiver_name}</Typography>
+            <Typography variant="body2">{params.row.receiver_phone}</Typography>
+          </Box>
+        )
+      },
+      {
+        field: 'name',
+        headerName: 'Person name',
+        width: 150,
+        renderCell: (params) => (
+          <Box>
+            <Typography variant="body2">{params.row.name}</Typography>
+            <Typography variant="body2">{params.row.phone}</Typography>
+          </Box>
+        )
+      },
+      { field: 'parcel_type', headerName: 'Parcel Type', flex: isSmallScreen ? 0 : 1 },
       {
         field: 'status',
         headerName: 'Status',
         flex: isSmallScreen ? 0 : 1,
-        renderCell: (params) => <Chip label={params.value} color="primary" />
+        renderCell: (params) => <TableChip>{params.value}</TableChip>
       },
       { field: 'message', headerName: 'Message', flex: isSmallScreen ? 0 : 1 }
     ];
     return columns;
   };
+
+  const rowsWithCount = courier.map((courier, index) => ({
+    ...courier,
+    id: index + 1
+  }));
 
   // Usage in your component
   const adjustedColumns = adjustColumnWidths();
@@ -70,9 +104,9 @@ export default function CourierList() {
           />
         </Box>
         <Box>
-          <Box style={{ width: '100%' }}>
+          <Box style={{ width: '95%' }}>
             <DataGrid
-              rows={rows}
+              rows={rowsWithCount}
               columns={adjustedColumns}
               initialState={{
                 pagination: {

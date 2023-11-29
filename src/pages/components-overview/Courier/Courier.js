@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Button, MenuItem, Select, TextField, Typography } from '@mui/material';
 import MainCard from 'components/MainCard';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { courierSchema } from 'components/validation/validation';
+import axiosInstance from 'utils/axios.config';
+import { useAppContextReception } from 'AppContextReception';
+import { toast } from 'react-toastify';
 
 export default function Courier() {
-  const [parcel, setParcel] = useState('');
+  const { comId } = useAppContextReception();
+  const [employeeList, setEmployeeList] = useState([]);
   const navigate = useNavigate();
 
   const handleCancelButton = () => {
@@ -17,16 +21,37 @@ export default function Courier() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors }
   } = useForm({ resolver: yupResolver(courierSchema) });
 
   const onSubmit = (data) => {
-    console.log(data);
+    axiosInstance
+      .post('https://api.hellokompass.com/courier/add', data)
+      .then((res) => {
+        if (res.data.code) {
+          toast.success(res.data.message);
+          navigate('/courierList');
+          reset();
+        } else if (res.data.code === 400) {
+          toast.error(res.data.message);
+          reset();
+        } else {
+          <></>;
+        }
+      })
+      .catch((err) => console.error(err));
   };
 
-  const handleChange = (event) => {
-    setParcel(event.target.value);
-  };
+  useEffect(() => {
+    const fetchData = () => {
+      axiosInstance
+        .get(`https://api.hellokompass.com/reception/employee/${comId}`)
+        .then((res) => setEmployeeList(res.data.data))
+        .catch((err) => console.error(err));
+    };
+    fetchData();
+  }, []);
   return (
     <Box>
       <MainCard>
@@ -67,11 +92,20 @@ export default function Courier() {
                 name="phone"
                 size="large"
                 variant="outlined"
+                type="number"
                 placeholder="Your Phone Ex: 017xxxxxxxx"
                 sx={{ width: '100%' }}
               />
               <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.phone?.message}</Typography>
             </Box>
+            <TextField
+              {...register('com_id', { required: true })}
+              id="outlined-basic"
+              name="com_id"
+              variant="outlined"
+              sx={{ display: 'none' }}
+              value={comId}
+            />
             <Box sx={{ my: 2 }}>
               <Typography variant="p" sx={{ my: 2, fontSize: 17 }}>
                 Company
@@ -92,44 +126,40 @@ export default function Courier() {
                 Parcel Type
               </Typography>
               <Select
-                {...register('parcelType', { required: true })}
-                value={parcel}
-                name="parcelType"
-                onChange={handleChange}
-                displayEmpty
+                {...register('parcel_type', { required: true })}
+                name="parcel_type"
                 inputProps={{ 'aria-label': 'Without label' }}
                 sx={{ width: '100%' }}
               >
                 <MenuItem value="">
                   <em>Select Parcel Type</em>
                 </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                <MenuItem value="document">Documents</MenuItem>
+                <MenuItem value="small box">Small Box</MenuItem>
+                <MenuItem value="medium box">Medium Box</MenuItem>
               </Select>
-              <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.parcelType?.message}</Typography>
+              <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.parcel_type?.message}</Typography>
             </Box>
             <Box sx={{ my: 2 }}>
               <Typography variant="p" sx={{ fontSize: 17, display: 'block' }}>
                 Employee
               </Typography>
               <Select
-                {...register('employee', { required: true })}
-                name="employee"
-                value={parcel}
-                onChange={handleChange}
-                displayEmpty
+                {...register('person_id', { required: true })}
+                name="person_id"
                 inputProps={{ 'aria-label': 'Without label' }}
                 sx={{ width: '100%' }}
               >
                 <MenuItem value="">
-                  <em>Select Employee</em>
+                  <em>Select Employee Type</em>
                 </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                {employeeList.map((employee) => (
+                  <MenuItem key={employee.id} value={employee.person_id}>
+                    {employee.dname}
+                  </MenuItem>
+                ))}
               </Select>
-              <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.employee?.message}</Typography>
+              <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.person_id?.message}</Typography>
             </Box>
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'end' }}>

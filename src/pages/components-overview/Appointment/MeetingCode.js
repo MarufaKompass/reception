@@ -1,16 +1,19 @@
 import MainCard from 'components/MainCard';
 import React, { useState } from 'react';
 import QrReader from 'react-qr-scanner';
-import { Box, OutlinedInput, Typography, Button, Paper } from '@mui/material';
+import { Box, OutlinedInput, Typography, Button, Paper, FormControl } from '@mui/material';
 import Image from '../../../assets/images/img/reception_background.png';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { meetingCodeSchema } from 'components/validation/validation';
+import axiosInstance from 'utils/axios.config';
+import { useAppContextReception } from 'AppContextReception';
+import { toast } from 'react-toastify';
 
 export default function MeetingCode() {
   const delay = 500;
-
+  const { comId } = useAppContextReception();
   const navigate = useNavigate();
 
   const handleCancelButton = () => {
@@ -27,11 +30,33 @@ export default function MeetingCode() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors }
   } = useForm({ resolver: yupResolver(meetingCodeSchema) });
 
   const onSubmit = (data) => {
-    console.log(data);
+    axiosInstance
+      .post('https://api.hellokompass.com/reception/meetingcheck', data)
+      .then((res) => {
+        if (res.data.code === 200) {
+          toast.success(res.data.message);
+          navigate('/dashboard');
+          reset();
+        } else {
+          toast.error(res.data.message);
+          navigate('/dashboard');
+          reset();
+        }
+      })
+      .catch((error) => {
+        if (error.response.status === 400) {
+          toast.error(error.response.data.message);
+          navigate('/dashboard');
+          reset();
+        } else {
+          console.error(error);
+        }
+      });
   };
 
   const [resultQR, setResultQR] = useState('');
@@ -94,25 +119,34 @@ export default function MeetingCode() {
                   </Box>
                   <Box sx={{ mx: { xs: 0, sm: 2 }, mt: { xs: 2, sm: 0 }, width: { xs: '100%', sm: '40%' } }}>
                     <Typography variant="h6">Meeting Code *</Typography>
-                    {resultQR ? (
-                      <OutlinedInput
-                        {...register('meetingCode', { required: true })}
-                        name="meetingCode"
-                        placeholder="Search"
-                        sx={{ border: 1, borderColor: '#12A9B2', width: '100%', mt: 1 }}
-                        size="small"
-                        value={resultQR}
-                      />
-                    ) : (
-                      <OutlinedInput
-                        {...register('meetingCode', { required: true })}
-                        name="meetingCode"
-                        placeholder="Search"
-                        sx={{ border: 1, borderColor: '#12A9B2', width: '100%', mt: 1 }}
-                        size="small"
-                      />
-                    )}
-                    <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.meetingCode?.message}</Typography>
+                    <FormControl>
+                      {resultQR && (
+                        <OutlinedInput
+                          {...register('code', { required: true })}
+                          name="code"
+                          sx={{ border: 1, borderColor: '#12A9B2', width: '100%', mt: 1 }}
+                          size="small"
+                          value={resultQR}
+                        />
+                      )}
+                      {!resultQR && (
+                        <OutlinedInput
+                          {...register('code', { required: true })}
+                          name="code"
+                          sx={{ border: 1, borderColor: '#12A9B2', width: '100%', mt: 1 }}
+                          size="small"
+                        />
+                      )}
+                      <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.code?.message}</Typography>
+                    </FormControl>
+
+                    <OutlinedInput
+                      {...register('company_id', { required: true })}
+                      name="company_id"
+                      sx={{ display: 'none' }}
+                      size="small"
+                      value={comId}
+                    />
                     <Box sx={{ display: 'flex', justifyContent: 'end', mb: 2 }}>
                       <Button
                         variant="outlined"

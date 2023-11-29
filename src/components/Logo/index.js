@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import config from 'config';
 import { activeItem } from 'store/reducers/menu';
-import Logo from './logo';
+import Logo from './Logo';
 
 // ==============================|| MAIN LOGO ||============================== //
 
