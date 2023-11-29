@@ -12,7 +12,7 @@ const axiosInstance =
 axiosInstance.interceptors.request.use(
   function (config) {
     if (!config.headers.Authorization) {
-      const usersInfo = JSON.parse(sessionStorage.getItem('usersInfo'));
+      const usersInfo = JSON.parse(sessionStorage.getItem('token'));
       if (usersInfo) {
         config.headers.Authorization = `Bearer ${usersInfo}`;
       }
