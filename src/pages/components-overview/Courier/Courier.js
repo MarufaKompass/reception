@@ -52,6 +52,7 @@ export default function Courier() {
     };
     fetchData();
   }, []);
+
   return (
     <Box>
       <MainCard>
@@ -155,7 +156,7 @@ export default function Courier() {
                 </MenuItem>
                 {employeeList.map((employee) => (
                   <MenuItem key={employee.id} value={employee.person_id}>
-                    {employee.dname}
+                    {employee.pname} ({employee.dname})
                   </MenuItem>
                 ))}
               </Select>
