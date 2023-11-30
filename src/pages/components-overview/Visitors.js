@@ -71,7 +71,7 @@ export default function Visitors() {
 
   const rowsWithCount = visitors.map((visitor, index) => ({
     ...visitor,
-    visitorsCount: visitors.length,
+    visitorsCount: 1 + parseInt(visitor.ex_visitor_no),
     id: index + 1
   }));
 

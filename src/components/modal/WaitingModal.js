@@ -18,7 +18,9 @@ export default function WaitingModal(props) {
   const [extraVisitors, setExtraVisitors] = useState([]);
   const { comId } = useAppContextReception();
   const [extraVisitorId, setExtraVisitorsId] = useState([]);
+  const [visitorBelong, setVisitorBelong] = useState([]);
   const [items, setItems] = useState([]);
+  console.log(visitorBelong);
 
   const handleDeleteItem = (index) => {
     const updatedItems = [...items];
@@ -76,7 +78,10 @@ export default function WaitingModal(props) {
       axiosInstance
         .get(`https://api.hellokompass.com/reception/meetingview?meeting_id=${waitingId}&com_id=${comId}`)
         .then((res) => {
-          setMeetingShow(res.data.data.meeting), setExtraVisitors(res.data.data.extravisitors);
+          setMeetingShow(res.data.data.meeting);
+          setExtraVisitors(res.data.data.extravisitors);
+          setVisitorBelong(res.data.data.visitorbelong);
+          console.log(res.data);
         })
         .catch((err) => console.error(err));
     };

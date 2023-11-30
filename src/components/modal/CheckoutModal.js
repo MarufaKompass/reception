@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Box, Typography, Divider, Avatar, Button, List, ListItem, Grid } from '@mui/material';
-import axiosInstance from 'utils/axios.config';
-import { useAppContextReception } from 'AppContextReception';
+import { Modal, Box, Typography, Divider, List, Grid, ListItem, Avatar, Button } from '@mui/material';
 
-import user from '../../assets/images/img/user.jpg';
-import ImageModal from './ImageModal';
-import CloseButton from 'components/Button/CloseButton';
 import TableChip from 'components/chips/chip';
-import BelongsTable from 'components/table/BelongsTable';
+import CloseButton from 'components/Button/CloseButton';
+import { useAppContextReception } from 'AppContextReception';
+import axiosInstance from 'utils/axios.config';
+import ImageModal from './ImageModal';
+import user from '../../assets/images/img/user.jpg';
+import SubmitButton from 'components/Button/SubmitButton';
 
-export default function MeetingModal(props) {
-  const { selectedMeetingId, showMeetingModal, handleClose } = props;
+export default function Checkout(props) {
+  const { checkOutModal, handleClose, waitingId } = props;
   const [imageModal, setImageModal] = useState(false);
-  const { comId } = useAppContextReception();
   const [meetingShow, setMeetingShow] = useState([]);
   const [extraVisitors, setExtraVisitors] = useState([]);
+  const { comId } = useAppContextReception();
   const [extraVisitorId, setExtraVisitorsId] = useState([]);
-  const [visitorBelongs, setVisitorBelongs] = useState('');
-  console.log(visitorBelongs);
 
   const handleVisitor = (id) => {
     setImageModal(true);
@@ -43,20 +41,21 @@ export default function MeetingModal(props) {
   useEffect(() => {
     const fetchData = () => {
       axiosInstance
-        .get(`https://api.hellokompass.com/reception/meetingview?meeting_id=${selectedMeetingId}&com_id=${comId}`)
+        .get(`https://api.hellokompass.com/reception/meetingview?meeting_id=${waitingId}&com_id=${comId}`)
         .then((res) => {
           setMeetingShow(res.data.data.meeting);
           setExtraVisitors(res.data.data.extravisitors);
-          setVisitorBelongs(res.data.data.visitorbelong);
+          setVisitorBelong(res.data.data.visitorbelong);
+          console.log(res.data);
         })
         .catch((err) => console.error(err));
     };
     fetchData();
-  }, [selectedMeetingId]);
+  }, [waitingId]);
 
   return (
     <Modal
-      open={Boolean(showMeetingModal)}
+      open={Boolean(checkOutModal)}
       onClose={handleClose}
       aria-labelledby="guest-modal-title"
       aria-describedby="guest-modal-description"
@@ -85,7 +84,7 @@ export default function MeetingModal(props) {
       >
         <Box id="modal-modal-title" sx={{ px: 2, py: 1, color: '#7e8790' }}>
           <Typography variant="h4" component="h2" sx={{ color: 'black' }}>
-            Meeting Details
+            Waiting Details
           </Typography>
         </Box>
         <Divider sx={{ color: '#12A9B2', border: 1, opacity: 0.3 }} />
@@ -103,12 +102,11 @@ export default function MeetingModal(props) {
           }}
         >
           <Typography align="center" variant="h6" component="h2">
-            Meeting Overview
+            Waiting Overview
           </Typography>
           <Typography align="center" variant="h6" component="h2">
             <Box sx={{ display: 'inline', color: '#12a9b2' }}>Date:</Box>
-            <Box sx={{ display: 'inline' }}> {date}</Box>
-            <Box sx={{ display: 'inline', color: '#12a9b2', ml: 0.5 }}> Time:</Box>
+            <Box sx={{ display: 'inline' }}> {date}</Box> <Box sx={{ display: 'inline', color: '#12a9b2', ml: 1 }}>Time:</Box>
             <Box sx={{ display: 'inline' }}> {time}</Box>
           </Typography>
         </Box>
@@ -119,27 +117,6 @@ export default function MeetingModal(props) {
                 <Grid container>
                   <Grid xs={4} sm={2} lg={4}>
                     <Typography variant="p" component="p">
-                      Purpose
-                    </Typography>
-                  </Grid>
-                  <Grid xs={1} sm={1} lg={1}>
-                    <Typography variant="p" component="div">
-                      :
-                    </Typography>
-                  </Grid>
-                  <Grid xs={7} sm={9} lg={7}>
-                    <Typography sx={{ color: '#000' }} variant="p" component="div">
-                      {purpose}
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </ListItem>
-            </Grid>
-            <Grid items xs={12} sm={12} lg={6}>
-              <ListItem sx={{ mb: -1 }}>
-                <Grid container>
-                  <Grid xs={4} sm={2} lg={4}>
-                    <Typography variant="p" component="div">
                       Meeting Code
                     </Typography>
                   </Grid>
@@ -156,6 +133,27 @@ export default function MeetingModal(props) {
                 </Grid>
               </ListItem>
             </Grid>
+            <Grid items xs={12} sm={12} lg={6}>
+              <ListItem sx={{ mb: -1 }}>
+                <Grid container>
+                  <Grid xs={4} sm={2} lg={2}>
+                    <Typography variant="p" component="div">
+                      Purpose
+                    </Typography>
+                  </Grid>
+                  <Grid xs={1} sm={1} lg={1}>
+                    <Typography variant="p" component="div">
+                      :
+                    </Typography>
+                  </Grid>
+                  <Grid xs={7} sm={9} lg={9}>
+                    <Typography sx={{ color: '#000' }} variant="p" component="div">
+                      {purpose}
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </ListItem>
+            </Grid>
           </Grid>
           <Grid container>
             <Grid items xs={12} sm={12} lg={6}>
@@ -163,7 +161,7 @@ export default function MeetingModal(props) {
                 <Grid container>
                   <Grid xs={4} sm={2} lg={4}>
                     <Typography variant="p" component="div">
-                      Employee Name
+                      Host Name
                     </Typography>
                   </Grid>
                   <Grid xs={1} sm={1} lg={1}>
@@ -182,7 +180,7 @@ export default function MeetingModal(props) {
             <Grid items xs={12} sm={12} lg={6}>
               <ListItem sx={{ mb: -1 }}>
                 <Grid container>
-                  <Grid xs={4} sm={2} lg={4}>
+                  <Grid xs={4} sm={2} lg={2}>
                     <Typography variant="p" component="div">
                       Phone
                     </Typography>
@@ -192,7 +190,7 @@ export default function MeetingModal(props) {
                       :
                     </Typography>
                   </Grid>
-                  <Grid xs={7} sm={9} lg={7}>
+                  <Grid xs={7} sm={9} lg={9}>
                     <Typography sx={{ color: '#000' }} variant="p" component="div">
                       {host_phone}
                     </Typography>
@@ -200,28 +198,30 @@ export default function MeetingModal(props) {
                 </Grid>
               </ListItem>
             </Grid>
-            <Grid items xs={12} sm={12} lg={6}>
-              <ListItem sx={{ mb: -1 }}>
-                <Grid container>
-                  <Grid xs={4} sm={2} lg={4}>
-                    <Typography variant="p" component="div">
-                      Status
-                    </Typography>
+            <Grid container>
+              <Grid items xs={12} sm={12} lg={6}>
+                <ListItem sx={{ mb: -1 }}>
+                  <Grid container>
+                    <Grid xs={4} sm={2} lg={4}>
+                      <Typography variant="p" component="div">
+                        Status
+                      </Typography>
+                    </Grid>
+                    <Grid xs={1} sm={1} lg={1}>
+                      <Typography variant="p" component="div">
+                        :
+                      </Typography>
+                    </Grid>
+                    <Grid xs={7} sm={9} lg={7}>
+                      <TableChip>{status}</TableChip>
+                    </Grid>
                   </Grid>
-                  <Grid xs={1} sm={1} lg={1}>
-                    <Typography variant="p" component="div">
-                      :
-                    </Typography>
-                  </Grid>
-                  <Grid xs={7} sm={9} lg={7}>
-                    <TableChip>{status}</TableChip>
-                  </Grid>
-                </Grid>
-              </ListItem>
+                </ListItem>
+              </Grid>
             </Grid>
             <Grid xs={12} sm={12}>
               <Typography sx={{ pl: 2, mt: 2, color: '#12a9b2' }} variant="h5" component="div">
-                Meeting with :
+                Meeting details :
               </Typography>
             </Grid>
             <Grid xs={12} sm={12}>
@@ -312,20 +312,18 @@ export default function MeetingModal(props) {
                 <Grid container>
                   <Grid item xs={12} sm={12} md={6}>
                     {guest_image ? (
-                      <>
-                        <Avatar
-                          alt="Captured"
-                          src={guest_image}
-                          variant="square"
-                          sx={{ width: '130px', height: '130px', border: 1, color: '#12A9B2', borderRadius: 1 }}
-                        />
-                      </>
+                      <Avatar
+                        alt="Captured"
+                        src={guest_image}
+                        variant="square"
+                        sx={{ width: '130px', height: '130px', border: 1, color: '#12A9B2', borderRadius: 1 }}
+                      />
                     ) : (
                       <>
                         <Avatar
                           alt="Captured"
-                          src={user}
                           variant="square"
+                          src={user}
                           sx={{ width: '130px', height: '130px', border: 1, color: '#12A9B2', borderRadius: 1 }}
                         />
                         <Grid item xs={12} sm={12} md={12} lg={12} xl={12} sx={{ pr: 3 }}>
@@ -338,9 +336,15 @@ export default function MeetingModal(props) {
                   </Grid>
                 </Grid>
               </ListItem>
-              <ImageModal imageModal={imageModal} handleClose={() => setImageModal(false)} />
+              <ImageModal
+                imageModal={imageModal}
+                name={guest_name}
+                phone={guest_phone}
+                extraVisitorId={extraVisitorId}
+                handleClose={() => setImageModal(false)}
+              />
             </Grid>
-            {extraVisitors !== null && (
+            {ex_visitor_no > 0 && (
               <>
                 <Grid xs={12} sm={12}>
                   <Typography sx={{ pl: 2, mt: 1, color: '#12a9b2' }} variant="h5" component="div">
@@ -444,88 +448,14 @@ export default function MeetingModal(props) {
                 ))}
               </>
             )}
-            {visitorBelongs !== null && (
-              <>
-                <Grid xs={12} sm={12}>
-                  <Typography sx={{ pl: 2, mt: 1, color: '#12a9b2' }} variant="h5" component="div">
-                    Visitors Belongings :
-                  </Typography>
-                </Grid>
-                <Grid items xs={12} sm={6} sx={{ mt: 2 }}>
-                  <ListItem sx={{ mb: -1 }}>
-                    <Grid container>
-                      <Grid xs={4} sm={4} lg={4}>
-                        <Typography variant="p" component="div">
-                          Visitors Card
-                        </Typography>
-                      </Grid>
-                      <Grid xs={1} sm={1} lg={1}>
-                        <Typography variant="p" component="div">
-                          :
-                        </Typography>
-                      </Grid>
-                      <Grid xs={7} sm={7} lg={7}>
-                        <Typography sx={{ color: '#000' }} variant="p" component="div">
-                          {visitorBelongs.vcard}
-                        </Typography>
-                      </Grid>
-                    </Grid>
-                  </ListItem>
-                  <ListItem sx={{ mb: -1 }}>
-                    <Grid container>
-                      <Grid xs={4} sm={4} lg={4}>
-                        <Typography variant="p" component="div">
-                          In Time
-                        </Typography>
-                      </Grid>
-                      <Grid xs={1} sm={1} lg={1}>
-                        <Typography variant="p" component="div">
-                          :
-                        </Typography>
-                      </Grid>
-                      <Grid xs={7} sm={7} lg={7}>
-                        <Typography sx={{ color: '#000' }} variant="p" component="div">
-                          {visitorBelongs.intime}
-                        </Typography>
-                      </Grid>
-                    </Grid>
-                  </ListItem>
-                  <ListItem sx={{ mb: -1 }}>
-                    <Grid container>
-                      <Grid xs={4} sm={4} lg={4}>
-                        <Typography variant="p" component="div">
-                          Out Time
-                        </Typography>
-                      </Grid>
-                      <Grid xs={1} sm={1} lg={1}>
-                        <Typography variant="p" component="div">
-                          :
-                        </Typography>
-                      </Grid>
-                      <Grid xs={7} sm={7} lg={7}>
-                        <Typography sx={{ color: '#000' }} variant="p" component="div">
-                          {visitorBelongs.outtime}
-                        </Typography>
-                      </Grid>
-                    </Grid>
-                  </ListItem>
-                </Grid>
-                <Grid container>
-                  <Grid items xs={12} sm={12} sx={{ px: { xs: 1, sm: 0, md: 2 }, mt: 1 }}>
-                    <BelongsTable belongs={visitorBelongs.belongs} qty={visitorBelongs.qty} />
-                  </Grid>
-                </Grid>
-              </>
-            )}
           </Grid>
+
+          <Divider sx={{ color: '#12A9B2', border: 1, opacity: 0.3, mt: 2 }} />
+          <Box sx={{ display: { xs: 'block', sm: 'flex' }, justifyContent: 'end', alignItems: 'center', px: 2 }}>
+            <SubmitButton>Check In</SubmitButton>
+            <CloseButton handleClose={handleClose}>Close</CloseButton>
+          </Box>
         </List>
-        <Divider sx={{ color: '#12A9B2', border: 1, opacity: 0.3, mt: 2 }} />
-        <Box sx={{ display: { xs: 'block', sm: 'flex' }, justifyContent: 'space-between', alignItems: 'center', px: 2, my: 1 }}>
-          <Typography variant="h5" color="#ff0000">
-            To close this screen press
-          </Typography>
-          <CloseButton handleClose={handleClose}>Close</CloseButton>
-        </Box>
       </Box>
     </Modal>
   );

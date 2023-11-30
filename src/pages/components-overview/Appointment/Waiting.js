@@ -9,6 +9,7 @@ import { useAppContextReception } from 'AppContextReception';
 import axiosInstance from 'utils/axios.config';
 import WaitingModal from 'components/modal/WaitingModal';
 import TableChip from 'components/chips/chip';
+import Checkout from 'components/modal/CheckoutModal';
 
 export default function Waiting() {
   const { comId } = useAppContextReception();
@@ -17,9 +18,14 @@ export default function Waiting() {
   const [waiting, setWaiting] = useState([]);
   const [waitingId, setWaitingId] = useState('');
   const [waitingModal, setWaitingModal] = useState(false);
+  const [checkOutModal, setCheckOutModal] = useState(false);
 
   const handleWaitingList = (id) => {
     setWaitingModal(true);
+    setWaitingId(id);
+  };
+  const handleCheckOutList = (id) => {
+    setCheckOutModal(true);
     setWaitingId(id);
   };
 
@@ -69,23 +75,39 @@ export default function Waiting() {
         field: 'status',
         headerName: 'Status',
         flex: isSmallScreen ? 0 : 1,
-        renderCell: (params) => <TableChip>{params.value}</TableChip>
+        renderCell: (params) => {
+          return <TableChip>{params.value}</TableChip>;
+        }
       },
       { field: 'message', headerName: 'Message', flex: isSmallScreen ? 0 : 1 },
       {
         field: 'action',
         headerName: 'Action',
-        flex: isSmallScreen ? 0 : 1,
-        renderCell: (params) => (
-          <Button
-            onClick={() => handleWaitingList(params.id)}
-            variant="outlined"
-            size="small"
-            sx={{ color: '#12A9B2', borderColor: '#12A9B2', borderRadius: 1, '&:focus': { border: 'none' } }}
-          >
-            Checkin
-          </Button>
-        )
+        width: 200,
+        renderCell: (params) => {
+          return (
+            <>
+              <Button
+                onClick={() => handleWaitingList(params.id)}
+                variant="outlined"
+                size="small"
+                sx={{ color: '#12A9B2', borderColor: '#12A9B2', borderRadius: 1, mr: 1, '&:focus': { border: 'none' } }}
+              >
+                Checkin
+              </Button>
+              {params.row.status === 'Active' && (
+                <Button
+                  onClick={() => handleCheckOutList(params.id)}
+                  variant="outlined"
+                  size="small"
+                  sx={{ color: '#12A9B2', borderColor: '#12A9B2', borderRadius: 1, mr: 1, px: 1, '&:focus': { border: 'none' } }}
+                >
+                  Check Out
+                </Button>
+              )}
+            </>
+          );
+        }
       }
     ];
 
@@ -96,7 +118,6 @@ export default function Waiting() {
     ...wait,
     originalId: index + 1
   }));
-
   // Usage in your component
   const adjustedColumns = adjustColumnWidths();
 
@@ -144,6 +165,7 @@ export default function Waiting() {
           </Box>
         </Box>
         <WaitingModal waitingModal={waitingModal} waitingId={waitingId} handleClose={() => setWaitingModal(false)} />
+        <Checkout checkOutModal={checkOutModal} waitingId={waitingId} handleClose={() => setCheckOutModal(false)} />
       </MainCard>
     </Box>
   );
