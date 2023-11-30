@@ -1,4 +1,4 @@
-import { lazy } from 'react';
+import { lazy, Suspense } from 'react';
 
 // project import
 import Loadable from 'components/Loadable';
@@ -13,65 +13,154 @@ import CheckEvent from 'pages/components-overview/Event/CheckEvent';
 import Courier from 'pages/components-overview/Courier/Courier';
 import InstantMeeting from 'pages/components-overview/InstantMeeting/InstantMeeting';
 import GuestList from 'pages/components-overview/Event/GuestList';
+import PrivateRoutes from 'components/PrivateRoutes/PrivateRoutes';
+import NotFoundPage from 'pages/components-overview/NotFoundPage';
+import { Typography } from '@mui/material';
 
 // render - dashboard
 const DashboardDefault = Loadable(lazy(() => import('pages/dashboard')));
 const MainRoutes = {
   path: '/',
-  element: <MainLayout />,
+  element: (
+    <Suspense fallback={<Typography>Loading...</Typography>}>
+      <PrivateRoutes>
+        <MainLayout />
+      </PrivateRoutes>
+    </Suspense>
+  ),
   children: [
     {
       path: '/',
-      element: <DashboardDefault />
+      element: (
+        <Suspense fallback={<Typography>Loading...</Typography>}>
+          <DashboardDefault />
+        </Suspense>
+      )
     },
     {
       path: 'dashboard',
       children: [
         {
           path: '',
-          element: <DashboardDefault />
+          element: (
+            <Suspense fallback={<Typography>Loading...</Typography>}>
+              <PrivateRoutes>
+                <DashboardDefault />
+              </PrivateRoutes>
+            </Suspense>
+          )
         }
       ]
     },
     {
       path: 'waiting',
-      element: <Waiting />
+      element: (
+        <Suspense fallback={<Typography>Loading...</Typography>}>
+          <PrivateRoutes>
+            <Waiting />
+          </PrivateRoutes>
+        </Suspense>
+      )
     },
     {
       path: 'meeting',
-      element: <Meeting />
+      element: (
+        <Suspense fallback={<Typography>Loading...</Typography>}>
+          <PrivateRoutes>
+            <Meeting />
+          </PrivateRoutes>
+        </Suspense>
+      )
     },
     {
       path: 'visitor',
-      element: <Visitors />
+      element: (
+        <Suspense fallback={<Typography>Loading...</Typography>}>
+          <PrivateRoutes>
+            <Visitors />
+          </PrivateRoutes>
+        </Suspense>
+      )
     },
     {
       path: 'event',
-      element: <EventList />
+      element: (
+        <Suspense fallback={<Typography>Loading...</Typography>}>
+          <PrivateRoutes>
+            <EventList />
+          </PrivateRoutes>
+        </Suspense>
+      )
     },
     {
       path: 'courierList',
-      element: <CourierList />
+      element: (
+        <Suspense fallback={<Typography>Loading...</Typography>}>
+          <PrivateRoutes>
+            <CourierList />
+          </PrivateRoutes>
+        </Suspense>
+      )
     },
     {
       path: 'checkMeeting',
-      element: <MeetingCode />
+      element: (
+        <Suspense fallback={<Typography>Loading...</Typography>}>
+          <PrivateRoutes>
+            <MeetingCode />
+          </PrivateRoutes>
+        </Suspense>
+      )
     },
     {
       path: 'checkEvent',
-      element: <CheckEvent />
+      element: (
+        <Suspense fallback={<Typography>Loading...</Typography>}>
+          <PrivateRoutes>
+            <CheckEvent />
+          </PrivateRoutes>
+        </Suspense>
+      )
     },
     {
       path: 'event/guestlist/:idxe',
-      element: <GuestList />
+      element: (
+        <Suspense fallback={<Typography>Loading...</Typography>}>
+          <PrivateRoutes>
+            <GuestList />
+          </PrivateRoutes>
+        </Suspense>
+      )
     },
     {
       path: 'instantMeeting',
-      element: <InstantMeeting />
+      element: (
+        <Suspense fallback={<Typography>Loading...</Typography>}>
+          <PrivateRoutes>
+            <InstantMeeting />
+          </PrivateRoutes>
+        </Suspense>
+      )
     },
     {
       path: 'courier',
-      element: <Courier />
+      element: (
+        <Suspense fallback={<Typography>Loading...</Typography>}>
+          <PrivateRoutes>
+            <Courier />
+          </PrivateRoutes>
+        </Suspense>
+      )
+    },
+    {
+      path: '*',
+      element: (
+        <Suspense fallback={<Typography>Loading...</Typography>}>
+          <PrivateRoutes>
+            <NotFoundPage />
+          </PrivateRoutes>
+        </Suspense>
+      )
     }
   ]
 };
