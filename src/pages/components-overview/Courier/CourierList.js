@@ -8,6 +8,7 @@ import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import axiosInstance from 'utils/axios.config';
 import { useAppContextReception } from 'AppContextReception';
 import TableChip from 'components/chips/chip';
+import NoDataImage from 'components/Image/NoDataImage';
 
 export default function CourierList() {
   const { comId } = useAppContextReception();
@@ -87,36 +88,42 @@ export default function CourierList() {
             Today’s Courier List
           </Typography>
         </Box>
-        <Box sx={{ display: 'flex', justifyContent: 'end', py: 2 }}>
-          <OutlinedInput
-            id="outlined-adornment-weight"
-            aria-describedby="outlined-weight-helper-text"
-            placeholder="Search"
-            sx={{ border: 1, borderColor: '#12A9B2' }}
-            size="small"
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton>
-                  <SearchOutlinedIcon sx={{ color: '#12A9B2', mr: -2 }} />
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-        </Box>
-        <Box>
-          <Box style={{ width: '95%' }}>
-            <DataGrid
-              rows={rowsWithCount}
-              columns={adjustedColumns}
-              initialState={{
-                pagination: {
-                  paginationModel: { page: 0, pageSize: 10 }
+        {courier.length != 0 ? (
+          <Box>
+            <Box sx={{ display: 'flex', justifyContent: 'end', py: 2 }}>
+              <OutlinedInput
+                id="outlined-adornment-weight"
+                aria-describedby="outlined-weight-helper-text"
+                placeholder="Search"
+                sx={{ border: 1, borderColor: '#12A9B2' }}
+                size="small"
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton>
+                      <SearchOutlinedIcon sx={{ color: '#12A9B2', mr: -2 }} />
+                    </IconButton>
+                  </InputAdornment>
                 }
-              }}
-              pageSizeOptions={[10, 25, 50, 100]}
-            />
+              />
+            </Box>
+            <Box>
+              <Box style={{ width: '95%' }}>
+                <DataGrid
+                  rows={rowsWithCount}
+                  columns={adjustedColumns}
+                  initialState={{
+                    pagination: {
+                      paginationModel: { page: 0, pageSize: 10 }
+                    }
+                  }}
+                  pageSizeOptions={[10, 25, 50, 100]}
+                />
+              </Box>
+            </Box>
           </Box>
-        </Box>
+        ) : (
+          <NoDataImage />
+        )}
       </MainCard>
     </Box>
   );

@@ -7,7 +7,9 @@ import { useAppContextReception } from 'AppContextReception';
 import axiosInstance from 'utils/axios.config';
 import ImageModal from './ImageModal';
 import user from '../../assets/images/img/user.jpg';
-import SubmitButton from 'components/Button/SubmitButton';
+import BelongsTable from 'components/table/BelongsTable';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 export default function Checkout(props) {
   const { checkOutModal, handleClose, waitingId } = props;
@@ -16,6 +18,25 @@ export default function Checkout(props) {
   const [extraVisitors, setExtraVisitors] = useState([]);
   const { comId } = useAppContextReception();
   const [extraVisitorId, setExtraVisitorsId] = useState([]);
+  const [visitorBelongs, setVisitorBelongs] = useState('');
+  const navigate = useNavigate();
+
+  const onSubmit = (id, comId) => {
+    const data = { meeting_id: id, com_id: comId };
+    console.log(data);
+    axiosInstance
+      .post('https://api.hellokompass.com/reception/visitorcheckout', data)
+      .then((res) => {
+        if (res.data.code === 200) {
+          toast.success(res.data.message);
+          handleClose;
+          navigate('/meeting');
+        } else {
+          toast.error(res.data.message);
+        }
+      })
+      .catch((error) => console.error(error));
+  };
 
   const handleVisitor = (id) => {
     setImageModal(true);
@@ -23,6 +44,7 @@ export default function Checkout(props) {
   };
 
   const {
+    id,
     code,
     purpose,
     status,
@@ -45,8 +67,7 @@ export default function Checkout(props) {
         .then((res) => {
           setMeetingShow(res.data.data.meeting);
           setExtraVisitors(res.data.data.extravisitors);
-          setVisitorBelong(res.data.data.visitorbelong);
-          console.log(res.data);
+          setVisitorBelongs(res.data.data.visitorbelong);
         })
         .catch((err) => console.error(err));
     };
@@ -344,7 +365,7 @@ export default function Checkout(props) {
                 handleClose={() => setImageModal(false)}
               />
             </Grid>
-            {ex_visitor_no > 0 && (
+            {extraVisitors !== null && (
               <>
                 <Grid xs={12} sm={12}>
                   <Typography sx={{ pl: 2, mt: 1, color: '#12a9b2' }} variant="h5" component="div">
@@ -448,11 +469,91 @@ export default function Checkout(props) {
                 ))}
               </>
             )}
+            {visitorBelongs !== null && (
+              <>
+                <Grid xs={12} sm={12}>
+                  <Typography sx={{ pl: 2, mt: 1, color: '#12a9b2' }} variant="h5" component="div">
+                    Visitors Belongings :
+                  </Typography>
+                </Grid>
+                <Grid items xs={12} sm={6} sx={{ mt: 2 }}>
+                  <ListItem sx={{ mb: -1 }}>
+                    <Grid container>
+                      <Grid xs={4} sm={4} lg={4}>
+                        <Typography variant="p" component="div">
+                          Visitors Card
+                        </Typography>
+                      </Grid>
+                      <Grid xs={1} sm={1} lg={1}>
+                        <Typography variant="p" component="div">
+                          :
+                        </Typography>
+                      </Grid>
+                      <Grid xs={7} sm={7} lg={7}>
+                        <Typography sx={{ color: '#000' }} variant="p" component="div">
+                          {visitorBelongs.vcard}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  </ListItem>
+                  <ListItem sx={{ mb: -1 }}>
+                    <Grid container>
+                      <Grid xs={4} sm={4} lg={4}>
+                        <Typography variant="p" component="div">
+                          In Time
+                        </Typography>
+                      </Grid>
+                      <Grid xs={1} sm={1} lg={1}>
+                        <Typography variant="p" component="div">
+                          :
+                        </Typography>
+                      </Grid>
+                      <Grid xs={7} sm={7} lg={7}>
+                        <Typography sx={{ color: '#000' }} variant="p" component="div">
+                          {visitorBelongs.intime}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  </ListItem>
+                  <ListItem sx={{ mb: -1 }}>
+                    <Grid container>
+                      <Grid xs={4} sm={4} lg={4}>
+                        <Typography variant="p" component="div">
+                          Out Time
+                        </Typography>
+                      </Grid>
+                      <Grid xs={1} sm={1} lg={1}>
+                        <Typography variant="p" component="div">
+                          :
+                        </Typography>
+                      </Grid>
+                      <Grid xs={7} sm={7} lg={7}>
+                        <Typography sx={{ color: '#000' }} variant="p" component="div">
+                          {visitorBelongs.outtime}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  </ListItem>
+                </Grid>
+                <Grid container>
+                  <Grid items xs={12} sm={12} sx={{ px: { xs: 1, sm: 0, md: 2 }, mt: 1 }}>
+                    <BelongsTable belongs={visitorBelongs.belongs} qty={visitorBelongs.qty} />
+                  </Grid>
+                </Grid>
+              </>
+            )}
           </Grid>
 
           <Divider sx={{ color: '#12A9B2', border: 1, opacity: 0.3, mt: 2 }} />
           <Box sx={{ display: { xs: 'block', sm: 'flex' }, justifyContent: 'end', alignItems: 'center', px: 2 }}>
-            <SubmitButton>Check In</SubmitButton>
+            <Button
+              onClick={() => onSubmit(id, comId)}
+              variant="outlined"
+              size="large"
+              sx={{ mt: 1, mr: 2, p: 0, px: 2, color: '#12A9B2', '&:hover': { backgroundColor: '#0e8087', color: '#FFF' } }}
+            >
+              Check out
+            </Button>
             <CloseButton handleClose={handleClose}>Close</CloseButton>
           </Box>
         </List>

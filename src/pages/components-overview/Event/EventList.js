@@ -8,6 +8,7 @@ import { useMediaQuery } from '@mui/material';
 import axiosInstance from 'utils/axios.config';
 import { useAppContextReception } from 'AppContextReception';
 import { useNavigate } from 'react-router-dom';
+import NoDataImage from 'components/Image/NoDataImage';
 
 export default function EventList() {
   const { comId } = useAppContextReception();
@@ -91,35 +92,42 @@ export default function EventList() {
             Today’s Event Schedule
           </Typography>
         </Box>
-        <Box sx={{ display: 'flex', justifyContent: 'end', py: 2 }}>
-          <OutlinedInput
-            id="outlined-adornment-weight"
-            aria-describedby="outlined-weight-helper-text"
-            placeholder="Search"
-            sx={{ border: 1, borderColor: '#12A9B2' }}
-            size="small"
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton>
-                  <SearchOutlinedIcon sx={{ color: '#12A9B2', mr: -2 }} />
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-        </Box>
+
         <Box>
-          <Box style={{ width: '95%' }}>
-            <DataGrid
-              rows={rowsWithCount}
-              columns={adjustedColumns}
-              initialState={{
-                pagination: {
-                  paginationModel: { page: 0, pageSize: 10 }
-                }
-              }}
-              pageSizeOptions={[10, 25, 50, 100]}
-            />
-          </Box>
+          {events.length !== 0 ? (
+            <Box>
+              <Box sx={{ display: 'flex', justifyContent: 'end', py: 2 }}>
+                <OutlinedInput
+                  id="outlined-adornment-weight"
+                  aria-describedby="outlined-weight-helper-text"
+                  placeholder="Search"
+                  sx={{ border: 1, borderColor: '#12A9B2' }}
+                  size="small"
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton>
+                        <SearchOutlinedIcon sx={{ color: '#12A9B2', mr: -2 }} />
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+              </Box>
+              <Box style={{ width: '95%' }}>
+                <DataGrid
+                  rows={rowsWithCount}
+                  columns={adjustedColumns}
+                  initialState={{
+                    pagination: {
+                      paginationModel: { page: 0, pageSize: 10 }
+                    }
+                  }}
+                  pageSizeOptions={[10, 25, 50, 100]}
+                />
+              </Box>
+            </Box>
+          ) : (
+            <NoDataImage />
+          )}
         </Box>
       </MainCard>
     </Box>

@@ -17,7 +17,6 @@ export default function MeetingModal(props) {
   const [extraVisitors, setExtraVisitors] = useState([]);
   const [extraVisitorId, setExtraVisitorsId] = useState([]);
   const [visitorBelongs, setVisitorBelongs] = useState('');
-  console.log(visitorBelongs);
 
   const handleVisitor = (id) => {
     setImageModal(true);
@@ -48,6 +47,7 @@ export default function MeetingModal(props) {
           setMeetingShow(res.data.data.meeting);
           setExtraVisitors(res.data.data.extravisitors);
           setVisitorBelongs(res.data.data.visitorbelong);
+          console.log(res.data.data);
         })
         .catch((err) => console.error(err));
     };
@@ -444,7 +444,7 @@ export default function MeetingModal(props) {
                 ))}
               </>
             )}
-            {visitorBelongs !== null && (
+            {visitorBelongs && visitorBelongs?.belongs !== '' && (
               <>
                 <Grid xs={12} sm={12}>
                   <Typography sx={{ pl: 2, mt: 1, color: '#12a9b2' }} variant="h5" component="div">

@@ -9,6 +9,7 @@ import { useAppContextReception } from 'AppContextReception';
 import axiosInstance from 'utils/axios.config';
 import MeetingModal from 'components/modal/MeetingModal';
 import TableChip from '../../../components/chips/chip';
+import NoDataImage from 'components/Image/NoDataImage';
 
 export default function Meeting() {
   const { comId } = useAppContextReception();
@@ -110,36 +111,44 @@ export default function Meeting() {
             Today’s Meeting Schedule
           </Typography>
         </Box>
-        <Box sx={{ display: 'flex', justifyContent: 'end', py: 2 }}>
-          <OutlinedInput
-            id="outlined-adornment-weight"
-            aria-describedby="outlined-weight-helper-text"
-            placeholder="Search"
-            sx={{ border: 1, borderColor: '#12A9B2' }}
-            size="small"
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton>
-                  <Search></Search>
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-        </Box>
-        <Box>
-          <Box style={{ width: '95%' }}>
-            <DataGrid
-              rows={rowsWithCount}
-              columns={adjustedColumns}
-              initialState={{
-                pagination: {
-                  paginationModel: { page: 0, pageSize: 10 }
+        {meetings.length != 0 ? (
+          <Box>
+            {' '}
+            <Box sx={{ display: 'flex', justifyContent: 'end', py: 2 }}>
+              <OutlinedInput
+                id="outlined-adornment-weight"
+                aria-describedby="outlined-weight-helper-text"
+                placeholder="Search"
+                sx={{ border: 1, borderColor: '#12A9B2' }}
+                size="small"
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton>
+                      <Search></Search>
+                    </IconButton>
+                  </InputAdornment>
                 }
-              }}
-              pageSizeOptions={[10, 25, 50, 100]}
-            />
+              />
+            </Box>
+            <Box>
+              <Box style={{ width: '95%' }}>
+                <DataGrid
+                  rows={rowsWithCount}
+                  columns={adjustedColumns}
+                  initialState={{
+                    pagination: {
+                      paginationModel: { page: 0, pageSize: 10 }
+                    }
+                  }}
+                  pageSizeOptions={[10, 25, 50, 100]}
+                />
+              </Box>
+            </Box>
           </Box>
-        </Box>
+        ) : (
+          <NoDataImage />
+        )}
+
         {selectedMeetingId && (
           <MeetingModal
             selectedMeetingId={selectedMeetingId}

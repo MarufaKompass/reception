@@ -3,10 +3,10 @@ import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, 
 
 export default function BelongsTable(props) {
   const { belongs, qty } = props;
-  const productTypes = belongs?.split(',');
+  const productTypes = belongs?.split(',') || [];
   const quantities = qty?.split(',');
 
-  const products = productTypes.map((belong, index) => ({
+  const products = productTypes?.map((belong, index) => ({
     belong,
     quantity: quantities[index]
   }));
