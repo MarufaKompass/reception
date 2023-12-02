@@ -26,7 +26,7 @@ const AuthLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   // const [isFetching, setIsFetching] = useState(false);
-  const { setUser, setComId } = useAppContextReception();
+  const { setUser } = useAppContextReception();
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
@@ -44,9 +44,9 @@ const AuthLogin = () => {
 
       if (response.status === 200) {
         sessionStorage.setItem('token', JSON.stringify(response.data.data.token));
-        sessionStorage.setItem('com', JSON.stringify(response.data.data.com_id));
+        // sessionStorage.setItem('com', JSON.stringify(response.data.data.com_id));
         setUser(response.data.data.token);
-        setComId(response.data.date.com_id);
+        // setComId(response.data.date.com_id);
         navigate('/');
       }
     } catch (error) {
