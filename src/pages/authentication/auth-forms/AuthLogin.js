@@ -53,12 +53,13 @@ const AuthLogin = () => {
         // sessionStorage.setItem('com', JSON.stringify(response.data.data.com_id));
         setUser(response.data.data.token);
         // setComId(response.data.date.com_id);
+
         navigate('/');
       }
     } catch (error) {
       console.error('Error:', error);
     } finally {
-      setIsSubmitting(false); 
+      setIsSubmitting(false);
     }
   };
 
