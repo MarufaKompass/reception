@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Avatar } from '@mui/material';
-import noData from '../../assets/images/img/noData.jpg';
+import noData from '../../assets/images/img/noData.png';
 
 export default function NoDataImage() {
   return (

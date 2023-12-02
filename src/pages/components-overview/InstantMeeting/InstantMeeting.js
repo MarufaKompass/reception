@@ -64,6 +64,7 @@ export default function InstantMeeting() {
   };
 
   const onSubmit = (data) => {
+    console.log(data);
     data.guest_image = uploadedPhoto;
     if (visitor1Upload) {
       data.extra_visitor_image = [visitor1Upload];
@@ -545,43 +546,40 @@ export default function InstantMeeting() {
                         </Typography>
                       </FormHelperText>
                       <Box fullWidth>
-                        <Grid container>
+                        <Grid container spacing={2}>
                           <Grid items xs={12}>
-                            <FormControl>
-                              <Grid container>
-                                <Grid item xs={5} sm={5} md={5}>
-                                  <Select
-                                    {...register('guest_country_code', { required: true })}
-                                    name="guest_country_code"
-                                    onChange={handleCountryChange}
-                                    value={defaultCountryCode}
-                                    inputProps={{ 'aria-label': 'Without label' }}
-                                    size="medium"
-                                    sx={{ mt: 1, mr: 2 }}
-                                  >
-                                    <MenuItem value="">
-                                      <em>Select Country Code</em>
+                            <Grid container sx={{ mt: '18px' }}>
+                              <Grid items lg={3}>
+                                <Select
+                                  {...register('guest_country_code', { required: true })}
+                                  name="guest_country_code"
+                                  onChange={handleCountryChange}
+                                  value={defaultCountryCode}
+                                  inputProps={{ 'aria-label': 'Without label' }}
+                                  size="medium"
+                                  sx={{ mt: 1, mr: 2 }}
+                                >
+                                  {countryCode.map((country) => (
+                                    <MenuItem key={country.id} value={country.pcode}>
+                                      {country.name}({country.pcode})
                                     </MenuItem>
-                                    {countryCode.map((country) => (
-                                      <MenuItem key={country.id} value={country.pcode}>
-                                        {country.name}({country.pcode})
-                                      </MenuItem>
-                                    ))}
-                                  </Select>
-                                </Grid>
-                                <Grid items xs={7} sx={{ width: '100%' }}>
-                                  <TextField
-                                    {...register('guest_phone', { required: true })}
-                                    id="standard-basic"
-                                    name="guest_phone"
-                                    sx={{ mt: 1, color: '#4e4d4e', pr: 1, width: '100%' }}
-                                    inputProps={ariaLabel}
-                                    type="number"
-                                  />
-                                </Grid>
+                                  ))}
+                                </Select>
                               </Grid>
-                              <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.guest_phone?.message}</Typography>
-                            </FormControl>
+
+                              <Grid items lg={9} sx={{ width: '100%' }}>
+                                <TextField
+                                  {...register('guest_phone', { required: true })}
+                                  id="standard-basic"
+                                  name="guest_phone"
+                                  sx={{ mt: 1, color: '#4e4d4e', pr: 1, width: '100%' }}
+                                  inputProps={ariaLabel}
+                                  type="number"
+                                  placeholder="Phone number"
+                                />
+                              </Grid>
+                            </Grid>
+                            <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.guest_phone?.message}</Typography>
                           </Grid>
                         </Grid>
                       </Box>
@@ -625,6 +623,7 @@ export default function InstantMeeting() {
                           size="medium"
                           name="guest_gender"
                           sx={{ mt: 1, mr: 2, width: '100%' }}
+                          displayEmpty
                         >
                           <MenuItem>
                             <InputLabel selected htmlFor="outlined-adornments">
@@ -674,11 +673,14 @@ export default function InstantMeeting() {
                           {...register('emp_person_id', { required: true })}
                           name="emp_person_id"
                           inputProps={{ 'aria-label': 'Without label' }}
+                          displayEmpty
                           sx={{ mt: 1, mr: 2, width: '100%' }}
-                          size="medium"
+                          size="small"
                         >
-                          <MenuItem value="">
-                            <em>Select Employee Type</em>
+                          <MenuItem>
+                            <InputLabel selected htmlFor="outlined-adornment">
+                              Select Employee Type
+                            </InputLabel>
                           </MenuItem>
                           {employeeList.map((employee) => (
                             <MenuItem key={employee.id} value={employee.person_id}>
@@ -706,8 +708,9 @@ export default function InstantMeeting() {
                           name="meeting_purpose_id"
                           sx={{ mt: 1, mr: 2, width: '100%' }}
                           {...register('meeting_purpose_id', { required: true })}
+                          displayEmpty
                           inputProps={{ 'aria-label': 'Without label' }}
-                          size="medium"
+                          size="small"
                         >
                           <MenuItem>
                             <InputLabel selected htmlFor="outlined-adornment">
@@ -796,9 +799,12 @@ export default function InstantMeeting() {
                           inputProps={{ 'aria-label': 'Without label' }}
                           value={days}
                           onChange={handleChange}
+                          displayEmpty
                         >
-                          <MenuItem value={0} selected>
-                            0
+                          <MenuItem value="">
+                            <InputLabel selected htmlFor="outlined-adornment">
+                              0
+                            </InputLabel>
                           </MenuItem>
                           <MenuItem value={1}>1</MenuItem>
                           <MenuItem value={2}>2</MenuItem>

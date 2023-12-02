@@ -15,7 +15,7 @@ export default function MeetingCode() {
   const delay = 500;
   const { comId } = useAppContextReception();
   const navigate = useNavigate();
-
+  const [resultQR, setResultQR] = useState('');
   const handleCancelButton = () => {
     navigate('/');
   };
@@ -59,12 +59,10 @@ export default function MeetingCode() {
       });
   };
 
-  const [resultQR, setResultQR] = useState('');
-
   const handleScan = (result) => {
     if (result) {
       const { text } = result;
-      setResultQR(text);
+      setResultQR(text || '');
     }
   };
 
@@ -120,7 +118,7 @@ export default function MeetingCode() {
                   <Box sx={{ mx: { xs: 0, sm: 2 }, mt: { xs: 2, sm: 0 }, width: { xs: '100%', sm: '40%' } }}>
                     <Typography variant="h6">Meeting Code *</Typography>
                     <FormControl>
-                      {resultQR && (
+                      {(resultQR || (errors.code && errors.code.type === 'required')) && (
                         <OutlinedInput
                           {...register('code', { required: true })}
                           name="code"
@@ -129,7 +127,7 @@ export default function MeetingCode() {
                           value={resultQR}
                         />
                       )}
-                      {!resultQR && (
+                      {!resultQR && !errors.code && (
                         <OutlinedInput
                           {...register('code', { required: true })}
                           name="code"
