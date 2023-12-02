@@ -26,7 +26,7 @@ const AuthLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   // const [isFetching, setIsFetching] = useState(false);
-  const { setUser, setComId } = useAppContextReception();
+  const { setUser } = useAppContextReception();
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
@@ -43,10 +43,17 @@ const AuthLogin = () => {
       const response = await axios.post('https://api.hellokompass.com/reception/login', data);
 
       if (response.status === 200) {
+<<<<<<< HEAD
         sessionStorage.setItem('com', JSON.stringify(response.data.data.com_id));
         sessionStorage.setItem('token', JSON.stringify(response.data.data.token));
         setComId(response.data.date.com_id);
         setUser(response.data.data.token);
+=======
+        sessionStorage.setItem('token', JSON.stringify(response.data.data.token));
+        // sessionStorage.setItem('com', JSON.stringify(response.data.data.com_id));
+        setUser(response.data.data.token);
+        // setComId(response.data.date.com_id);
+>>>>>>> d77f88a5f9c7c408d46ed0dd3add0a3e21977ce2
         navigate('/');
       }
     } catch (error) {
