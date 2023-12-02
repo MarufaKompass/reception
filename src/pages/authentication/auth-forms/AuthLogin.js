@@ -23,7 +23,7 @@ const AuthLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   // const [isFetching, setIsFetching] = useState(false);
-  const { setUser, setComId } = useAppContextReception();
+  const { setUser,setComId } = useAppContextReception();
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
@@ -53,6 +53,9 @@ const AuthLogin = () => {
       setIsSubmitting(false); // Reset the submission flag after the request is complete
     }
   };
+
+
+  
   return (
     <>
       <ThemeProvider theme={theme}>

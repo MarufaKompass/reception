@@ -106,7 +106,7 @@ export default function InstantMeeting() {
     } else {
       data.extra_visitor_name = [];
     }
-    console.log(data);
+
     axiosInstance.post('https://api.hellokompass.com/reception/addmeeting', data).then((res) => {
       if (res.data.code === 200) {
         toast.success(res.data.message);

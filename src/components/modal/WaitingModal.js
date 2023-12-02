@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, Box, Typography, Divider, List, Grid, ListItem, Avatar, Button, OutlinedInput } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
 import TableChip from 'components/chips/chip';
 import CloseButton from 'components/Button/CloseButton';
 import { useAppContextReception } from 'AppContextReception';
 import axiosInstance from 'utils/axios.config';
 import ImageModal from './ImageModal';
-import { useForm } from 'react-hook-form';
+import { useForm, useFieldArray } from 'react-hook-form';
 import user from '../../assets/images/img/user.jpg';
 import SubmitButton from 'components/Button/SubmitButton';
-
+import { toast } from 'react-toastify';
 export default function WaitingModal(props) {
   const { waitingModal, handleClose, waitingId } = props;
   const [imageModal, setImageModal] = useState(false);
@@ -18,41 +16,55 @@ export default function WaitingModal(props) {
   const [extraVisitors, setExtraVisitors] = useState([]);
   const { comId } = useAppContextReception();
   const [extraVisitorId, setExtraVisitorsId] = useState([]);
-  const [items, setItems] = useState([]);
-
-  const handleDeleteItem = (index) => {
-    const updatedItems = [...items];
-    updatedItems.splice(index, 1);
-    setItems(updatedItems);
-  };
 
   const handleVisitor = (id) => {
     setImageModal(true);
     setExtraVisitorsId(id);
   };
 
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, control } = useForm({
+    defaultValues: {
+      fields: [{ belongs: '', qty: '' }]
+    }
+  });
 
-  const handleAddItem = () => {
-    setItems([...items, { belongs: [], qty: [] }]);
-  };
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'fields'
+  });
 
   const onSubmit = (data) => {
-    const { vcard, com_id, meeting_id, ...rest } = data;
+    const belongs = data.fields.map((field) => field.belongs);
+    const qty = data.fields.map((field) => field.qty);
 
-    const itemsPayload = items.map((item) => ({
-      belongs: item.belongs,
-      qty: item.qty
-    }));
-
-    const payload = {
-      vcard,
-      com_id,
-      meeting_id,
-      ...rest
+    // Including the original 'fields' array along with separated arrays in 'data'
+    const newData = {
+      ...data,
+      belongs,
+      qty
     };
+    delete newData.fields;
+    console.log('Data with separated arrays:', newData);
 
-    console.log(payload, itemsPayload);
+    axiosInstance.post('https://api.hellokompass.com/reception/visitorcheckin', newData).then((res) => {
+      if (res.data.code === 200) {
+        handleClose();
+        toast.success(res.data.message);
+      } else if (res.data.code === 400) {
+        toast.error(res.data.message);
+        reset();
+      } else {
+        <></>;
+      }
+    });
+  };
+
+  const addFields = () => {
+    append({ belongs: '', qty: '' });
+  };
+
+  const removeFields = (index) => {
+    remove(index);
   };
 
   const {
@@ -512,74 +524,14 @@ export default function WaitingModal(props) {
                     />
                   </Grid>
                   <Grid container>
-                    <Grid xs={12} sm={8}>
-                      {/* <Grid container>
-                        <Grid xs={12} sm={6} sx={{ m: 0, p: 0, pr: { xs: 0, sm: 1 } }}>
-                          <Grid container>
-                            <Grid xs={4} sm={2} lg={2} sx={{ display: 'flex', alignItems: 'center' }}>
-                              <Typography variant="p" component="div">
-                                Name
-                              </Typography>
-                            </Grid>
-                            <Grid xs={1} sm={1} lg={1} sx={{ display: 'flex', alignItems: 'center' }}>
-                              <Typography variant="p" component="div">
-                                :
-                              </Typography>
-                            </Grid>
-                            <Grid xs={7} sm={9} lg={9}>
-                              <OutlinedInput
-                                {...register(`items[${index}].belongs`, { required: false })}
-                                name={`items[${index}].belongs`}
-                                sx={{ border: 1, borderColor: '#12A9B2', width: '100%', mt: 1 }}
-                                size="small"
-                              />
-                            </Grid>
-                          </Grid>
-                        </Grid>
-                        <Grid xs={12} sm={6} sx={{ m: 0, p: 0 }}>
-                          <Grid container>
-                            <Grid xs={4} sm={2} lg={2} sx={{ display: 'flex', alignItems: 'center' }}>
-                              <Typography variant="p" component="div">
-                                Quantity
-                              </Typography>
-                            </Grid>
-                            <Grid xs={1} sm={1} lg={1} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'end' }}>
-                              <Typography variant="p" component="div">
-                                :
-                              </Typography>
-                            </Grid>
-                            <Grid xs={7} sm={9} lg={9}>
-                              <OutlinedInput
-                                {...register(`items[${index}].qty`, { required: false })}
-                                type="qty"
-                                name={`items[${index}].qty`}
-                                sx={{ border: 1, borderColor: '#12A9B2', width: '100%', mt: 1 }}
-                                size="small"
-                              />
-                            </Grid>
-                          </Grid>
-                        </Grid>
-                      </Grid> */}
-                    </Grid>
-                    <Grid xs={12} sm={4}>
-                      <Button
-                        onClick={handleAddItem}
-                        variant="contained"
-                        size="large"
-                        sx={{ mt: 1, ml: 2, p: 0, backgroundColor: '#12A9B2', '&:hover': { backgroundColor: '#0e8087' } }}
-                        startIcon={<AddIcon sx={{ mr: -1 }} />}
-                      >
-                        Add
-                      </Button>
-                    </Grid>
-                    <Grid xs={12} sm={8}>
-                      {items.map((item, index) => (
-                        <Grid key={index} xs={12} sm={12}>
-                          <Grid container>
-                            <Grid xs={12} sm={6} sx={{ m: 0, p: 0, pr: { xs: 0, sm: 1 } }}>
+                    <Grid xs={12} sm={9}>
+                      {fields.map((field, index) => (
+                        <Box key={field.id}>
+                          <Grid container spacing={1} sx={{ mt: 2 }}>
+                            <Grid xs={12} sm={5} lg={5} sx={{ p: 0, pr: { xs: 0, sm: 1 } }}>
                               <Grid container>
                                 <Grid xs={4} sm={2} lg={2} sx={{ display: 'flex', alignItems: 'center' }}>
-                                  <Typography variant="p" component="div">
+                                  <Typography variant="p" component="div" fontSize="12px">
                                     Name
                                   </Typography>
                                 </Grid>
@@ -588,32 +540,34 @@ export default function WaitingModal(props) {
                                     :
                                   </Typography>
                                 </Grid>
-                                <Grid xs={7} sm={9} lg={9}>
+                                <Grid xs={7} sm={8} lg={9}>
                                   <OutlinedInput
-                                    {...register(`items[${index}].belongs`, { required: false })}
-                                    name={`items[${index}].belongs`}
+                                    {...control.register(`fields.${index}.belongs`)}
+                                    type="text"
+                                    placeholder={`Devices ${index + 1}`}
                                     sx={{ border: 1, borderColor: '#12A9B2', width: '100%', mt: 1 }}
                                     size="small"
                                   />
                                 </Grid>
                               </Grid>
                             </Grid>
-                            <Grid xs={12} sm={6} sx={{ m: 0, p: 0 }}>
+
+                            <Grid xs={12} sm={5} lg={5} sx={{ ml: '10px', p: 0 }}>
                               <Grid container>
-                                <Grid xs={4} sm={2} lg={2} sx={{ display: 'flex', alignItems: 'center' }}>
-                                  <Typography variant="p" component="div">
+                                <Grid xs={4} sm={2} lg={2} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'end' }}>
+                                  <Typography variant="p" component="div" fontSize="12px">
                                     Quantity
                                   </Typography>
                                 </Grid>
-                                <Grid xs={1} sm={1} lg={1} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'end' }}>
-                                  <Typography variant="p" component="div">
+                                <Grid xs={1} sm={1} lg={1} sx={{ display: 'flex', alignItems: 'center' }}>
+                                  <Typography variant="p" component="div" sx={{ ml: '4px' }}>
                                     :
                                   </Typography>
                                 </Grid>
                                 <Grid xs={7} sm={9} lg={9}>
                                   <OutlinedInput
-                                    {...register(`items[${index}].qty`, { required: false })}
-                                    name={`items[${index}].qty`}
+                                    {...control.register(`fields.${index}.qty`)}
+                                    placeholder={`Qty ${index + 1}`}
                                     type="number"
                                     sx={{ border: 1, borderColor: '#12A9B2', width: '100%', mt: 1 }}
                                     size="small"
@@ -621,18 +575,61 @@ export default function WaitingModal(props) {
                                 </Grid>
                               </Grid>
                             </Grid>
-                            <Grid xs={12}>
-                              <Button
-                                onClick={() => handleDeleteItem(index)}
-                                variant="contained"
-                                size="large"
-                                sx={{ mt: 1, p: 0, backgroundColor: '#FF0000', '&:hover': { backgroundColor: '#CC0000' } }}
-                                startIcon={<RemoveIcon />}
-                              ></Button>
+                            <Grid xs={1} sm={1} lg={1} sx={{ mt: 1.2 }}>
+                              <Box
+                                onClick={() => removeFields(index)}
+                                sx={{
+                                  backgroundColor: '#FF0000',
+                                  '&:hover': { backgroundColor: '#CC0000' },
+                                  width: '24px',
+                                  height: '24px',
+                                  mt: '4px',
+                                  ml: '46px',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  borderRadius: '10%'
+                                }}
+                              >
+                                <Typography
+                                  sx={{
+                                    backgroundColor: '#fff',
+                                    width: '12px',
+                                    height: '12px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    borderRadius: '50%',
+                                    color: '#FF0000'
+                                  }}
+                                >
+                                  -
+                                </Typography>
+                              </Box>
                             </Grid>
                           </Grid>
-                        </Grid>
+                        </Box>
                       ))}
+                    </Grid>
+
+                    <Grid xs={12} sm={3}>
+                      <Button
+                        type="button"
+                        onClick={addFields}
+                        variant="contained"
+                        size="large"
+                        sx={{
+                          mt: '28px',
+                          ml: 1,
+                          p: 0,
+                          fontSize: '14px',
+                          backgroundColor: '#12A9B2',
+                          '&:hover': { backgroundColor: '#0e8087' }
+                        }}
+                        // startIcon={<AddIcon sx={{ mr: -1 }} />}
+                      >
+                        Add
+                      </Button>
                     </Grid>
                   </Grid>
                 </Grid>
