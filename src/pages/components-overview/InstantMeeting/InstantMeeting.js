@@ -569,13 +569,12 @@ export default function InstantMeeting() {
                                     ))}
                                   </Select>
                                 </Grid>
-                                <Grid items xs={7}>
+                                <Grid items xs={7} sx={{ width: '100%' }}>
                                   <TextField
                                     {...register('guest_phone', { required: true })}
                                     id="standard-basic"
                                     name="guest_phone"
-                                    fullWidth
-                                    sx={{ mt: 1, color: '#4e4d4e', pr: 1 }}
+                                    sx={{ mt: 1, color: '#4e4d4e', pr: 1, width: '100%' }}
                                     inputProps={ariaLabel}
                                     type="number"
                                   />
@@ -1825,7 +1824,7 @@ export default function InstantMeeting() {
                 <Button
                   type="submit"
                   variant="contained"
-                  size="small"
+                  size="large"
                   sx={{ backgroundColor: '#12A9B2', width: 100, '&:hover': { backgroundColor: '#12A9B2' } }}
                 >
                   Next

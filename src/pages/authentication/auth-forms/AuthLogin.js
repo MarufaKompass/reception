@@ -7,11 +7,14 @@ import InvisibleEye from 'components/svg/InvisibleEye';
 import VisibleEye from 'components/svg/VisibleEye';
 import { useForm } from 'react-hook-form';
 import { useAppContextReception } from 'AppContextReception';
+import { useNavigate } from 'react-router-dom';
 
 const AuthLogin = () => {
   // const [checked, setChecked] = useState(false);
   const { register, handleSubmit } = useForm();
   const { palette } = createTheme();
+  const navigate = useNavigate();
+
   //palette
   const { augmentColor } = palette;
   const createColor = (mainColor) => augmentColor({ color: { main: mainColor } });
@@ -23,14 +26,13 @@ const AuthLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   // const [isFetching, setIsFetching] = useState(false);
-  const { setUser,setComId } = useAppContextReception();
+  const { setUser, setComId } = useAppContextReception();
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
   };
 
   const onSubmit = async (data) => {
-    console.log(data);
     if (isSubmitting) {
       return;
     }
@@ -40,22 +42,20 @@ const AuthLogin = () => {
     try {
       const response = await axios.post('https://api.hellokompass.com/reception/login', data);
 
-      if (response.data.code === 200) {
-        sessionStorage.setItem('token', JSON.stringify(response.data.data.token));
+      if (response.status === 200) {
         sessionStorage.setItem('com', JSON.stringify(response.data.data.com_id));
-        setUser(response.data.data.token);
+        sessionStorage.setItem('token', JSON.stringify(response.data.data.token));
         setComId(response.data.date.com_id);
-        // navigate('/');
+        setUser(response.data.data.token);
+        navigate('/');
       }
     } catch (error) {
       console.error('Error:', error);
     } finally {
-      setIsSubmitting(false); // Reset the submission flag after the request is complete
+      setIsSubmitting(false); 
     }
   };
 
-
-  
   return (
     <>
       <ThemeProvider theme={theme}>

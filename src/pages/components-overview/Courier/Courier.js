@@ -31,7 +31,7 @@ export default function Courier() {
       .then((res) => {
         if (res.data.code === 200) {
           toast.success(res.data.message);
-          // navigate('/courierList');
+          navigate('/courierList');
           reset();
         } else if (res.data.code === 400) {
           toast.error(res.data.message);
