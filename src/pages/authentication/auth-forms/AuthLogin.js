@@ -6,12 +6,11 @@ import AnimateButton from 'components/@extended/AnimateButton';
 import InvisibleEye from 'components/svg/InvisibleEye';
 import VisibleEye from 'components/svg/VisibleEye';
 import { useForm } from 'react-hook-form';
-import { useAppContextReception } from 'AppContextReception';
 import { useNavigate } from 'react-router-dom';
 
 const AuthLogin = () => {
   // const [checked, setChecked] = useState(false);
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const { palette } = createTheme();
   const navigate = useNavigate();
 
@@ -25,8 +24,6 @@ const AuthLogin = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  // const [isFetching, setIsFetching] = useState(false);
-  const { setUser } = useAppContextReception();
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
@@ -43,18 +40,10 @@ const AuthLogin = () => {
       const response = await axios.post('https://api.hellokompass.com/reception/login', data);
 
       if (response.status === 200) {
-
         sessionStorage.setItem('com', JSON.stringify(response.data.data.com_id));
         sessionStorage.setItem('token', JSON.stringify(response.data.data.token));
-        setComId(response.data.date.com_id);
-        setUser(response.data.data.token);
-
-        sessionStorage.setItem('token', JSON.stringify(response.data.data.token));
-        // sessionStorage.setItem('com', JSON.stringify(response.data.data.com_id));
-        setUser(response.data.data.token);
-        // setComId(response.data.date.com_id);
-
         navigate('/');
+        reset();
       }
     } catch (error) {
       console.error('Error:', error);
