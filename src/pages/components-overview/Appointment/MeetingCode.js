@@ -1,5 +1,5 @@
 import MainCard from 'components/MainCard';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import QrReader from 'react-qr-scanner';
 import { Box, OutlinedInput, Typography, Button, Paper, FormControl } from '@mui/material';
 import Image from '../../../assets/images/img/reception_background.png';
@@ -34,6 +34,12 @@ export default function MeetingCode() {
     formState: { errors }
   } = useForm({ resolver: yupResolver(meetingCodeSchema) });
 
+  useEffect(() => {
+    if (resultQR) {
+      onSubmit({ code: resultQR, company_id: comId }); // Pass data to onSubmit
+    }
+  }, [resultQR, comId]);
+
   const onSubmit = (data) => {
     axiosInstance
       .post('https://api.hellokompass.com/reception/meetingcheck', data)
@@ -50,7 +56,7 @@ export default function MeetingCode() {
       })
       .catch((error) => {
         if (error.response.status === 400) {
-          toast.success(error.response.data.message);
+          toast.error(error.response.data.message);
           navigate('/dashboard');
           reset();
         } else {
@@ -62,7 +68,7 @@ export default function MeetingCode() {
   const handleScan = (result) => {
     if (result) {
       const { text } = result;
-      setResultQR(text || '');
+      setResultQR(text);
     }
   };
 
@@ -118,7 +124,7 @@ export default function MeetingCode() {
                   <Box sx={{ mx: { xs: 0, sm: 2 }, mt: { xs: 2, sm: 0 }, width: { xs: '100%', sm: '40%' } }}>
                     <Typography variant="h6">Meeting Code *</Typography>
                     <FormControl>
-                      {(resultQR || (errors.code && errors.code.type === 'required')) && (
+                      {resultQR && (
                         <OutlinedInput
                           {...register('code', { required: true })}
                           name="code"

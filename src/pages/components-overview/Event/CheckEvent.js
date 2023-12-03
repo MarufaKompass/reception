@@ -1,5 +1,5 @@
 import MainCard from 'components/MainCard';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import QrReader from 'react-qr-scanner';
 import { Box, OutlinedInput, FormControl, Typography, Button, Paper } from '@mui/material';
 import Image from '../../../assets/images/img/reception_background.png';
@@ -13,6 +13,7 @@ import { toast } from 'react-toastify';
 
 export default function CheckEvent() {
   const { comId } = useAppContextReception();
+  const [resultQR, setResultQR] = useState('');
   const delay = 500;
   const navigate = useNavigate();
 
@@ -33,6 +34,12 @@ export default function CheckEvent() {
     reset,
     formState: { errors }
   } = useForm({ resolver: yupResolver(eventCodeSchema) });
+
+  useEffect(() => {
+    if (resultQR) {
+      onSubmit({ code: resultQR, company_id: comId });
+    }
+  }, [resultQR, comId]);
 
   const onSubmit = (data) => {
     axiosInstance
@@ -58,8 +65,6 @@ export default function CheckEvent() {
         }
       });
   };
-
-  const [resultQR, setResultQR] = useState('');
 
   const handleScan = (result) => {
     if (result) {
