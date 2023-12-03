@@ -40,6 +40,7 @@ export default function GuestList() {
           setGuests(res.data.data.guestlist);
           setTotalGuests(res.data.data.totalGuest);
           setAbsentGuests(res.data.data.attendstatus.A);
+          // setAbsentGuests(res.data.data.attendstatus.A);
         })
         .catch((error) => {
           console.error(error);
