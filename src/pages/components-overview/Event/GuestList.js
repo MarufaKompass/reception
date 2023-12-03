@@ -15,6 +15,8 @@ export default function GuestList() {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
   const [event, setEvent] = useState([]);
   const [guests, setGuests] = useState([]);
+  const [totalGuests, setTotalGuests] = useState('');
+  const [absentGuests, setAbsentGuests] = useState('');
 
   const { evntname, date, starttime, endtime } = event;
 
@@ -35,7 +37,9 @@ export default function GuestList() {
       axiosInstance
         .get(`https://api.hellokompass.com/reception/evntguest?event_id=${idxe}&company_id=${comId}`)
         .then((res) => {
-          setGuests(res.data.data);
+          setGuests(res.data.data.guestlist);
+          setTotalGuests(res.data.data.totalGuest);
+          setAbsentGuests(res.data.data.attendstatus.A);
         })
         .catch((error) => {
           console.error(error);
@@ -94,14 +98,14 @@ export default function GuestList() {
           </Box>
         </Box>
         <Box sx={{ mt: 3 }}>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} sx={{ px: 3 }}>
             <Grid items={true} xs={12} sm={4} md={4} lg={4} xl={4}>
               <ListItem sx={{ m: 0 }}>
-                <Typography color="#12a9b2" variant="h5" component="div">
+                <Typography color="#12a9b2" variant="p" component="div">
                   Total Invitee :
                 </Typography>
-                <Typography sx={{ ml: 1 }} variant="h5" component="div">
-                  0
+                <Typography sx={{ ml: 1 }} variant="p" component="div">
+                  {totalGuests || 0}
                 </Typography>
               </ListItem>
             </Grid>
@@ -110,18 +114,18 @@ export default function GuestList() {
                 <Typography color="#12a9b2" variant="p" component="div">
                   Total Present :
                 </Typography>
-                <Typography sx={{ ml: 1 }} variant="h5" component="div">
-                  0
+                <Typography sx={{ ml: 1 }} variant="p" component="div">
+                  {totalGuests - absentGuests}
                 </Typography>
               </ListItem>
             </Grid>
             <Grid items={true} xs={12} sm={4} md={4} lg={4} xl={4}>
               <ListItem sx={{ mt: { xs: -2, sm: 0 } }}>
-                <Typography color="#12a9b2" variant="h5" component="div">
+                <Typography color="#12a9b2" variant="p" component="div">
                   Total Absent :
                 </Typography>
-                <Typography sx={{ ml: 1 }} variant="h5" component="div">
-                  0
+                <Typography sx={{ ml: 1 }} variant="p" component="div">
+                  {absentGuests || 0}
                 </Typography>
               </ListItem>
             </Grid>

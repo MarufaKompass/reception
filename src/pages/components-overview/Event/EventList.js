@@ -62,7 +62,7 @@ export default function EventList() {
             variant="outlined"
             size="small"
             onClick={() => handleGuestList(params.row.idxe)}
-            sx={{ color: '#12A9B2', borderColor: '#12A9B2', borderRadius: 5, '&:focus': { border: 'none' } }}
+            sx={{ color: '#12A9B2', borderColor: '#12A9B2', borderRadius: 1, mr: 1, '&:focus': { border: 'none' } }}
           >
             Guest List
           </Button>
