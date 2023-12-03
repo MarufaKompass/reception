@@ -43,10 +43,17 @@ const AuthLogin = () => {
       const response = await axios.post('https://api.hellokompass.com/reception/login', data);
 
       if (response.status === 200) {
+
         sessionStorage.setItem('com', JSON.stringify(response.data.data.com_id));
         sessionStorage.setItem('token', JSON.stringify(response.data.data.token));
         setComId(response.data.date.com_id);
         setUser(response.data.data.token);
+
+        sessionStorage.setItem('token', JSON.stringify(response.data.data.token));
+        // sessionStorage.setItem('com', JSON.stringify(response.data.data.com_id));
+        setUser(response.data.data.token);
+        // setComId(response.data.date.com_id);
+
         navigate('/');
       }
     } catch (error) {
