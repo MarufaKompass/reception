@@ -17,6 +17,11 @@ export default function GuestList() {
   const [guests, setGuests] = useState([]);
   const [totalGuests, setTotalGuests] = useState('');
   const [absentGuests, setAbsentGuests] = useState('');
+  const [presentGuests, setPresentGuests] = useState('');
+
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
 
   const { evntname, date, starttime, endtime } = event;
 
@@ -39,8 +44,8 @@ export default function GuestList() {
         .then((res) => {
           setGuests(res.data.data.guestlist);
           setTotalGuests(res.data.data.totalGuest);
-          setAbsentGuests(res.data.data.attendstatus.A);
-          // setAbsentGuests(res.data.data.attendstatus.A);
+          setAbsentGuests(res.data.data.attendstatus.total_absent);
+          setPresentGuests(res.data.data.attendstatus.total_present);
         })
         .catch((error) => {
           console.error(error);
@@ -56,7 +61,16 @@ export default function GuestList() {
       { field: 'guest_name', headerName: 'Guest name', flex: isSmallScreen ? 0 : 1 },
       { field: 'guest_email', headerName: 'Email', flex: isSmallScreen ? 0 : 1 },
       { field: 'guest_phone', headerName: 'Phone', flex: isSmallScreen ? 0 : 1 },
-      { field: 'attendance', headerName: 'Attendance', flex: isSmallScreen ? 0 : 1 }
+      {
+        field: 'attendance',
+        headerName: 'Attendance',
+        flex: isSmallScreen ? 0 : 1,
+        renderCell: (params) => (
+          <Box>
+            <Typography variant="body2">{capitalizeFirstLetter(params.value)}</Typography>
+          </Box>
+        )
+      }
     ];
     return columns;
   };
@@ -82,6 +96,9 @@ export default function GuestList() {
           </Typography>
         </Box>
         <Typography align="center" variant="h5" component="h2" sx={{ mt: 2 }}>
+          <Typography align="center" variant="h5" component="h2" sx={{ mt: 2, display: 'inline', color: '#12A9B2', fontWeight: 'bold' }}>
+            Event Name:
+          </Typography>{' '}
           {evntname}
         </Typography>
         <Box sx={{ display: { sm: 'flex' }, justifyContent: 'center' }} align="center">
@@ -116,7 +133,7 @@ export default function GuestList() {
                   Total Present :
                 </Typography>
                 <Typography sx={{ ml: 1 }} variant="p" component="div">
-                  {totalGuests - absentGuests || 0}
+                  {presentGuests || 0}
                 </Typography>
               </ListItem>
             </Grid>

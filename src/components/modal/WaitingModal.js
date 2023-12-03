@@ -6,9 +6,9 @@ import { useAppContextReception } from 'AppContextReception';
 import axiosInstance from 'utils/axios.config';
 import ImageModal from './ImageModal';
 import { useForm, useFieldArray } from 'react-hook-form';
-import user from '../../assets/images/img/user.jpg';
 import SubmitButton from 'components/Button/SubmitButton';
 import { toast } from 'react-toastify';
+
 export default function WaitingModal(props) {
   const { waitingModal, handleClose, waitingId } = props;
   const [imageModal, setImageModal] = useState(false);
@@ -44,7 +44,6 @@ export default function WaitingModal(props) {
       qty
     };
     delete newData.fields;
-    console.log('Data with separated arrays:', newData);
 
     axiosInstance.post('https://api.hellokompass.com/reception/visitorcheckin', newData).then((res) => {
       if (res.data.code === 200) {
@@ -354,28 +353,17 @@ export default function WaitingModal(props) {
                 <ListItem>
                   <Grid container>
                     <Grid item xs={12} sm={12} md={6}>
-                      {guest_image ? (
-                        <Avatar
-                          alt="Captured"
-                          src={guest_image}
-                          variant="square"
-                          sx={{ width: '130px', height: '130px', border: 1, color: '#12A9B2', borderRadius: 1 }}
-                        />
-                      ) : (
-                        <>
-                          <Avatar
-                            alt="Captured"
-                            variant="square"
-                            src={user}
-                            sx={{ width: '130px', height: '130px', border: 1, color: '#12A9B2', borderRadius: 1 }}
-                          />
-                          <Grid item xs={12} sm={12} md={12} lg={12} xl={12} sx={{ pr: 3 }}>
-                            <Button onClick={() => setImageModal(true)} variant="outlined" size="small" sx={{ my: 2, color: '#12A9B2' }}>
-                              Take Photo
-                            </Button>
-                          </Grid>
-                        </>
-                      )}
+                      <Avatar
+                        alt="Captured"
+                        variant="square"
+                        src={guest_image}
+                        sx={{ width: '130px', height: '130px', border: 1, color: '#12A9B2', borderRadius: 1 }}
+                      />
+                      <Grid item xs={12} sm={12} md={12} lg={12} xl={12} sx={{ pr: 3 }}>
+                        <Button onClick={() => setImageModal(true)} variant="outlined" size="small" sx={{ my: 2, color: '#12A9B2' }}>
+                          Take Photo
+                        </Button>
+                      </Grid>
                     </Grid>
                   </Grid>
                 </ListItem>
@@ -445,36 +433,23 @@ export default function WaitingModal(props) {
                         <ListItem>
                           <Grid container>
                             <Grid item xs={12} sm={12} md={6}>
-                              {visitors.image ? (
-                                <>
-                                  <Avatar
-                                    alt="Captured"
-                                    src={visitors.image}
-                                    variant="square"
-                                    sx={{ width: '100px', height: '100px', border: 1, color: '#12A9B2', borderRadius: 1 }}
-                                  />
-                                </>
-                              ) : (
-                                <>
-                                  <Avatar
-                                    alt="Captured"
-                                    src={user}
-                                    variant="square"
-                                    sx={{ width: '100px', height: '100px', border: 1, color: '#12A9B2', borderRadius: 1 }}
-                                  />
+                              <Avatar
+                                alt="Captured"
+                                src={visitors.image}
+                                variant="square"
+                                sx={{ width: '100px', height: '100px', border: 1, color: '#12A9B2', borderRadius: 1 }}
+                              />
 
-                                  <Grid item xs={12} sm={12} md={12} lg={12} xl={12} sx={{ pr: 3 }}>
-                                    <Button
-                                      onClick={() => handleVisitor(visitors.id)}
-                                      variant="outlined"
-                                      size="small"
-                                      sx={{ my: 2, color: '#12A9B2' }}
-                                    >
-                                      Update
-                                    </Button>
-                                  </Grid>
-                                </>
-                              )}
+                              <Grid item xs={12} sm={12} md={12} lg={12} xl={12} sx={{ pr: 3 }}>
+                                <Button
+                                  onClick={() => handleVisitor(visitors.id)}
+                                  variant="outlined"
+                                  size="small"
+                                  sx={{ my: 2, color: '#12A9B2' }}
+                                >
+                                  Update
+                                </Button>
+                              </Grid>
                             </Grid>
                           </Grid>
                         </ListItem>
