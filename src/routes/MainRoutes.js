@@ -16,6 +16,7 @@ import GuestList from 'pages/components-overview/Event/GuestList';
 import PrivateRoutes from 'components/PrivateRoutes/PrivateRoutes';
 import NotFoundPage from 'pages/components-overview/NotFoundPage';
 import { Typography } from '@mui/material';
+import Test from 'pages/components-overview/Test';
 
 // render - dashboard
 const DashboardDefault = Loadable(lazy(() => import('pages/dashboard')));
@@ -161,6 +162,10 @@ const MainRoutes = {
           </PrivateRoutes>
         </Suspense>
       )
+    },
+    {
+      path: 'test',
+      element: <Test />
     }
   ]
 };

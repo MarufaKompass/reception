@@ -116,7 +116,7 @@ export default function GuestList() {
                   Total Present :
                 </Typography>
                 <Typography sx={{ ml: 1 }} variant="p" component="div">
-                  {totalGuests - absentGuests}
+                  {totalGuests - absentGuests || 0}
                 </Typography>
               </ListItem>
             </Grid>

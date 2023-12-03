@@ -19,19 +19,32 @@ import Webcam from 'react-webcam';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { instantMeetingSchema } from 'components/validation/validation';
-import dayjs from 'dayjs';
-// eslint-disable-next-line no-restricted-imports
-import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { MobileTimePicker } from '@mui/x-date-pickers/MobileTimePicker';
+import TimePicker from 'rc-time-picker';
+import 'rc-time-picker/assets/index.css';
+import moment from 'moment';
 import '../../../assets/styles.css';
+import { styled } from '@mui/material/styles';
 
 import 'react-datepicker/dist/react-datepicker.css';
 import axiosInstance from 'utils/axios.config';
 import { useAppContextReception } from 'AppContextReception';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+
+const StyledTimePicker = styled(TimePicker)({
+  '& .rc-time-picker-input': {
+    width: '100%',
+    height: '34px',
+    borderColor: '#eaeaea',
+    fontSize: '15px',
+    '&:hover': {
+      borderColor: '#12A9B2'
+    },
+    '&:focus': {
+      borderColor: '#12A9B2'
+    }
+  }
+});
 
 const videoConstraints = {
   width: 150,
@@ -45,6 +58,8 @@ export default function InstantMeeting() {
   const [selectedValue, setSelectedValue] = useState(0);
   const [days, setDays] = useState('');
   const navigate = useNavigate();
+  const defaultTime = moment();
+  const [selectedTime, setSelectedTime] = useState(defaultTime);
 
   const handleCancelButton = () => {
     navigate('/');
@@ -64,7 +79,7 @@ export default function InstantMeeting() {
   };
 
   const onSubmit = (data) => {
-    console.log(data);
+    data.time = selectedTime.format('HH:mm');
     data.guest_image = uploadedPhoto;
     switch (true) {
       case visitor5Upload:
@@ -750,41 +765,37 @@ export default function InstantMeeting() {
                       </FormControl>
                     </Box>
                   </Grid>
-                  <Grid item xs={12} sm={6} md={6} lg={6} xl={6} sx={{ mt: 1 }}>
+                  <Grid item xs={12} sm={6} md={6} lg={6} xl={6} sx={{ mt: 1, pr: 3 }}>
                     <Box>
-                      <FormHelperText>
+                      <FormHelperText sx={{ mb: 1 }}>
                         <Typography variant="h5" component="h5" color="#4e4d4e">
                           Time
                         </Typography>
                       </FormHelperText>
-                      <FormControl sx={{ mt: 0 }} fullWidth className="maxWidth">
-                        <Box>
-                          <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DemoContainer components={['MobileTimePicker']}>
-                              <DemoItem>
-                                <Controller
-                                  className="maxWidth"
-                                  name="time"
-                                  control={control}
-                                  defaultValue={null}
-                                  render={({ field }) => (
-                                    <MobileTimePicker
-                                      value={field.value}
-                                      onChange={(newValue) => {
-                                        const formattedTime12Hour = dayjs(newValue, 'h:mm A');
-                                        const formattedTime24Hour = formattedTime12Hour.format('HH:mm');
-                                        field.onChange(formattedTime24Hour);
-                                      }}
-                                      renderInput={(params) => <TextField {...params} value={params.value} />}
-                                    />
-                                  )}
-                                />
-                              </DemoItem>
-                            </DemoContainer>
-                          </LocalizationProvider>
-                        </Box>
-                        <Typography sx={{ color: '#FF0000', fontSize: '12px' }}>{errors.time?.message}</Typography>
-                      </FormControl>
+                      <Box className="maxWidth">
+                        <Controller
+                          name="time"
+                          control={control}
+                          defaultValue={selectedTime}
+                          render={({ field }) => (
+                            <StyledTimePicker
+                              showSecond={false}
+                              onChange={(value) => {
+                                field.onChange(value);
+                                setSelectedTime(value);
+                              }}
+                              format="h:mm a"
+                              use12Hours
+                              name="name"
+                              defaultValue={defaultTime}
+                              style={{
+                                width: '100%'
+                              }}
+                            />
+                          )}
+                        />
+                      </Box>
+                      <Typography sx={{ color: '#FF0000', fontSize: '12px' }}>{errors.time?.message}</Typography>
                     </Box>
                   </Grid>
                 </Grid>
@@ -826,15 +837,17 @@ export default function InstantMeeting() {
                         >
                           <MenuItem value="">
                             <InputLabel selected htmlFor="outlined-adornment">
-                              0
+                              Select Extra Visitor
                             </InputLabel>
                           </MenuItem>
+                          <MenuItem value={0}>0</MenuItem>
                           <MenuItem value={1}>1</MenuItem>
                           <MenuItem value={2}>2</MenuItem>
                           <MenuItem value={3}>3</MenuItem>
                           <MenuItem value={4}>4</MenuItem>
                           <MenuItem value={5}>5</MenuItem>
                         </Select>
+                        <Typography sx={{ color: '#FF0000', fontSize: '12px' }}>{errors.ex_visitor_no?.message}</Typography>
                       </FormControl>
                     </Box>
                   </Grid>

@@ -14,6 +14,7 @@ const guestGenderValidation = yup.string().required('Guest gender is required');
 const guestCompanyValidation = yup.string().required('Guest company name is required');
 const purposeValidation = yup.string().required('Purpose is required');
 const timeValidation = yup.string().required('Meeting type is required');
+const extraVisitorValidation = yup.string().required('Extra visitor is required');
 
 export const meetingCodeSchema = yup.object().shape({
   code: meetingCodeValidation
@@ -39,5 +40,6 @@ export const instantMeetingSchema = yup.object().shape({
   guest_company: guestCompanyValidation,
   emp_person_id: employeeValidation,
   meeting_purpose_id: purposeValidation,
-  time: timeValidation
+  time: timeValidation,
+  ex_visitor_no: extraVisitorValidation
 });
