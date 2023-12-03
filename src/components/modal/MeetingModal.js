@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Modal, Box, Typography, Divider, Avatar, Button, List, ListItem, Grid } from '@mui/material';
 import axiosInstance from 'utils/axios.config';
 import { useAppContextReception } from 'AppContextReception';
-
-import user from '../../assets/images/img/user.jpg';
 import ImageModal from './ImageModal';
 import CloseButton from 'components/Button/CloseButton';
 import TableChip from 'components/chips/chip';
@@ -311,30 +309,17 @@ export default function MeetingModal(props) {
               <ListItem>
                 <Grid container>
                   <Grid item xs={12} sm={12} md={6}>
-                    {guest_image ? (
-                      <>
-                        <Avatar
-                          alt="Captured"
-                          src={guest_image}
-                          variant="square"
-                          sx={{ width: '130px', height: '130px', border: 1, color: '#12A9B2', borderRadius: 1 }}
-                        />
-                      </>
-                    ) : (
-                      <>
-                        <Avatar
-                          alt="Captured"
-                          src={user}
-                          variant="square"
-                          sx={{ width: '130px', height: '130px', border: 1, color: '#12A9B2', borderRadius: 1 }}
-                        />
-                        <Grid item xs={12} sm={12} md={12} lg={12} xl={12} sx={{ pr: 3 }}>
-                          <Button onClick={() => setImageModal(true)} variant="outlined" size="small" sx={{ my: 2, color: '#12A9B2' }}>
-                            Take Photo
-                          </Button>
-                        </Grid>
-                      </>
-                    )}
+                    <Avatar
+                      alt="Captured"
+                      src={guest_image}
+                      variant="square"
+                      sx={{ width: '130px', height: '130px', border: 1, color: '#12A9B2', borderRadius: 1 }}
+                    />
+                    <Grid item xs={12} sm={12} md={12} lg={12} xl={12} sx={{ pr: 3 }}>
+                      <Button onClick={() => setImageModal(true)} variant="outlined" size="small" sx={{ my: 2, color: '#12A9B2' }}>
+                        Take Photo
+                      </Button>
+                    </Grid>
                   </Grid>
                 </Grid>
               </ListItem>
@@ -398,36 +383,23 @@ export default function MeetingModal(props) {
                       <ListItem>
                         <Grid container>
                           <Grid item xs={12} sm={12} md={6}>
-                            {visitors.image ? (
-                              <>
-                                <Avatar
-                                  alt="Captured"
-                                  src={visitors.image}
-                                  variant="square"
-                                  sx={{ width: '100px', height: '100px', border: 1, color: '#12A9B2', borderRadius: 1 }}
-                                />
-                              </>
-                            ) : (
-                              <>
-                                <Avatar
-                                  alt="Captured"
-                                  src={user}
-                                  variant="square"
-                                  sx={{ width: '100px', height: '100px', border: 1, color: '#12A9B2', borderRadius: 1 }}
-                                />
+                            <Avatar
+                              alt="Captured"
+                              src={visitors.image}
+                              variant="square"
+                              sx={{ width: '100px', height: '100px', border: 1, color: '#12A9B2', borderRadius: 1 }}
+                            />
 
-                                <Grid item xs={12} sm={12} md={12} lg={12} xl={12} sx={{ pr: 3 }}>
-                                  <Button
-                                    onClick={() => handleVisitor(visitors.id)}
-                                    variant="outlined"
-                                    size="small"
-                                    sx={{ my: 2, color: '#12A9B2' }}
-                                  >
-                                    Update
-                                  </Button>
-                                </Grid>
-                              </>
-                            )}
+                            <Grid item xs={12} sm={12} md={12} lg={12} xl={12} sx={{ pr: 3 }}>
+                              <Button
+                                onClick={() => handleVisitor(visitors.id)}
+                                variant="outlined"
+                                size="small"
+                                sx={{ my: 2, color: '#12A9B2' }}
+                              >
+                                Update
+                              </Button>
+                            </Grid>
                           </Grid>
                         </Grid>
                       </ListItem>
