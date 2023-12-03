@@ -69,7 +69,7 @@ export default function Courier() {
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box>
             <Box sx={{ my: 2 }}>
-              <Typography variant="p" sx={{ my: 2, fontSize: 17 }}>
+              <Typography variant="p" sx={{ my: 2 }} fontSize="15px">
                 Name
               </Typography>
               <TextField
@@ -84,7 +84,7 @@ export default function Courier() {
               <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.name?.message}</Typography>
             </Box>
             <Box sx={{ my: 2 }}>
-              <Typography variant="p" sx={{ my: 2, fontSize: 17 }}>
+              <Typography variant="p" sx={{ my: 2}} fontSize="15px">
                 Phone
               </Typography>
               <TextField
@@ -108,7 +108,7 @@ export default function Courier() {
               value={comId}
             />
             <Box sx={{ my: 2 }}>
-              <Typography variant="p" sx={{ my: 2, fontSize: 17 }}>
+              <Typography variant="p" sx={{ my: 2 }} fontSize="15px">
                 Company
               </Typography>
               <TextField
@@ -123,7 +123,7 @@ export default function Courier() {
               <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.company?.message}</Typography>
             </Box>
             <Box sx={{ my: 2 }}>
-              <Typography variant="p" sx={{ fontSize: 17, display: 'block' }}>
+              <Typography variant="p" sx={{ display: 'block' }} fontSize="15px">
                 Parcel Type
               </Typography>
               <Select
@@ -146,7 +146,7 @@ export default function Courier() {
               <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.parcel_type?.message}</Typography>
             </Box>
             <Box sx={{ my: 2 }}>
-              <Typography variant="p" sx={{ fontSize: 17, display: 'block' }}>
+              <Typography variant="p" sx={{ display: 'block' }} fontSize="15px">
                 Employee
               </Typography>
               <Select
@@ -158,7 +158,7 @@ export default function Courier() {
                 displayEmpty
               >
                 <MenuItem selected htmlFor="outlined-adornment">
-                  <em>Select Employee Type</em>
+                  <InputLabel>Select Employee Type</InputLabel>
                 </MenuItem>
                 {employeeList.map((employee) => (
                   <MenuItem key={employee.id} value={employee.person_id}>
