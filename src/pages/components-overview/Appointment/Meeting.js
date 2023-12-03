@@ -113,7 +113,6 @@ export default function Meeting() {
         </Box>
         {meetings.length != 0 ? (
           <Box>
-            {' '}
             <Box sx={{ display: 'flex', justifyContent: 'end', py: 2 }}>
               <OutlinedInput
                 id="outlined-adornment-weight"

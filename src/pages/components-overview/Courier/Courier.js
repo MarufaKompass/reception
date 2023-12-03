@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Button, MenuItem, Select, TextField, Typography } from '@mui/material';
+import { Box, Button, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import MainCard from 'components/MainCard';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -76,7 +76,7 @@ export default function Courier() {
                 {...register('name', { required: true })}
                 id="outlined-basic"
                 name="name"
-                size="large"
+                size="medium"
                 variant="outlined"
                 placeholder="Your Name"
                 sx={{ width: '100%' }}
@@ -91,7 +91,7 @@ export default function Courier() {
                 {...register('phone', { required: true })}
                 id="outlined-basic"
                 name="phone"
-                size="large"
+                size="medium"
                 variant="outlined"
                 type="number"
                 placeholder="Your Phone Ex: 017xxxxxxxx"
@@ -114,7 +114,7 @@ export default function Courier() {
               <TextField
                 {...register('company', { required: true })}
                 id="outlined-basic"
-                size="large"
+                size="medium"
                 variant="outlined"
                 name="company"
                 placeholder="Your Company Name"
@@ -131,9 +131,13 @@ export default function Courier() {
                 name="parcel_type"
                 inputProps={{ 'aria-label': 'Without label' }}
                 sx={{ width: '100%' }}
+                size="medium"
+                displayEmpty
               >
-                <MenuItem value="">
-                  <em>Select Parcel Type</em>
+                <MenuItem>
+                  <InputLabel selected htmlFor="outlined-adornments">
+                    Select Parcel Type
+                  </InputLabel>
                 </MenuItem>
                 <MenuItem value="document">Documents</MenuItem>
                 <MenuItem value="small box">Small Box</MenuItem>
@@ -150,8 +154,10 @@ export default function Courier() {
                 name="person_id"
                 inputProps={{ 'aria-label': 'Without label' }}
                 sx={{ width: '100%' }}
+                size="medium"
+                displayEmpty
               >
-                <MenuItem value="">
+                <MenuItem selected htmlFor="outlined-adornment">
                   <em>Select Employee Type</em>
                 </MenuItem>
                 {employeeList.map((employee) => (

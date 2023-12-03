@@ -544,6 +544,7 @@ export default function InstantMeeting() {
                         fullWidth
                         id="standard-basic"
                         sx={{ mt: '9px' }}
+                        size="small"
                         name="guest_name"
                         placeholder="Guest Name"
                       />
@@ -570,14 +571,14 @@ export default function InstantMeeting() {
                         <Grid container spacing={2}>
                           <Grid items xs={12}>
                             <Grid container sx={{ mt: '18px' }}>
-                              <Grid items lg={3}>
+                              <Grid items lg={3} sx={{ width: '100%' }}>
                                 <Select
                                   {...register('guest_country_code', { required: true })}
                                   name="guest_country_code"
                                   onChange={handleCountryChange}
                                   value={defaultCountryCode}
                                   inputProps={{ 'aria-label': 'Without label' }}
-                                  size="medium"
+                                  size="small"
                                   sx={{ mt: 1, mr: 2 }}
                                 >
                                   {countryCode.map((country) => (
@@ -596,6 +597,7 @@ export default function InstantMeeting() {
                                   sx={{ mt: 1, color: '#4e4d4e', pr: 1, width: '100%' }}
                                   inputProps={ariaLabel}
                                   type="number"
+                                  size="small"
                                   placeholder="Phone number"
                                 />
                               </Grid>
@@ -622,6 +624,7 @@ export default function InstantMeeting() {
                         {...register('guest_email', { required: true })}
                         fullWidth
                         id="standard-basic"
+                        size="small"
                         sx={{ mt: '9px' }}
                         name="guest_email"
                         type="email"
@@ -641,7 +644,7 @@ export default function InstantMeeting() {
                         <Select
                           {...register('guest_gender', { register: true })}
                           inputProps={{ 'aria-label': 'Without label' }}
-                          size="medium"
+                          size="small"
                           name="guest_gender"
                           sx={{ mt: 1, mr: 2, width: '100%' }}
                           displayEmpty
@@ -677,6 +680,7 @@ export default function InstantMeeting() {
                         id="standard-basic"
                         sx={{ mt: '9px' }}
                         name="guest_company"
+                        size="small"
                         placeholder="Company Name"
                       />
                       <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.guest_company?.message}</Typography>
@@ -698,10 +702,8 @@ export default function InstantMeeting() {
                           sx={{ mt: 1, mr: 2, width: '100%' }}
                           size="small"
                         >
-                          <MenuItem>
-                            <InputLabel selected htmlFor="outlined-adornment">
-                              Select Employee Type
-                            </InputLabel>
+                          <MenuItem selected htmlFor="outlined-adornment">
+                            <em>Select Employee Type</em>
                           </MenuItem>
                           {employeeList.map((employee) => (
                             <MenuItem key={employee.id} value={employee.person_id}>
