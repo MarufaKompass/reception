@@ -549,7 +549,7 @@ export default function InstantMeeting() {
                   <Grid item xs={12} sm={6} md={6} lg={6} xl={6} sx={{ pr: 3 }}>
                     <Box>
                       <FormHelperText>
-                        <Typography variant="h5" component="h5" color="#4e4d4e">
+                        <Typography variant="h5" component="h5" color="#4e4d4e" fontSize="15px">
                           Name
                         </Typography>
                       </FormHelperText>
@@ -578,7 +578,7 @@ export default function InstantMeeting() {
                   <Grid item xs={12} sm={6} md={6} lg={6} xl={6} sx={{ pr: 3 }}>
                     <Box sx={{ mt: { xs: 2, sm: 0 } }}>
                       <FormHelperText>
-                        <Typography variant="h5" component="h5" color="#4e4d4e">
+                        <Typography variant="h5" component="h5" color="#4e4d4e" fontSize="15px">
                           Phone
                         </Typography>
                       </FormHelperText>
@@ -630,7 +630,7 @@ export default function InstantMeeting() {
                   <Grid item xs={12} sm={6} md={6} lg={6} xl={6} sx={{ mt: 1, pr: 3 }}>
                     <Box>
                       <FormHelperText>
-                        <Typography variant="h5" component="h5" color="#4e4d4e">
+                        <Typography variant="h5" component="h5" color="#4e4d4e" fontSize="15px">
                           Email
                         </Typography>
                       </FormHelperText>
@@ -651,7 +651,7 @@ export default function InstantMeeting() {
                   <Grid item xs={12} sm={6} md={6} lg={6} xl={6} sx={{ pr: 3, mt: 1 }}>
                     <Box>
                       <FormHelperText>
-                        <Typography variant="h5" component="h5" color="#4e4d4e">
+                        <Typography variant="h5" component="h5" color="#4e4d4e" fontSize="15px">
                           Gender
                         </Typography>
                       </FormHelperText>
@@ -684,7 +684,7 @@ export default function InstantMeeting() {
                   <Grid item xs={12} sm={6} md={6} lg={6} xl={6} sx={{ mt: 1, pr: 3 }}>
                     <Box>
                       <FormHelperText>
-                        <Typography variant="h5" component="h5" color="#4e4d4e">
+                        <Typography variant="h5" component="h5" color="#4e4d4e" fontSize="15px">
                           Company
                         </Typography>
                       </FormHelperText>
@@ -704,7 +704,7 @@ export default function InstantMeeting() {
                   <Grid item xs={12} sm={6} md={6} lg={6} xl={6} sx={{ mt: 1, pr: 3 }}>
                     <Box>
                       <FormHelperText>
-                        <Typography variant="h5" component="h5" color="#4e4d4e">
+                        <Typography variant="h5" component="h5" color="#4e4d4e" fontSize="15px">
                           Employee
                         </Typography>
                       </FormHelperText>
@@ -737,7 +737,7 @@ export default function InstantMeeting() {
                   <Grid item xs={12} sm={6} md={6} lg={6} xl={6} sx={{ mt: 1, pr: 3 }}>
                     <Box>
                       <FormHelperText>
-                        <Typography variant="h5" component="h5" color="#4e4d4e">
+                        <Typography variant="h5" component="h5" color="#4e4d4e" fontSize="15px">
                           Purpose
                         </Typography>
                       </FormHelperText>
@@ -768,7 +768,7 @@ export default function InstantMeeting() {
                   <Grid item xs={12} sm={6} md={6} lg={6} xl={6} sx={{ mt: 1, pr: 3 }}>
                     <Box>
                       <FormHelperText sx={{ mb: 1 }}>
-                        <Typography variant="h5" component="h5" color="#4e4d4e">
+                        <Typography variant="h5" component="h5" color="#4e4d4e" fontSize="15px">
                           Time
                         </Typography>
                       </FormHelperText>
@@ -805,7 +805,7 @@ export default function InstantMeeting() {
                   <Grid item xs={12} sm={6} md={6} lg={6} xl={6} sx={{ mt: 1, pr: 3 }}>
                     <Box>
                       <FormHelperText sx={{ mt: 1, mb: 1 }}>
-                        <Typography variant="h5" component="h5" color="#4e4d4e">
+                        <Typography variant="h5" component="h5" color="#4e4d4e" fontSize="15px">
                           Short Note
                         </Typography>
                       </FormHelperText>
@@ -823,7 +823,7 @@ export default function InstantMeeting() {
                   <Grid item xs={12} sm={6} md={6} lg={6} xl={6} sx={{ pr: 3 }}>
                     <Box>
                       <FormHelperText sx={{ mt: 2, mb: 1 }}>
-                        <Typography variant="h5" component="h5" color="#4e4d4e">
+                        <Typography variant="h5" component="h5" color="#4e4d4e" fontSize="15px">
                           Additional Visitor No
                         </Typography>
                       </FormHelperText>
