@@ -423,64 +423,74 @@ export default function MeetingModal(props) {
                     Visitors Belongings :
                   </Typography>
                 </Grid>
-                <Grid items xs={12} sm={6} sx={{ mt: 2 }}>
-                  <ListItem sx={{ mb: -1 }}>
-                    <Grid container>
-                      <Grid xs={4} sm={4} lg={4}>
-                        <Typography variant="p" component="div">
-                          Visitors Card
-                        </Typography>
-                      </Grid>
-                      <Grid xs={1} sm={1} lg={1}>
-                        <Typography variant="p" component="div">
-                          :
-                        </Typography>
-                      </Grid>
-                      <Grid xs={7} sm={7} lg={7}>
-                        <Typography sx={{ color: '#000' }} variant="p" component="div">
-                          {visitorBelongs.vcard}
-                        </Typography>
-                      </Grid>
+                <Grid items xs={12} sm={12} sx={{ mt: 2 }}>
+                  <Grid container>
+                    <Grid item xs={6} sm={6} lg={4}>
+                      <ListItem sx={{ mb: -1 }}>
+                        <Grid container>
+                          <Grid xs={7} sm={7} lg={7}>
+                            <Typography variant="p" component="div" fontSize="13px">
+                              Visitors Card
+                            </Typography>
+                          </Grid>
+                          <Grid xs={1} sm={1} lg={1}>
+                            <Typography variant="p" component="div">
+                              :
+                            </Typography>
+                          </Grid>
+                          <Grid xs={4} sm={4} lg={4}>
+                            <Typography sx={{ color: '#000' }} variant="p" component="div" fontSize="13px">
+                              {visitorBelongs.vcard}
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                      </ListItem>
                     </Grid>
-                  </ListItem>
-                  <ListItem sx={{ mb: -1 }}>
-                    <Grid container>
-                      <Grid xs={4} sm={4} lg={4}>
-                        <Typography variant="p" component="div">
-                          In Time
-                        </Typography>
-                      </Grid>
-                      <Grid xs={1} sm={1} lg={1}>
-                        <Typography variant="p" component="div">
-                          :
-                        </Typography>
-                      </Grid>
-                      <Grid xs={7} sm={7} lg={7}>
-                        <Typography sx={{ color: '#000' }} variant="p" component="div">
-                          {visitorBelongs.intime}
-                        </Typography>
-                      </Grid>
+
+                    <Grid item xs={4}>
+                      <ListItem sx={{ mb: -1 }}>
+                        <Grid container>
+                          <Grid xs={6} sm={6} lg={6}>
+                            <Typography variant="p" component="div" fontSize="13px">
+                              In Time
+                            </Typography>
+                          </Grid>
+                          <Grid xs={1} sm={1} lg={1}>
+                            <Typography variant="p" component="div">
+                              :
+                            </Typography>
+                          </Grid>
+                          <Grid xs={5} sm={5} lg={5}>
+                            <Typography sx={{ color: '#000' }} variant="p" component="div" fontSize="13px">
+                              {visitorBelongs.intime}
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                      </ListItem>
                     </Grid>
-                  </ListItem>
-                  <ListItem sx={{ mb: -1 }}>
-                    <Grid container>
-                      <Grid xs={4} sm={4} lg={4}>
-                        <Typography variant="p" component="div">
-                          Out Time
-                        </Typography>
-                      </Grid>
-                      <Grid xs={1} sm={1} lg={1}>
-                        <Typography variant="p" component="div">
-                          :
-                        </Typography>
-                      </Grid>
-                      <Grid xs={7} sm={7} lg={7}>
-                        <Typography sx={{ color: '#000' }} variant="p" component="div">
-                          {visitorBelongs.outtime}
-                        </Typography>
-                      </Grid>
+
+                    <Grid item xs={4}>
+                      <ListItem sx={{ mb: -1 }}>
+                        <Grid container>
+                          <Grid xs={6} sm={6} lg={6}>
+                            <Typography variant="p" component="div" fontSize="13px">
+                              Out Time
+                            </Typography>
+                          </Grid>
+                          <Grid xs={1} sm={1} lg={1}>
+                            <Typography variant="p" component="div">
+                              :
+                            </Typography>
+                          </Grid>
+                          <Grid xs={5} sm={5} lg={5}>
+                            <Typography sx={{ color: '#000' }} variant="p" component="div" fontSize="13px">
+                              {visitorBelongs.outtime}
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                      </ListItem>
                     </Grid>
-                  </ListItem>
+                  </Grid>
                 </Grid>
                 <Grid container>
                   <Grid items xs={12} sm={12} sx={{ px: { xs: 1, sm: 0, md: 2 }, mt: 1 }}>
