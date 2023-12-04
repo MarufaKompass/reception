@@ -13,7 +13,7 @@ const Login = () => (
       <Grid item xs={12} sm={12} md={12} lg={6} xl={6} sx={{ display: { xs: 'none', md: 'none', lg: 'block' } }}>
         <Stack md={{ width: '100%' }}>
           <Box sx={{ p: '25px' }}>
-            <img src={loginImage} alt="login" rel="Preload"></img>
+            <img src={loginImage} alt="login" rel="Preload" width="100%" height="310px"></img>
           </Box>
         </Stack>
       </Grid>
@@ -22,7 +22,7 @@ const Login = () => (
         <Stack textAlign="center" sx={{ mb: { xs: -0.5, sm: 0.5 } }}>
           <Typography variant="h2">Sign in</Typography>
           <Typography variant="p" sx={{ mt: 1 }}>
-            Login to stay connected.
+            Login to Stay Connected
           </Typography>
         </Stack>
         <AuthLogin />
@@ -30,21 +30,6 @@ const Login = () => (
     </Grid>
   </AuthWrapper>
 
-  // <AuthWrapper>
-  //   <Grid container spacing={3}>
-  //     <Grid item xs={12}>
-  //       <Stack direction="row" justifyContent="space-between" alignItems="baseline" sx={{ mb: { xs: -0.5, sm: 0.5 } }}>
-  //         <Typography variant="h3">Login</Typography>
-  //         <Typography component={Link} to="/register" variant="body1" sx={{ textDecoration: 'none' }} color="primary">
-  //           Don&apos;t have an account?
-  //         </Typography>
-  //       </Stack>
-  //     </Grid>
-  //     <Grid item xs={12}>
-  //       <AuthLogin />
-  //     </Grid>
-  //   </Grid>
-  // </AuthWrapper>
 );
 
 export default Login;
