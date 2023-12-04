@@ -84,7 +84,7 @@ export default function Courier() {
               <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.name?.message}</Typography>
             </Box>
             <Box sx={{ my: 2 }}>
-              <Typography variant="p" sx={{ my: 2}} fontSize="15px">
+              <Typography variant="p" sx={{ my: 2 }} fontSize="15px">
                 Phone
               </Typography>
               <TextField

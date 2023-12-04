@@ -1,6 +1,9 @@
 import { Box, Typography, Button } from '@mui/material';
-import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
 import { useNavigate } from 'react-router-dom';
+import DashCourier from 'components/svg/DashCourier';
+import DashEvent from 'components/svg/DashEvent';
+import CheckIn from 'components/svg/CheckIn';
+import InstantMeeting from 'components/svg/InstantMeeting';
 
 const NavigateMeeting = () => {
   const navigate = useNavigate();
@@ -48,15 +51,15 @@ const NavigateMeeting = () => {
                   fontSize: 20,
                   '&:hover': { color: '#fff', backgroundColor: '#12A9B2' }
                 }}
-                startIcon={<GridViewOutlinedIcon />}
+                startIcon={<CheckIn></CheckIn>}
               >
-                <Typography variant="p">Enter Meeting Code</Typography>
+                <Typography variant="p">Meeting Check In</Typography>
               </Button>
             </Box>
 
             <Box sx={{ display: 'block' }}>
               <Button
-              onClick={handleCheckInstantMeeting}
+                onClick={handleCheckInstantMeeting}
                 variant="outlined"
                 size="medium"
                 sx={{
@@ -67,7 +70,7 @@ const NavigateMeeting = () => {
                   fontSize: 20,
                   '&:hover': { color: '#fff', backgroundColor: '#12A9B2' }
                 }}
-                startIcon={<GridViewOutlinedIcon />}
+                startIcon={<InstantMeeting></InstantMeeting>}
               >
                 <Typography variant="p">Instant Meeting </Typography>
               </Button>
@@ -86,7 +89,7 @@ const NavigateMeeting = () => {
                   fontSize: 20,
                   '&:hover': { color: '#fff', backgroundColor: '#12A9B2' }
                 }}
-                startIcon={<GridViewOutlinedIcon />}
+                startIcon={<DashCourier></DashCourier>}
               >
                 <Typography variant="p">Courier </Typography>
               </Button>
@@ -105,7 +108,7 @@ const NavigateMeeting = () => {
                   fontSize: 20,
                   '&:hover': { color: '#fff', backgroundColor: '#12A9B2' }
                 }}
-                startIcon={<GridViewOutlinedIcon />}
+                startIcon={<DashEvent></DashEvent>}
               >
                 <Typography variant="p">Event </Typography>
               </Button>
