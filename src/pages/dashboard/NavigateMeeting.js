@@ -4,7 +4,7 @@ import DashCourier from 'components/svg/DashCourier';
 import DashEvent from 'components/svg/DashEvent';
 import CheckIn from 'components/svg/CheckIn';
 import InstantMeeting from 'components/svg/InstantMeeting';
-
+import { useState } from 'react';
 const NavigateMeeting = () => {
   const navigate = useNavigate();
 
@@ -19,6 +19,42 @@ const NavigateMeeting = () => {
   };
   const handleCheckInstantMeeting = () => {
     navigate('/instantMeeting');
+  };
+  const [isHoveredCheckIn, setIsHoveredCheckIn] = useState(false);
+  const [isHoveredInstant, setIsHoveredInstant] = useState(false);
+  const [isHoveredCourier, setIsHoveredCourier] = useState(false);
+  const [isHoveredEvent, setIsHoveredEvent] = useState(false);
+
+  const handleHoverCheck = () => {
+    setIsHoveredCheckIn(true);
+  };
+
+  const handleMouseCheckLeave = () => {
+    setIsHoveredCheckIn(false);
+  };
+
+  const handleHoverInstant = () => {
+    setIsHoveredInstant(true);
+  };
+
+  const handleHoverInstantLeave = () => {
+    setIsHoveredInstant(false);
+  };
+
+  const handleHoverCourier = () => {
+    setIsHoveredCourier(true);
+  };
+
+  const handleHoverCourierLeave = () => {
+    setIsHoveredCourier(false);
+  };
+
+  const handleHoverEvent = () => {
+    setIsHoveredEvent(true);
+  };
+
+  const handleHoverEventLeave = () => {
+    setIsHoveredEvent(false);
   };
 
   return (
@@ -38,18 +74,36 @@ const NavigateMeeting = () => {
           </Box>
 
           <Box sx={{ mt: 3 }}>
-            <Box sx={{ display: 'block' }}>
+            <Box
+              sx={{
+                display: 'block',
+                '&:hover': {
+                  button: {
+                    color: '#fff',
+                    backgroundColor: '#12A9B2'
+                  }
+                }
+              }}
+              onMouseEnter={handleHoverCheck}
+              onMouseLeave={handleMouseCheckLeave}
+            >
               <Button
                 onClick={handleCheckMeeting}
                 variant="outlined"
                 size="medium"
                 sx={{
                   my: 1,
-                  color: '#12A9B2',
+                  color: isHoveredCheckIn ? '#fff' : '#12A9B2',
                   border: 1,
                   borderColor: '#12A9B2',
                   fontSize: 20,
-                  '&:hover': { color: '#fff', backgroundColor: '#12A9B2' }
+                  '&:hover': {
+                    color: '#fff',
+                    backgroundColor: '#12A9B2'
+                  },
+                  '& svg path': {
+                    stroke: isHoveredCheckIn ? '#fff' : '#12A9B2' // Change SVG path color on hover
+                  }
                 }}
                 startIcon={<CheckIn></CheckIn>}
               >
@@ -57,18 +111,36 @@ const NavigateMeeting = () => {
               </Button>
             </Box>
 
-            <Box sx={{ display: 'block' }}>
+            <Box
+              sx={{
+                display: 'block',
+                '&:hover': {
+                  button: {
+                    color: '#fff',
+                    backgroundColor: '#12A9B2'
+                  }
+                }
+              }}
+              onMouseEnter={handleHoverInstant}
+              onMouseLeave={handleHoverInstantLeave}
+            >
               <Button
                 onClick={handleCheckInstantMeeting}
                 variant="outlined"
                 size="medium"
                 sx={{
                   my: 1,
-                  color: '#12A9B2',
+                  color: isHoveredInstant ? '#fff' : '#12A9B2',
                   border: 1,
                   borderColor: '#12A9B2',
                   fontSize: 20,
-                  '&:hover': { color: '#fff', backgroundColor: '#12A9B2' }
+                  '&:hover': {
+                    color: '#fff',
+                    backgroundColor: '#12A9B2'
+                  },
+                  '& svg path': {
+                    stroke: isHoveredInstant ? '#fff' : '#12A9B2' // Change SVG path color on hover
+                  }
                 }}
                 startIcon={<InstantMeeting></InstantMeeting>}
               >
@@ -76,18 +148,36 @@ const NavigateMeeting = () => {
               </Button>
             </Box>
 
-            <Box sx={{ display: 'block' }}>
+            <Box
+              sx={{
+                display: 'block',
+                '&:hover': {
+                  button: {
+                    color: '#fff',
+                    backgroundColor: '#12A9B2'
+                  }
+                }
+              }}
+              onMouseEnter={handleHoverCourier}
+              onMouseLeave={handleHoverCourierLeave}
+            >
               <Button
                 onClick={handleCheckCourier}
                 variant="outlined"
                 size="medium"
                 sx={{
                   my: 1,
-                  color: '#12A9B2',
+                  color: isHoveredCourier ? '#fff' : '#12A9B2',
                   border: 1,
                   borderColor: '#12A9B2',
                   fontSize: 20,
-                  '&:hover': { color: '#fff', backgroundColor: '#12A9B2' }
+                  '&:hover': {
+                    color: '#fff',
+                    backgroundColor: '#12A9B2'
+                  },
+                  '& svg path': {
+                    stroke: isHoveredCourier ? '#fff' : '#12A9B2' // Change SVG path color on hover
+                  }
                 }}
                 startIcon={<DashCourier></DashCourier>}
               >
@@ -95,18 +185,36 @@ const NavigateMeeting = () => {
               </Button>
             </Box>
 
-            <Box sx={{ display: 'block' }}>
+            <Box
+              sx={{
+                display: 'block',
+                '&:hover': {
+                  button: {
+                    color: '#fff',
+                    backgroundColor: '#12A9B2'
+                  }
+                }
+              }}
+              onMouseEnter={handleHoverEvent}
+              onMouseLeave={handleHoverEventLeave}
+            >
               <Button
                 onClick={handleCheckEvent}
                 variant="outlined"
                 size="medium"
                 sx={{
                   my: 1,
-                  color: '#12A9B2',
+                  color: isHoveredEvent ? '#fff' : '#12A9B2',
                   border: 1,
                   borderColor: '#12A9B2',
                   fontSize: 20,
-                  '&:hover': { color: '#fff', backgroundColor: '#12A9B2' }
+                  '&:hover': {
+                    color: '#fff',
+                    backgroundColor: '#12A9B2'
+                  },
+                  '& svg path': {
+                    stroke: isHoveredEvent ? '#fff' : '#12A9B2' // Change SVG path color on hover
+                  }
                 }}
                 startIcon={<DashEvent></DashEvent>}
               >
