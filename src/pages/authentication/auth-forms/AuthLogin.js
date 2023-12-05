@@ -10,11 +10,10 @@ import { useNavigate } from 'react-router-dom';
 import { useAppContextReception } from 'AppContextReception';
 const AuthLogin = () => {
   // const [checked, setChecked] = useState(false);
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const { palette } = createTheme();
   const navigate = useNavigate();
-  const{setUser} = useAppContextReception();
-
+ const{setUser} = useAppContextReception();
   //palette
   const { augmentColor } = palette;
   const createColor = (mainColor) => augmentColor({ color: { main: mainColor } });
@@ -41,10 +40,12 @@ const AuthLogin = () => {
       const response = await axios.post('https://api.hellokompass.com/reception/login', data);
 
       if (response.status === 200) {
-        sessionStorage.setItem('token', JSON.stringify(response.data.data));
-        setUser(response.data.data);
+        sessionStorage.setItem('com', JSON.stringify(response.data.data.com_id));
+        sessionStorage.setItem('token', JSON.stringify(response.data.data.token));
+        setUser(response.data.data.token);
+
         navigate('/');
-      
+        reset();
       }
     } catch (error) {
       console.error('Error:', error);
