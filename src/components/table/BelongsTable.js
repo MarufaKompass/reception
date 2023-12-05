@@ -18,7 +18,9 @@ export default function BelongsTable(props) {
           <TableHead>
             <TableRow >
               <TableCell sx={{ pl: '10px', pr: '10px', pt: '5px', pb: '5px', fontSize: '13px' }}>Items</TableCell>
-              <TableCell sx={{ pl: '10px', pr: '10px', pt: '5px', pb: '5px', fontSize: '13px' }} align="left" >Qty</TableCell>
+              <TableCell sx={{ pl: '10px', pr: '10px', pt: '5px', pb: '5px', fontSize: '13px' }} align="left">
+                Qty
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
