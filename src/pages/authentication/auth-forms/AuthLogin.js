@@ -7,12 +7,13 @@ import InvisibleEye from 'components/svg/InvisibleEye';
 import VisibleEye from 'components/svg/VisibleEye';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-
+import { useAppContextReception } from 'AppContextReception';
 const AuthLogin = () => {
   // const [checked, setChecked] = useState(false);
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit } = useForm();
   const { palette } = createTheme();
   const navigate = useNavigate();
+  const{setUser} = useAppContextReception();
 
   //palette
   const { augmentColor } = palette;
@@ -40,10 +41,10 @@ const AuthLogin = () => {
       const response = await axios.post('https://api.hellokompass.com/reception/login', data);
 
       if (response.status === 200) {
-        sessionStorage.setItem('com', JSON.stringify(response.data.data.com_id));
-        sessionStorage.setItem('token', JSON.stringify(response.data.data.token));
+        sessionStorage.setItem('token', JSON.stringify(response.data.data));
+        setUser(response.data.data);
         navigate('/');
-        reset();
+      
       }
     } catch (error) {
       console.error('Error:', error);
