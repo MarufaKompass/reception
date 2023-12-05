@@ -68,7 +68,7 @@ export default function Courier() {
         </Box>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={3}>
-            <Grid item xs={6}>
+            <Grid item xs={12} sm={12} md={6}>
               <Box>
                 <Box sx={{ my: 2 }}>
                   <Typography variant="p" fontSize="14px">
@@ -188,9 +188,9 @@ export default function Courier() {
               </Box>
             </Grid>
 
-            <Grid item xs={6}>
-              <Box>
-                <img src={courier} alt="courier"></img>
+            <Grid item xs={12} sm={12} md={6}>
+              <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+                <img src={courier} alt="courier" />
               </Box>
             </Grid>
           </Grid>
