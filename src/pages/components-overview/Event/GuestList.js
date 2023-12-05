@@ -1,13 +1,13 @@
 import { useAppContextReception } from 'AppContextReception';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Box, Typography, Grid, ListItem } from '@mui/material';
+import { Box, Typography, Grid, ListItem, OutlinedInput, InputAdornment, IconButton } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { useTheme } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
 import MainCard from 'components/MainCard';
 import axiosInstance from 'utils/axios.config';
-
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 export default function GuestList() {
   const { idxe } = useParams();
   const { comId } = useAppContextReception();
@@ -150,6 +150,22 @@ export default function GuestList() {
           </Grid>
         </Box>
         <Box>
+          <Box sx={{ display: 'flex', justifyContent: 'end', py: 2 }}>
+            <OutlinedInput
+              id="outlined-adornment-weight"
+              aria-describedby="outlined-weight-helper-text"
+              placeholder="Search"
+              sx={{ border: 1, borderColor: '#12A9B2' }}
+              size="small"
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton>
+                    <SearchOutlinedIcon sx={{ color: '#12A9B2', mr: -2 }} />
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+          </Box>
           <Box style={{ width: '95%' }}>
             <DataGrid
               rows={rowsWithCount}
