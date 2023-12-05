@@ -18,7 +18,8 @@ export default function GuestList() {
   const [totalGuests, setTotalGuests] = useState('');
   const [absentGuests, setAbsentGuests] = useState('');
   const [presentGuests, setPresentGuests] = useState('');
-
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
@@ -46,6 +47,7 @@ export default function GuestList() {
           setTotalGuests(res.data.data.totalGuest);
           setAbsentGuests(res.data.data.attendstatus.total_absent);
           setPresentGuests(res.data.data.attendstatus.total_present);
+          setSearchResults(res.data.data.guestlist);
         })
         .catch((error) => {
           console.error(error);
@@ -53,8 +55,17 @@ export default function GuestList() {
     };
 
     fetchData();
-  }, [comId]);
+  }, [idxe, comId]);
 
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+    const results = guests.filter((guest) => guest.guest_email.toLowerCase().includes(e.target.value.toLowerCase()));
+    setSearchResults(results);
+  };
+
+  const handleButtonClick = () => {
+    <></>;
+  };
   const adjustColumnWidths = () => {
     const columns = [
       { field: 'id', headerName: 'SL' },
@@ -75,7 +86,7 @@ export default function GuestList() {
     return columns;
   };
 
-  const rowsWithCount = guests.map((guest, index) => ({
+  const rowsWithCount = searchResults.map((guest, index) => ({
     ...guest,
     id: index + 1
   }));
@@ -152,15 +163,16 @@ export default function GuestList() {
         <Box>
           <Box sx={{ display: 'flex', justifyContent: 'end', py: 2 }}>
             <OutlinedInput
-              id="outlined-adornment-weight"
-              aria-describedby="outlined-weight-helper-text"
-              placeholder="Search"
+              type="text"
+              placeholder="Search by name..."
+              value={searchTerm}
+              onChange={handleSearch}
               sx={{ border: 1, borderColor: '#12A9B2' }}
               size="small"
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton>
-                    <SearchOutlinedIcon sx={{ color: '#12A9B2', mr: -2 }} />
+                    <SearchOutlinedIcon onClick={handleButtonClick} sx={{ color: '#12A9B2', mr: -2 }} />
                   </IconButton>
                 </InputAdornment>
               }
