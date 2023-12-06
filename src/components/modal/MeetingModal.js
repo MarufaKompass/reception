@@ -1,25 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Box, Typography, Divider, Avatar, Button, List, ListItem, Grid } from '@mui/material';
+import { Modal, Box, Typography, Divider, Avatar, List, ListItem, Grid } from '@mui/material';
 import axiosInstance from 'utils/axios.config';
 import { useAppContextReception } from 'AppContextReception';
-import ImageModal from './ImageModal';
 import CloseButton from 'components/Button/CloseButton';
 import TableChip from 'components/chips/chip';
 import BelongsTable from 'components/table/BelongsTable';
+import Uppercase from 'components/Uppercase/Uppercase';
 
 export default function MeetingModal(props) {
   const { selectedMeetingId, showMeetingModal, handleClose } = props;
-  const [imageModal, setImageModal] = useState(false);
   const { comId } = useAppContextReception();
   const [meetingShow, setMeetingShow] = useState([]);
   const [extraVisitors, setExtraVisitors] = useState([]);
-  const [extraVisitorId, setExtraVisitorsId] = useState([]);
   const [visitorBelongs, setVisitorBelongs] = useState('');
-
-  const handleVisitor = (id) => {
-    setImageModal(true);
-    setExtraVisitorsId(id);
-  };
+  const [cancelNote, setCancelNote] = useState('');
 
   const {
     code,
@@ -45,7 +39,8 @@ export default function MeetingModal(props) {
           setMeetingShow(res.data.data.meeting);
           setExtraVisitors(res.data.data.extravisitors);
           setVisitorBelongs(res.data.data.visitorbelong);
-          console.log(res.data.data);
+          setCancelNote(res.data.data.cancelnote);
+          console.log(res.data);
         })
         .catch((err) => console.error(err));
     };
@@ -315,17 +310,11 @@ export default function MeetingModal(props) {
                       variant="square"
                       sx={{ width: '130px', height: '130px', border: 1, color: '#12A9B2', borderRadius: 1 }}
                     />
-                    <Grid item xs={12} sm={12} md={12} lg={12} xl={12} sx={{ pr: 3 }}>
-                      <Button onClick={() => setImageModal(true)} variant="outlined" size="small" sx={{ my: 2, color: '#12A9B2' }}>
-                        Take Photo
-                      </Button>
-                    </Grid>
                   </Grid>
                 </Grid>
               </ListItem>
-              <ImageModal imageModal={imageModal} handleClose={() => setImageModal(false)} />
             </Grid>
-            {extraVisitors !== null && (
+            {ex_visitor_no > 0 && (
               <>
                 <Grid xs={12} sm={12}>
                   <Typography sx={{ pl: 2, mt: 1, color: '#12a9b2' }} variant="h5" component="div">
@@ -389,29 +378,10 @@ export default function MeetingModal(props) {
                               variant="square"
                               sx={{ width: '100px', height: '100px', border: 1, color: '#12A9B2', borderRadius: 1 }}
                             />
-
-                            <Grid item xs={12} sm={12} md={12} lg={12} xl={12} sx={{ pr: 3 }}>
-                              <Button
-                                onClick={() => handleVisitor(visitors.id)}
-                                variant="outlined"
-                                size="small"
-                                sx={{ my: 2, color: '#12A9B2' }}
-                              >
-                                Update
-                              </Button>
-                            </Grid>
                           </Grid>
                         </Grid>
                       </ListItem>
                     </Grid>
-                    <ImageModal
-                      imageModal={imageModal}
-                      name={visitors.name}
-                      phone={visitors.phone}
-                      vcard={visitors.vcard}
-                      extraVisitorId={extraVisitorId}
-                      handleClose={() => setImageModal(false)}
-                    />
                   </>
                 ))}
               </>
@@ -500,6 +470,46 @@ export default function MeetingModal(props) {
               </>
             )}
           </Grid>
+          {Uppercase(status) === 'Cancel' && (
+            <>
+              <Grid sx={{ pb: 3 }} container spacing={2}>
+                <Grid
+                  item
+                  xs={12}
+                  md={12}
+                  lg={12}
+                  sx={{
+                    width: '100%'
+                  }}
+                >
+                  <List>
+                    <Typography sx={{ pl: 2, mt: 1, color: '#FF0000' }} variant="h5" component="div">
+                      Cancel Note :
+                    </Typography>
+                    <ListItem sx={{ mb: -1 }}>
+                      <Grid container>
+                        <Grid xs={4} sm={2} lg={2}>
+                          <Typography sx={{ color: '#FF0000' }} variant="h6" component="div">
+                            Text
+                          </Typography>
+                        </Grid>
+                        <Grid xs={1} sm={1} lg={1}>
+                          <Typography sx={{ color: '#FF0000' }} variant="h6" component="div">
+                            :
+                          </Typography>
+                        </Grid>
+                        <Grid xs={7} sm={9} lg={9}>
+                          <Typography sx={{ color: '#FF0000' }} variant="h6" component="div">
+                            {cancelNote.note}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                    </ListItem>
+                  </List>
+                </Grid>
+              </Grid>
+            </>
+          )}
         </List>
         <Divider sx={{ color: '#12A9B2', border: 1, opacity: 0.3, mt: 2 }} />
         <Box sx={{ display: { xs: 'block', sm: 'flex' }, justifyContent: 'space-between', alignItems: 'center', px: 2, my: 1 }}>

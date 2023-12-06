@@ -24,6 +24,8 @@ export default function MeetingCode() {
     height: '180px',
     width: '100%',
     border: 1,
+    padding: 0,
+    margin: 0,
     borderColor: '#12A9B2'
   };
 
