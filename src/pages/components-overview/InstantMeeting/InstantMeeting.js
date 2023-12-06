@@ -570,7 +570,7 @@ export default function InstantMeeting() {
                     placeholder="Guest Name"
                     value={comId}
                   />
-                  <Grid item xs={12} sm={6} md={6} lg={6} xl={6} sx={{ pr: 3 }}>
+                  <Grid item xs={12} sm={6} md={6} lg={6} xl={6} sx={{ pr: 3, pl: 2 }}>
                     <Box sx={{ mt: { xs: 2, sm: 0 } }}>
                       <FormHelperText>
                         <Typography variant="h5" component="h5" color="#4e4d4e" fontSize="14px">
@@ -581,7 +581,7 @@ export default function InstantMeeting() {
                         <Grid container spacing={2}>
                           <Grid items xs={12}>
                             <Grid container sx={{ mt: '18px' }}>
-                              <Grid items sm={6} md={4}  lg={5} xl={3} sx={{ width: '100%' }}>
+                              <Grid items sm={6} md={4} lg={5} xl={3} sx={{ width: '100%' }}>
                                 <Select
                                   {...register('guest_country_code', { required: true })}
                                   name="guest_country_code"
