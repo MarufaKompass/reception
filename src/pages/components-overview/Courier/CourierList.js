@@ -83,9 +83,9 @@ export default function CourierList() {
 
   return (
     <Box>
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: '-60px', pb:"10px"}}>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: '-60px', pb: '10px' }}>
         <Button
-           onClick={courierNavigate}
+          onClick={courierNavigate}
           style={{
             color: '#12A9B2',
             borderColor: '#12A9B2',

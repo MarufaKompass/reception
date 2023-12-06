@@ -92,7 +92,7 @@ export default function EventList() {
             borderColor: '#12A9B2',
             '&:hover': {
               color: '#12A9B2',
-              borderColor: '#12A9B2',
+              borderColor: '#12A9B2'
             }
           }}
           variant="outlined"

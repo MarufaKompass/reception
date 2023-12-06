@@ -23,7 +23,7 @@ const allListed = {
   children: [
     {
       id: 'waitingList',
-      title: "Today's waiting List",
+      title: "Today's Waiting List",
       type: 'item',
       url: '/waiting',
       icon: icons.waitingList
