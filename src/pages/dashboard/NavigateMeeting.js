@@ -48,7 +48,7 @@ const NavigateMeeting = () => {
                   fontSize: 20,
                   '&:hover': { color: '#fff', backgroundColor: '#12A9B2' }
                 }}
-                startIcon={<GridViewOutlinedIcon />}
+                startIcon={<GridViewOutlinedIcon sx={{ '&:hover': { color: '#12A9B2' } }} />}
               >
                 <Typography variant="p">Enter Meeting Code</Typography>
               </Button>
@@ -56,7 +56,7 @@ const NavigateMeeting = () => {
 
             <Box sx={{ display: 'block' }}>
               <Button
-              onClick={handleCheckInstantMeeting}
+                onClick={handleCheckInstantMeeting}
                 variant="outlined"
                 size="medium"
                 sx={{
