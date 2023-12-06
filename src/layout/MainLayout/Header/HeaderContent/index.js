@@ -3,19 +3,12 @@ import { Box, useMediaQuery } from '@mui/material';
 
 import Profile from './Profile';
 
-import MobileSection from './MobileSection';
-
 // ==============================|| HEADER - CONTENT ||============================== //
 
 const HeaderContent = () => {
-  const matchesXs = useMediaQuery((theme) => theme.breakpoints.down('md'));
+  const matchesXs = useMediaQuery((theme) => theme.breakpoints.down('sx'));
 
-  return (
-    <Box>
-      {!matchesXs && <Profile />}
-      {matchesXs && <MobileSection />}
-    </Box>
-  );
+  return <Box>{!matchesXs && <Profile />}</Box>;
 };
 
 export default HeaderContent;

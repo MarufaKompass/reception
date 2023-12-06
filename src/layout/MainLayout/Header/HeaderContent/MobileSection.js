@@ -85,7 +85,6 @@ const MobileSection = () => {
               <ClickAwayListener onClickAway={handleClose}>
                 <AppBar color="inherit">
                   <Toolbar>
-                   
                     <Profile />
                   </Toolbar>
                 </AppBar>
