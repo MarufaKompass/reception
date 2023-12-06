@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import { AppBar,IconButton, Toolbar, useMediaQuery } from '@mui/material';
+import { AppBar, Box, IconButton, Toolbar, useMediaQuery } from '@mui/material';
 
 // project import
 import AppBarStyled from './AppBarStyled';
@@ -22,7 +22,7 @@ const Header = ({ open, handleDrawerToggle }) => {
 
   // common header
   const mainHeader = (
-    <Toolbar>
+    <Toolbar sx={{ background: '#fff', display: 'flex', justifyContent: 'space-between' }}>
       <IconButton
         disableRipple
         aria-label="open drawer"
@@ -49,15 +49,15 @@ const Header = ({ open, handleDrawerToggle }) => {
   };
 
   return (
-    <>
+    <Box>
       {!matchDownMD ? (
-        <AppBarStyled open={open} {...appBar} >
+        <AppBarStyled open={open} {...appBar}>
           {mainHeader}
         </AppBarStyled>
       ) : (
         <AppBar {...appBar}>{mainHeader}</AppBar>
       )}
-    </>
+    </Box>
   );
 };
 
