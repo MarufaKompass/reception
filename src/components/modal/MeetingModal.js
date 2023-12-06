@@ -3,7 +3,7 @@ import { Modal, Box, Typography, Divider, Avatar, List, ListItem, Grid } from '@
 import axiosInstance from 'utils/axios.config';
 import { useAppContextReception } from 'AppContextReception';
 import CloseButton from 'components/Button/CloseButton';
-import TableChip from 'components/chips/chip';
+import TableChip from 'components/chips/TableChip';
 import BelongsTable from 'components/table/BelongsTable';
 import Uppercase from 'components/Uppercase/Uppercase';
 

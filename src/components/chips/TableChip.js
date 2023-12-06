@@ -14,14 +14,14 @@ export default function TableChip({ children }) {
 
   const toUpperCaseStatus = capitalizeFirstLetter(children);
   return toUpperCaseStatus === 'Cancel' ? (
-    <Chip label={toUpperCaseStatus} sx={{ backgroundColor: '#ED5E68', color: '#fff', borderRadius: 1 }} />
+    <Chip label={toUpperCaseStatus} size="small" sx={{ backgroundColor: '#ED5E68', color: '#fff', borderRadius: 1 }} />
   ) : toUpperCaseStatus === 'Waiting' ? (
-    <Chip label={toUpperCaseStatus} sx={{ backgroundColor: '#ffc107', color: '#fff', borderRadius: 1 }} />
+    <Chip label={toUpperCaseStatus} size="small" sx={{ backgroundColor: '#ffc107', color: '#fff', borderRadius: 1 }} />
   ) : toUpperCaseStatus === 'Pending' ? (
-    <Chip label={toUpperCaseStatus} sx={{ backgroundColor: '#F29339', color: '#fff', borderRadius: 1 }} />
+    <Chip label={toUpperCaseStatus} size="small" sx={{ backgroundColor: '#F29339', color: '#fff', borderRadius: 1 }} />
   ) : toUpperCaseStatus === 'Active' ? (
-    <Chip label={toUpperCaseStatus} sx={{ backgroundColor: '#6AA84F', color: '#fff', borderRadius: 1 }} />
+    <Chip label={toUpperCaseStatus} size="small" sx={{ backgroundColor: '#6AA84F', color: '#fff', borderRadius: 1 }} />
   ) : (
-    <Chip label={toUpperCaseStatus} sx={{ backgroundColor: '#4EA20F', color: '#fff', borderRadius: 1 }} />
+    <Chip label={toUpperCaseStatus} size="small" sx={{ backgroundColor: '#4EA20F', color: '#fff', borderRadius: 1 }} />
   );
 }

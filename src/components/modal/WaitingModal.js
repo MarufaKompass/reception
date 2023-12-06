@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, Box, Typography, Divider, List, Grid, ListItem, Avatar, Button, OutlinedInput } from '@mui/material';
-import TableChip from 'components/chips/chip';
+import TableChip from 'components/chips/TableChip';
 import CloseButton from 'components/Button/CloseButton';
 import { useAppContextReception } from 'AppContextReception';
 import axiosInstance from 'utils/axios.config';
