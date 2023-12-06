@@ -20,15 +20,6 @@ export default function MeetingCode() {
     navigate('/');
   };
 
-  const previewStyle = {
-    height: '180px',
-    width: '100%',
-    border: 1,
-    padding: 0,
-    margin: 0,
-    borderColor: '#12A9B2'
-  };
-
   const {
     register,
     handleSubmit,
@@ -121,7 +112,12 @@ export default function MeetingCode() {
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Box sx={{ display: { sm: 'flex', md: 'flex' }, justifyContent: 'center', alignItems: 'center', my: 2 }}>
                   <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <QrReader delay={delay} style={previewStyle} onError={handleError} onScan={handleScan} />
+                    <QrReader
+                      delay={delay}
+                      style={{ height: '180px', width: '100%', border: 1, padding: 0, margin: 0, borderColor: '#12A9B2' }}
+                      onError={handleError}
+                      onScan={handleScan}
+                    />
                   </Box>
                   <Box sx={{ mx: { xs: 0, sm: 2 }, mt: { xs: 2, sm: 0 }, width: { xs: '100%', sm: '40%' } }}>
                     <Typography variant="h6">Meeting Code *</Typography>
