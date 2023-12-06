@@ -15,20 +15,18 @@ const videoConstraints = {
 };
 
 export default function ImageModal(props) {
-  const { imageModal, handleClose, extraVisitorId, name, phone, vcard } = props;
+  const { imageModal, handleClose, extraVisitorId, name, phone } = props;
 
   const { register, handleSubmit, reset } = useForm();
 
   const onSubmit = (data) => {
     data.extra_visitor_id = extraVisitorId;
     data.extra_visitor_image = uploadedPhoto;
-    console.log(data);
     axiosInstance
       .put('https://api.hellokompass.com/reception/visitorupdate', data)
       .then((res) => {
         if (res.data.code === 200) {
           toast.success(res.data.message);
-          handleClose();
           reset();
         } else if (res.data.code === 400) {
           toast.failed(res.data.message);
@@ -156,7 +154,7 @@ export default function ImageModal(props) {
                 sx={{ width: '100%' }}
               />
             </Box>
-            <Box sx={{ my: 2 }}>
+            {/* <Box sx={{ my: 2 }}>
               <Typography variant="p" sx={{ my: 2, fontSize: 17 }}>
                 Visitor Card
               </Typography>
@@ -170,7 +168,7 @@ export default function ImageModal(props) {
                 placeholder="Your Name"
                 sx={{ width: '100%' }}
               />
-            </Box>
+            </Box> */}
           </Box>
           <Grid container>
             <Grid item xs={12} sm={6} md={6} lg={6} xl={6} sx={{ pr: 3 }} alignItems="center">

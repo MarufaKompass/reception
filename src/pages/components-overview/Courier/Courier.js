@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Button, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
+import { Box, Button, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import MainCard from 'components/MainCard';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -8,7 +8,7 @@ import { courierSchema } from 'components/validation/validation';
 import axiosInstance from 'utils/axios.config';
 import { useAppContextReception } from 'AppContextReception';
 import { toast } from 'react-toastify';
-
+import courier from '../../../assets/images/img/Courier.png';
 export default function Courier() {
   const { comId } = useAppContextReception();
   const [employeeList, setEmployeeList] = useState([]);
@@ -67,108 +67,133 @@ export default function Courier() {
           </Typography>
         </Box>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Box>
-            <Box sx={{ my: 2 }}>
-              <Typography variant="p" sx={{ my: 2, fontSize: 17 }}>
-                Name
-              </Typography>
-              <TextField
-                {...register('name', { required: true })}
-                id="outlined-basic"
-                name="name"
-                size="medium"
-                variant="outlined"
-                placeholder="Your Name"
-                sx={{ width: '100%' }}
-              />
-              <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.name?.message}</Typography>
-            </Box>
-            <Box sx={{ my: 2 }}>
-              <Typography variant="p" sx={{ my: 2, fontSize: 17 }}>
-                Phone
-              </Typography>
-              <TextField
-                {...register('phone', { required: true })}
-                id="outlined-basic"
-                name="phone"
-                size="medium"
-                variant="outlined"
-                type="number"
-                placeholder="Your Phone Ex: 017xxxxxxxx"
-                sx={{ width: '100%' }}
-              />
-              <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.phone?.message}</Typography>
-            </Box>
-            <TextField
-              {...register('com_id', { required: true })}
-              id="outlined-basic"
-              name="com_id"
-              variant="outlined"
-              sx={{ display: 'none' }}
-              value={comId}
-            />
-            <Box sx={{ my: 2 }}>
-              <Typography variant="p" sx={{ my: 2, fontSize: 17 }}>
-                Company
-              </Typography>
-              <TextField
-                {...register('company', { required: true })}
-                id="outlined-basic"
-                size="medium"
-                variant="outlined"
-                name="company"
-                placeholder="Your Company Name"
-                sx={{ width: '100%' }}
-              />
-              <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.company?.message}</Typography>
-            </Box>
-            <Box sx={{ my: 2 }}>
-              <Typography variant="p" sx={{ fontSize: 17, display: 'block' }}>
-                Parcel Type
-              </Typography>
-              <Select
-                {...register('parcel_type', { required: true })}
-                name="parcel_type"
-                inputProps={{ 'aria-label': 'Without label' }}
-                sx={{ width: '100%' }}
-                size="medium"
-                displayEmpty
-              >
-                <MenuItem>
-                  <InputLabel selected htmlFor="outlined-adornments">
-                    Select Parcel Type
-                  </InputLabel>
-                </MenuItem>
-                <MenuItem value="document">Documents</MenuItem>
-                <MenuItem value="small box">Small Box</MenuItem>
-                <MenuItem value="medium box">Medium Box</MenuItem>
-              </Select>
-              <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.parcel_type?.message}</Typography>
-            </Box>
-            <Box sx={{ my: 2 }}>
-              <Typography variant="p" sx={{ fontSize: 17, display: 'block' }}>
-                Employee
-              </Typography>
-              <Select
-                {...register('person_id', { required: true })}
-                name="person_id"
-                inputProps={{ 'aria-label': 'Without label' }}
-                sx={{ width: '100%' }}
-                size="medium"
-                displayEmpty
-              >
-                <MenuItem selected htmlFor="outlined-adornment">
-                  <em>Select Employee Type</em>
-                </MenuItem>
-                {employeeList.map((employee) => (
-                  <MenuItem key={employee.id} value={employee.person_id}>
-                    {employee.pname} ({employee.dname})
-                  </MenuItem>
-                ))}
-              </Select>
-              <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.person_id?.message}</Typography>
-            </Box>
-          </Box>
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={12} md={6}>
+              <Box>
+                <Box sx={{ my: 2 }}>
+                  <Typography variant="p" fontSize="14px">
+                    Ref
+                  </Typography>
+                  <TextField
+                    {...register('ref', { required: true })}
+                    id="outlined-basic"
+                    name="name"
+                    size="medium"
+                    variant="outlined"
+                    placeholder="Your Name"
+                    sx={{ width: '100%', mt: 1 }}
+                  />
+                  <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.ref?.message}</Typography>
+                </Box>
+                <Box>
+                  <Typography variant="p" fontSize="14px">
+                    Delivery Man Name
+                  </Typography>
+                  <TextField
+                    {...register('name', { required: true })}
+                    id="outlined-basic"
+                    name="name"
+                    size="medium"
+                    variant="outlined"
+                    placeholder="Your Name"
+                    sx={{ width: '100%', mt: 1 }}
+                  />
+                  <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.name?.message}</Typography>
+                </Box>
+                <Box sx={{ my: 2 }}>
+                  <Typography variant="p" sx={{ my: 2 }} fontSize="14px">
+                    Delivery Man Phone
+                  </Typography>
+                  <TextField
+                    {...register('phone', { required: true })}
+                    id="outlined-basic"
+                    name="phone"
+                    size="medium"
+                    variant="outlined"
+                    type="number"
+                    placeholder="Your Phone Ex: 017xxxxxxxx"
+                    sx={{ width: '100%', mt: 1 }}
+                  />
+                  <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.phone?.message}</Typography>
+                </Box>
+                <TextField
+                  {...register('com_id', { required: true })}
+                  id="outlined-basic"
+                  name="com_id"
+                  variant="outlined"
+                  sx={{ display: 'none' }}
+                  value={comId}
+                />
+                <Box sx={{ my: 2 }}>
+                  <Typography variant="p" sx={{ my: 2 }} fontSize="14px">
+                    Delivery Company
+                  </Typography>
+                  <TextField
+                    {...register('company', { required: true })}
+                    id="outlined-basic"
+                    size="medium"
+                    variant="outlined"
+                    name="company"
+                    placeholder="Your Company Name"
+                    sx={{ width: '100%', mt: 1 }}
+                  />
+                  <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.company?.message}</Typography>
+                </Box>
+                <Box sx={{ my: 2 }}>
+                  <Typography variant="p" sx={{ display: 'block' }} fontSize="14px">
+                    Parcel Type
+                  </Typography>
+                  <Select
+                    {...register('parcel_type', { required: true })}
+                    name="parcel_type"
+                    inputProps={{ 'aria-label': 'Without label' }}
+                    sx={{ width: '100%', mt: 1 }}
+                    size="medium"
+                    displayEmpty
+                  >
+                    <MenuItem>
+                      <InputLabel selected htmlFor="outlined-adornments">
+                        Select Parcel Type
+                      </InputLabel>
+                    </MenuItem>
+                    <MenuItem value="document">Documents</MenuItem>
+                    <MenuItem value="small box">Small Box</MenuItem>
+                    <MenuItem value="medium box">Medium Box</MenuItem>
+                  </Select>
+                  <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.parcel_type?.message}</Typography>
+                </Box>
+                <Box sx={{ my: 2 }}>
+                  <Typography variant="p" sx={{ display: 'block' }} fontSize="14px">
+                    Employee
+                  </Typography>
+                  <Select
+                    {...register('person_id', { required: true })}
+                    name="person_id"
+                    inputProps={{ 'aria-label': 'Without label' }}
+                    sx={{ width: '100%', mt: 1 }}
+                    size="medium"
+                    displayEmpty
+                  >
+                    <MenuItem selected htmlFor="outlined-adornment">
+                      <InputLabel>Select Employee Type</InputLabel>
+                    </MenuItem>
+                    {employeeList.map((employee) => (
+                      <MenuItem key={employee.id} value={employee.person_id}>
+                        {employee.pname} ({employee.dname})
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.person_id?.message}</Typography>
+                </Box>
+              </Box>
+            </Grid>
+
+            <Grid item xs={12} sm={12} md={6}>
+              <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+                <img src={courier} alt="courier" />
+              </Box>
+            </Grid>
+          </Grid>
           <Box sx={{ display: 'flex', justifyContent: 'end' }}>
             <Button
               variant="outlined"

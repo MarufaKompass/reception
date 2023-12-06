@@ -15,6 +15,9 @@ const guestCompanyValidation = yup.string().required('Guest company name is requ
 const purposeValidation = yup.string().required('Purpose is required');
 const timeValidation = yup.string().required('Meeting type is required');
 const extraVisitorValidation = yup.string().required('Extra visitor is required');
+const reference = yup.string().required('ref is required');
+const quantities = yup.number().min(1, 'Quantity must be at least 1');
+
 
 export const meetingCodeSchema = yup.object().shape({
   code: meetingCodeValidation
@@ -23,8 +26,12 @@ export const meetingCodeSchema = yup.object().shape({
 export const eventCodeSchema = yup.object().shape({
   code: eventCodeValidation
 });
+export const quantity = yup.object().shape({
+  qty:quantities
+});
 
 export const courierSchema = yup.object().shape({
+  ref: reference,
   name: nameValidation,
   phone: phoneValidation,
   company: companyValidation,

@@ -7,13 +7,13 @@ import InvisibleEye from 'components/svg/InvisibleEye';
 import VisibleEye from 'components/svg/VisibleEye';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-
+import { useAppContextReception } from 'AppContextReception';
 const AuthLogin = () => {
   // const [checked, setChecked] = useState(false);
   const { register, handleSubmit, reset } = useForm();
   const { palette } = createTheme();
   const navigate = useNavigate();
-
+ const{setUser} = useAppContextReception();
   //palette
   const { augmentColor } = palette;
   const createColor = (mainColor) => augmentColor({ color: { main: mainColor } });
@@ -42,6 +42,8 @@ const AuthLogin = () => {
       if (response.status === 200) {
         sessionStorage.setItem('com', JSON.stringify(response.data.data.com_id));
         sessionStorage.setItem('token', JSON.stringify(response.data.data.token));
+        setUser(response.data.data.token);
+
         navigate('/');
         reset();
       }

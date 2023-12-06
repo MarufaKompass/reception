@@ -8,7 +8,8 @@ import ImageModal from './ImageModal';
 import { useForm, useFieldArray } from 'react-hook-form';
 import SubmitButton from 'components/Button/SubmitButton';
 import { toast } from 'react-toastify';
-
+import { quantity } from 'components/validation/validation';
+import { yupResolver } from '@hookform/resolvers/yup';
 export default function WaitingModal(props) {
   const { waitingModal, handleClose, waitingId } = props;
   const [imageModal, setImageModal] = useState(false);
@@ -22,9 +23,15 @@ export default function WaitingModal(props) {
     setExtraVisitorsId(id);
   };
 
-  const { register, handleSubmit, control } = useForm({
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors }
+  } = useForm({
     defaultValues: {
-      fields: [{ belongs: '', qty: '' }]
+      fields: [{ belongs: '', qty: '' }],
+      resolver: yupResolver(quantity)
     }
   });
 
@@ -361,7 +368,7 @@ export default function WaitingModal(props) {
                       />
                       <Grid item xs={12} sm={12} md={12} lg={12} xl={12} sx={{ pr: 3 }}>
                         <Button onClick={() => setImageModal(true)} variant="outlined" size="small" sx={{ my: 2, color: '#12A9B2' }}>
-                          Take Photo
+                          Update
                         </Button>
                       </Grid>
                     </Grid>
@@ -547,6 +554,7 @@ export default function WaitingModal(props) {
                                     sx={{ border: 1, borderColor: '#12A9B2', width: '100%', mt: 1 }}
                                     size="small"
                                   />
+                                  <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.qty?.message}</Typography>
                                 </Grid>
                               </Grid>
                             </Grid>
@@ -610,7 +618,6 @@ export default function WaitingModal(props) {
                 </Grid>
               </Grid>
             </Grid>
-
             <Divider sx={{ color: '#12A9B2', border: 1, opacity: 0.3, mt: 2 }} />
             <Box sx={{ display: { xs: 'block', sm: 'flex' }, justifyContent: 'end', alignItems: 'center', px: 2 }}>
               <SubmitButton>Check In</SubmitButton>
