@@ -3,7 +3,9 @@ import { Chip } from '@mui/material';
 
 export default function TableChip({ children }) {
   const capitalizeFirstLetter = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+    const capitalizedStatus =
+      string && typeof string === 'string' && string.length > 0 ? string.charAt(0).toUpperCase() + string.slice(1) : '';
+    return capitalizedStatus;
   };
 
   if (!children) {

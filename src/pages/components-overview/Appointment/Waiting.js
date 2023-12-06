@@ -80,7 +80,7 @@ export default function Waiting() {
           return <TableChip>{params.value}</TableChip>;
         }
       },
-      { field: 'message', headerName: 'Message', flex: isSmallScreen ? 0 : 1 },
+      { field: 'text', headerName: 'Message', flex: isSmallScreen ? 0 : 1 },
       {
         field: 'action',
         headerName: 'Action',
@@ -177,7 +177,12 @@ export default function Waiting() {
           <NoDataImage />
         )}
 
-        <WaitingModal waitingModal={waitingModal} waitingId={waitingId} handleClose={() => setWaitingModal(false)} />
+        <WaitingModal
+          waitingModal={waitingModal}
+          waitingId={waitingId}
+          handleClose={() => setWaitingModal(false)}
+          handleOpen={() => setWaitingModal(true)}
+        />
         <Checkout checkOutModal={checkOutModal} waitingId={waitingId} handleClose={() => setCheckOutModal(false)} />
       </MainCard>
     </Box>

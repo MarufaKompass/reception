@@ -6,17 +6,19 @@ import { useAppContextReception } from 'AppContextReception';
 import axiosInstance from 'utils/axios.config';
 import ImageModal from './ImageModal';
 import { useForm, useFieldArray } from 'react-hook-form';
-import SubmitButton from 'components/Button/SubmitButton';
 import { toast } from 'react-toastify';
 import { quantity } from 'components/validation/validation';
 import { yupResolver } from '@hookform/resolvers/yup';
+import SubmitButton from 'components/Button/SubmitButton';
 export default function WaitingModal(props) {
-  const { waitingModal, handleClose, waitingId } = props;
+  const { waitingModal, handleClose, handleOpen, waitingId } = props;
   const [imageModal, setImageModal] = useState(false);
   const [meetingShow, setMeetingShow] = useState([]);
   const [extraVisitors, setExtraVisitors] = useState([]);
+  const [belongs, setBelongs] = useState('');
   const { comId } = useAppContextReception();
-  const [extraVisitorId, setExtraVisitorsId] = useState([]);
+  const [extraVisitorId, setExtraVisitorsId] = useState('');
+  const [cancelNote, setCancelNote] = useState('');
 
   const handleVisitor = (id) => {
     setImageModal(true);
@@ -27,6 +29,7 @@ export default function WaitingModal(props) {
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors }
   } = useForm({
     defaultValues: {
@@ -54,10 +57,12 @@ export default function WaitingModal(props) {
 
     axiosInstance.post('https://api.hellokompass.com/reception/visitorcheckin', newData).then((res) => {
       if (res.data.code === 200) {
-        handleClose();
         toast.success(res.data.message);
+        handleOpen();
+        reset();
       } else if (res.data.code === 400) {
         toast.error(res.data.message);
+        handleOpen();
         reset();
       } else {
         <></>;
@@ -73,7 +78,14 @@ export default function WaitingModal(props) {
     remove(index);
   };
 
+  const capitalizeFirstLetter = (string) => {
+    const capitalizedStatus =
+      string && typeof string === 'string' && string.length > 0 ? string.charAt(0).toUpperCase() + string.slice(1) : '';
+    return capitalizedStatus;
+  };
+
   const {
+    id,
     code,
     purpose,
     status,
@@ -94,7 +106,10 @@ export default function WaitingModal(props) {
       axiosInstance
         .get(`https://api.hellokompass.com/reception/meetingview?meeting_id=${waitingId}&com_id=${comId}`)
         .then((res) => {
-          setMeetingShow(res.data.data.meeting), setExtraVisitors(res.data.data.extravisitors);
+          setMeetingShow(res.data.data.meeting);
+          setExtraVisitors(res.data.data.extravisitors);
+          setBelongs(res.data.data.visitorbelong);
+          setCancelNote(res.data.data.cancelnote);
         })
         .catch((err) => console.error(err));
     };
@@ -367,20 +382,13 @@ export default function WaitingModal(props) {
                         sx={{ width: '130px', height: '130px', border: 1, color: '#12A9B2', borderRadius: 1 }}
                       />
                       <Grid item xs={12} sm={12} md={12} lg={12} xl={12} sx={{ pr: 3 }}>
-                        <Button onClick={() => setImageModal(true)} variant="outlined" size="small" sx={{ my: 2, color: '#12A9B2' }}>
+                        <Button onClick={() => handleVisitor(id)} variant="outlined" size="small" sx={{ my: 2, color: '#12A9B2' }}>
                           Update
                         </Button>
                       </Grid>
                     </Grid>
                   </Grid>
                 </ListItem>
-                <ImageModal
-                  imageModal={imageModal}
-                  name={guest_name}
-                  phone={guest_phone}
-                  extraVisitorId={extraVisitorId}
-                  handleClose={() => setImageModal(false)}
-                />
               </Grid>
               {ex_visitor_no > 0 && (
                 <>
@@ -461,14 +469,6 @@ export default function WaitingModal(props) {
                           </Grid>
                         </ListItem>
                       </Grid>
-                      <ImageModal
-                        imageModal={imageModal}
-                        name={visitors.name}
-                        phone={visitors.phone}
-                        vcard={visitors.vcard}
-                        extraVisitorId={extraVisitorId}
-                        handleClose={() => setImageModal(false)}
-                      />
                     </>
                   ))}
                 </>
@@ -617,6 +617,48 @@ export default function WaitingModal(props) {
                   </Grid>
                 </Grid>
               </Grid>
+
+              {capitalizeFirstLetter(status) === 'Cancel' && (
+                <>
+                  <Divider sx={{ borderTop: 2, borderTopStyle: 'dashed', borderTopColor: '#a2a2a2' }} />
+                  <Grid sx={{ pb: 3 }} container spacing={2}>
+                    <Grid
+                      item
+                      xs={12}
+                      md={12}
+                      lg={12}
+                      sx={{
+                        width: '100%'
+                      }}
+                    >
+                      <List>
+                        <Typography sx={{ pl: 2, mt: 1, color: '#FF0000' }} variant="h5" component="div">
+                          Cancel Note :
+                        </Typography>
+                        <ListItem sx={{ mb: -1 }}>
+                          <Grid container>
+                            <Grid xs={4} sm={2} lg={2}>
+                              <Typography sx={{ color: '#FF0000' }} variant="h6" component="div">
+                                Text
+                              </Typography>
+                            </Grid>
+                            <Grid xs={1} sm={1} lg={1}>
+                              <Typography sx={{ color: '#FF0000' }} variant="h6" component="div">
+                                :
+                              </Typography>
+                            </Grid>
+                            <Grid xs={7} sm={9} lg={9}>
+                              <Typography sx={{ color: '#FF0000' }} variant="h6" component="div">
+                                {cancelNote.note}
+                              </Typography>
+                            </Grid>
+                          </Grid>
+                        </ListItem>
+                      </List>
+                    </Grid>
+                  </Grid>
+                </>
+              )}
             </Grid>
             <Divider sx={{ color: '#12A9B2', border: 1, opacity: 0.3, mt: 2 }} />
             <Box sx={{ display: { xs: 'block', sm: 'flex' }, justifyContent: 'end', alignItems: 'center', px: 2 }}>
@@ -625,6 +667,15 @@ export default function WaitingModal(props) {
             </Box>
           </form>
         </List>
+        <ImageModal
+          imageModal={imageModal}
+          name={guest_name}
+          phone={guest_phone}
+          vcard={belongs}
+          extraVisitorId={extraVisitorId}
+          handleOpen={handleOpen}
+          handleClose={() => setImageModal(false)}
+        />
       </Box>
     </Modal>
   );
