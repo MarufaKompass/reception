@@ -16,7 +16,7 @@ Mantis has Ant Design principal on top of the MAterial UI React component librar
 
 ![mantis-free-react-dashboard-template.jpg](https://mantisdashboard.io/adv-banner-images/og-social-v1.1.0.png)
 
-The [Pro version](https://mantisdashboard.io) of Mantis react template includes features such as TypeScript, apps, authentication methods (i.e. JWT, Auth0, Firebase), advance components, form plugins, layouts, widgets, and more.
+The [Pro version](https://mantisdashboard.io) of reception react template includes features such as TypeScript, apps, authentication methods (i.e. JWT, Auth0, Firebase), advance components, form plugins, layouts, widgets, and more.
 
 | [Mantis Free](https://mantisdashboard.io/free) | [Mantis Pro](https://mantisdashboard.io)                                         |
 | ---------------------------------------------- | :------------------------------------------------------------------------------- |
@@ -43,7 +43,7 @@ Mantis offers everything needed to build an advanced dashboard application. In t
 - Flexible & high-Performance code
 - Simple documentation
 
-## Free Mantis React version
+## reception dashboard React version
 
 #### Preview
 

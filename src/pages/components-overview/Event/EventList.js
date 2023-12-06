@@ -9,7 +9,6 @@ import axiosInstance from 'utils/axios.config';
 import { useAppContextReception } from 'AppContextReception';
 import { useNavigate } from 'react-router-dom';
 import NoDataImage from 'components/Image/NoDataImage';
-
 export default function EventList() {
   const { comId } = useAppContextReception();
   const theme = useTheme();
@@ -79,8 +78,28 @@ export default function EventList() {
 
   // Usage in your component
   const adjustedColumns = adjustColumnWidths();
+
+  const eventCode = () => {
+    navigate('/checkEvent');
+  };
   return (
     <Box>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: '-60px', pb: '10px' }}>
+        <Button
+          onClick={eventCode}
+          style={{
+            color: '#12A9B2',
+            borderColor: '#12A9B2',
+            '&:hover': {
+              color: '#12A9B2',
+              borderColor: '#12A9B2'
+            }
+          }}
+          variant="outlined"
+        >
+          Qr/Code Scan
+        </Button>
+      </Box>
       <MainCard>
         <Box>
           <Typography

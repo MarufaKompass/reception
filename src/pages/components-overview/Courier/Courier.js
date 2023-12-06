@@ -80,7 +80,7 @@ export default function Courier() {
                     name="name"
                     size="medium"
                     variant="outlined"
-                    placeholder="Your Name"
+                    placeholder="ref"
                     sx={{ width: '100%', mt: 1 }}
                   />
                   <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.ref?.message}</Typography>
@@ -95,7 +95,7 @@ export default function Courier() {
                     name="name"
                     size="medium"
                     variant="outlined"
-                    placeholder="Your Name"
+                    placeholder="Delivery Man Name"
                     sx={{ width: '100%', mt: 1 }}
                   />
                   <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.name?.message}</Typography>
@@ -111,7 +111,7 @@ export default function Courier() {
                     size="medium"
                     variant="outlined"
                     type="number"
-                    placeholder="Your Phone Ex: 017xxxxxxxx"
+                    placeholder="Phone Ex: 017xxxxxxxx"
                     sx={{ width: '100%', mt: 1 }}
                   />
                   <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.phone?.message}</Typography>
@@ -134,7 +134,7 @@ export default function Courier() {
                     size="medium"
                     variant="outlined"
                     name="company"
-                    placeholder="Your Company Name"
+                    placeholder="Delivery Company Name"
                     sx={{ width: '100%', mt: 1 }}
                   />
                   <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.company?.message}</Typography>
@@ -153,7 +153,7 @@ export default function Courier() {
                   >
                     <MenuItem>
                       <InputLabel selected htmlFor="outlined-adornments">
-                        Select Parcel Type
+                        Select
                       </InputLabel>
                     </MenuItem>
                     <MenuItem value="document">Documents</MenuItem>
@@ -175,7 +175,7 @@ export default function Courier() {
                     displayEmpty
                   >
                     <MenuItem selected htmlFor="outlined-adornment">
-                      <InputLabel>Select Employee Type</InputLabel>
+                      <InputLabel>Select</InputLabel>
                     </MenuItem>
                     {employeeList.map((employee) => (
                       <MenuItem key={employee.id} value={employee.person_id}>

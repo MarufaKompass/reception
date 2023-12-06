@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, OutlinedInput, InputAdornment, IconButton } from '@mui/material';
+import { Box, Typography, OutlinedInput, InputAdornment, IconButton, Button } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { useTheme } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
@@ -9,13 +9,13 @@ import axiosInstance from 'utils/axios.config';
 import { useAppContextReception } from 'AppContextReception';
 import TableChip from 'components/chips/chip';
 import NoDataImage from 'components/Image/NoDataImage';
-
+import { useNavigate } from '../../../../node_modules/react-router-dom/dist/index';
 export default function CourierList() {
   const { comId } = useAppContextReception();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
   const [courier, setCourier] = useState([]);
-  console.log(courier)
+  console.log(courier);
 
   useEffect(() => {
     const fetchData = () => {
@@ -76,8 +76,32 @@ export default function CourierList() {
 
   // Usage in your component
   const adjustedColumns = adjustColumnWidths();
+  const navigate = useNavigate();
+  const courierNavigate = () => {
+    navigate('/courier');
+  };
+
   return (
     <Box>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: '-60px', pb: '10px' }}>
+        <Button
+          onClick={courierNavigate}
+          style={{
+            color: '#12A9B2',
+            borderColor: '#12A9B2',
+            '&:hover': {
+              color: '#12A9B2',
+              borderColor: '#12A9B2'
+            }
+          }}
+          variant="outlined"
+        >
+          <Box fontSize="20px" sx={{ pr: '4px' }}>
+            +
+          </Box>
+          Add Courier
+        </Button>
+      </Box>
       <MainCard>
         <Box>
           <Typography
