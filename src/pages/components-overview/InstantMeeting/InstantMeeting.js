@@ -268,8 +268,6 @@ export default function InstantMeeting() {
     setVisitor1Phone(phone);
   };
 
-  /* The above code is a JavaScript code snippet that is using React hooks to capture an image from a
-   webcam and submit it to an API endpoint. */
   const [visitor2Upload, setVisitor2Upload] = useState('');
   const [visitor2Photo, setVisitor2Photo] = useState(null);
 
@@ -288,7 +286,7 @@ export default function InstantMeeting() {
 
   const submitVisitor2Image = async () => {
     try {
-      const capturedPhoto = await capture2(); // Capture the image
+      const capturedPhoto = await capture2();
 
       const requestData = new FormData();
       requestData.append('module_name', 'visitorimage');
@@ -340,7 +338,7 @@ export default function InstantMeeting() {
 
   const submitVisitor3Image = async () => {
     try {
-      const capturedPhoto = await capture3(); // Capture the image
+      const capturedPhoto = await capture3();
 
       const requestData = new FormData();
       requestData.append('module_name', 'visitorimage');
@@ -392,7 +390,7 @@ export default function InstantMeeting() {
 
   const submitVisitor4Image = async () => {
     try {
-      const capturedPhoto = await capture4(); // Capture the image
+      const capturedPhoto = await capture4();
 
       const requestData = new FormData();
       requestData.append('module_name', 'visitorimage');
@@ -426,9 +424,6 @@ export default function InstantMeeting() {
     setVisitor4Phone(phone);
   };
 
-  /* The above code is a JavaScript function that captures an image from a webcam using the `webcamRef`
-   reference. It converts the captured image into a blob object and sets it as the `visitor5Photo`
-   state. */
   const [visitor5Upload, setVisitor5Upload] = useState('');
   const [visitor5Photo, setVisitor5Photo] = useState(null);
 
@@ -447,7 +442,7 @@ export default function InstantMeeting() {
 
   const submitVisitor5Image = async () => {
     try {
-      const capturedPhoto = await capture5(); // Capture the image
+      const capturedPhoto = await capture5();
 
       const requestData = new FormData();
       requestData.append('module_name', 'visitorimage');
@@ -586,7 +581,7 @@ export default function InstantMeeting() {
                         <Grid container spacing={2}>
                           <Grid items xs={12}>
                             <Grid container sx={{ mt: '18px' }}>
-                              <Grid items lg={3} sx={{ width: '100%' }}>
+                              <Grid items sm={6} md={4}  lg={5} xl={3} sx={{ width: '100%' }}>
                                 <Select
                                   {...register('guest_country_code', { required: true })}
                                   name="guest_country_code"
@@ -604,7 +599,7 @@ export default function InstantMeeting() {
                                 </Select>
                               </Grid>
 
-                              <Grid items lg={9} sx={{ width: '100%' }}>
+                              <Grid items sm={6} md={8} lg={7} xl={9} sx={{ width: '100%' }}>
                                 <TextField
                                   {...register('guest_phone', { required: true })}
                                   id="standard-basic"
