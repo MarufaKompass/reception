@@ -5,19 +5,15 @@ import TableChip from 'components/chips/chip';
 import CloseButton from 'components/Button/CloseButton';
 import { useAppContextReception } from 'AppContextReception';
 import axiosInstance from 'utils/axios.config';
-import ImageModal from './ImageModal';
-import user from '../../assets/images/img/user.jpg';
 import BelongsTable from 'components/table/BelongsTable';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
 export default function Checkout(props) {
   const { checkOutModal, handleClose, waitingId } = props;
-  const [imageModal, setImageModal] = useState(false);
   const [meetingShow, setMeetingShow] = useState([]);
   const [extraVisitors, setExtraVisitors] = useState([]);
   const { comId } = useAppContextReception();
-  const [extraVisitorId, setExtraVisitorsId] = useState([]);
   const [visitorBelongs, setVisitorBelongs] = useState('');
   const navigate = useNavigate();
 
@@ -36,11 +32,6 @@ export default function Checkout(props) {
         }
       })
       .catch((error) => console.error(error));
-  };
-
-  const handleVisitor = (id) => {
-    setImageModal(true);
-    setExtraVisitorsId(id);
   };
 
   const {
@@ -332,40 +323,17 @@ export default function Checkout(props) {
               <ListItem>
                 <Grid container>
                   <Grid item xs={12} sm={12} md={6}>
-                    {guest_image ? (
-                      <Avatar
-                        alt="Captured"
-                        src={guest_image}
-                        variant="square"
-                        sx={{ width: '130px', height: '130px', border: 1, color: '#12A9B2', borderRadius: 1 }}
-                      />
-                    ) : (
-                      <>
-                        <Avatar
-                          alt="Captured"
-                          variant="square"
-                          src={user}
-                          sx={{ width: '130px', height: '130px', border: 1, color: '#12A9B2', borderRadius: 1 }}
-                        />
-                        <Grid item xs={12} sm={12} md={12} lg={12} xl={12} sx={{ pr: 3 }}>
-                          <Button onClick={() => setImageModal(true)} variant="outlined" size="small" sx={{ my: 2, color: '#12A9B2' }}>
-                            Take Photo
-                          </Button>
-                        </Grid>
-                      </>
-                    )}
+                    <Avatar
+                      alt="Captured"
+                      src={guest_image}
+                      variant="square"
+                      sx={{ width: '130px', height: '130px', border: 1, color: '#12A9B2', borderRadius: 1 }}
+                    />
                   </Grid>
                 </Grid>
               </ListItem>
-              <ImageModal
-                imageModal={imageModal}
-                name={guest_name}
-                phone={guest_phone}
-                extraVisitorId={extraVisitorId}
-                handleClose={() => setImageModal(false)}
-              />
             </Grid>
-            {extraVisitors !== null && (
+            {ex_visitor_no > 0 && (
               <>
                 <Grid xs={12} sm={12}>
                   <Typography sx={{ pl: 2, mt: 1, color: '#12a9b2' }} variant="h5" component="div">
@@ -423,48 +391,16 @@ export default function Checkout(props) {
                       <ListItem>
                         <Grid container>
                           <Grid item xs={12} sm={12} md={6}>
-                            {visitors.image ? (
-                              <>
-                                <Avatar
-                                  alt="Captured"
-                                  src={visitors.image}
-                                  variant="square"
-                                  sx={{ width: '100px', height: '100px', border: 1, color: '#12A9B2', borderRadius: 1 }}
-                                />
-                              </>
-                            ) : (
-                              <>
-                                <Avatar
-                                  alt="Captured"
-                                  src={user}
-                                  variant="square"
-                                  sx={{ width: '100px', height: '100px', border: 1, color: '#12A9B2', borderRadius: 1 }}
-                                />
-
-                                <Grid item xs={12} sm={12} md={12} lg={12} xl={12} sx={{ pr: 3 }}>
-                                  <Button
-                                    onClick={() => handleVisitor(visitors.id)}
-                                    variant="outlined"
-                                    size="small"
-                                    sx={{ my: 2, color: '#12A9B2' }}
-                                  >
-                                    Update
-                                  </Button>
-                                </Grid>
-                              </>
-                            )}
+                            <Avatar
+                              alt="Captured"
+                              src={visitors.image}
+                              variant="square"
+                              sx={{ width: '100px', height: '100px', border: 1, color: '#12A9B2', borderRadius: 1 }}
+                            />
                           </Grid>
                         </Grid>
                       </ListItem>
                     </Grid>
-                    <ImageModal
-                      imageModal={imageModal}
-                      name={visitors.name}
-                      phone={visitors.phone}
-                      vcard={visitors.vcard}
-                      extraVisitorId={extraVisitorId}
-                      handleClose={() => setImageModal(false)}
-                    />
                   </>
                 ))}
               </>
@@ -545,11 +481,13 @@ export default function Checkout(props) {
                     </Grid>
                   </Grid>
                 </Grid>
-                <Grid container>
-                  <Grid items xs={12} sm={12} sx={{ px: { xs: 1, sm: 0, md: 2 }, mt: 1 }}>
-                    <BelongsTable belongs={visitorBelongs.belongs} qty={visitorBelongs.qty} />
+                {visitorBelongs.belongs && (
+                  <Grid container>
+                    <Grid items xs={12} sm={12} sx={{ px: { xs: 1, sm: 0, md: 2 }, mt: 1 }}>
+                      <BelongsTable belongs={visitorBelongs.belongs} qty={visitorBelongs.qty} />
+                    </Grid>
                   </Grid>
-                </Grid>
+                )}
               </>
             )}
           </Grid>

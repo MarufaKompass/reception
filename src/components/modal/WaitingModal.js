@@ -15,14 +15,13 @@ export default function WaitingModal(props) {
   const [imageModal, setImageModal] = useState(false);
   const [meetingShow, setMeetingShow] = useState([]);
   const [extraVisitors, setExtraVisitors] = useState([]);
-  const [belongs, setBelongs] = useState('');
   const { comId } = useAppContextReception();
   const [extraVisitorId, setExtraVisitorsId] = useState('');
   const [cancelNote, setCancelNote] = useState('');
 
-  const handleVisitor = (id) => {
+  const handleVisitor = (visitor) => {
     setImageModal(true);
-    setExtraVisitorsId(id);
+    setExtraVisitorsId(visitor);
   };
 
   const {
@@ -85,7 +84,6 @@ export default function WaitingModal(props) {
   };
 
   const {
-    id,
     code,
     purpose,
     status,
@@ -106,9 +104,9 @@ export default function WaitingModal(props) {
       axiosInstance
         .get(`https://api.hellokompass.com/reception/meetingview?meeting_id=${waitingId}&com_id=${comId}`)
         .then((res) => {
+          console.log(res.data);
           setMeetingShow(res.data.data.meeting);
           setExtraVisitors(res.data.data.extravisitors);
-          setBelongs(res.data.data.visitorbelong);
           setCancelNote(res.data.data.cancelnote);
         })
         .catch((err) => console.error(err));
@@ -381,11 +379,6 @@ export default function WaitingModal(props) {
                         src={guest_image}
                         sx={{ width: '130px', height: '130px', border: 1, color: '#12A9B2', borderRadius: 1 }}
                       />
-                      <Grid item xs={12} sm={12} md={12} lg={12} xl={12} sx={{ pr: 3 }}>
-                        <Button onClick={() => handleVisitor(id)} variant="outlined" size="small" sx={{ my: 2, color: '#12A9B2' }}>
-                          Update
-                        </Button>
-                      </Grid>
                     </Grid>
                   </Grid>
                 </ListItem>
@@ -457,7 +450,7 @@ export default function WaitingModal(props) {
 
                               <Grid item xs={12} sm={12} md={12} lg={12} xl={12} sx={{ pr: 3 }}>
                                 <Button
-                                  onClick={() => handleVisitor(visitors.id)}
+                                  onClick={() => handleVisitor(visitors)}
                                   variant="outlined"
                                   size="small"
                                   sx={{ my: 2, color: '#12A9B2' }}
@@ -467,6 +460,15 @@ export default function WaitingModal(props) {
                               </Grid>
                             </Grid>
                           </Grid>
+                          <ImageModal
+                            imageModal={imageModal}
+                            name={extraVisitorId.name}
+                            phone={extraVisitorId.phone}
+                            vcard={extraVisitorId.vcard}
+                            extraVisitorId={extraVisitorId.id}
+                            handleOpen={handleOpen}
+                            handleClose={() => setImageModal(false)}
+                          />
                         </ListItem>
                       </Grid>
                     </>
@@ -669,10 +671,10 @@ export default function WaitingModal(props) {
         </List>
         <ImageModal
           imageModal={imageModal}
-          name={guest_name}
-          phone={guest_phone}
-          vcard={belongs}
-          extraVisitorId={extraVisitorId}
+          name={extraVisitorId.name}
+          phone={extraVisitorId.phone}
+          vcard={extraVisitorId.vcard}
+          extraVisitorId={extraVisitorId.id}
           handleOpen={handleOpen}
           handleClose={() => setImageModal(false)}
         />

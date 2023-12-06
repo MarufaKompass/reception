@@ -81,67 +81,48 @@ export default function InstantMeeting() {
   const onSubmit = (data) => {
     data.time = selectedTime.format('HH:mm');
     data.guest_image = uploadedPhoto;
-    switch (true) {
-      case visitor5Upload:
-        data.extra_visitor_image = [visitor1Upload, visitor2Upload, visitor3Upload, visitor4Upload, visitor5Upload];
-        break;
-      case visitor4Upload:
-        data.extra_visitor_image = [visitor1Upload, visitor2Upload, visitor3Upload, visitor4Upload];
-        break;
-      case visitor3Upload:
-        data.extra_visitor_image = [visitor1Upload, visitor2Upload, visitor3Upload];
-        break;
-      case visitor2Upload:
-        data.extra_visitor_image = [visitor1Upload, visitor2Upload];
-        break;
-      case visitor1Upload:
-        data.extra_visitor_image = [visitor1Upload];
-        break;
-      default:
-        data.extra_visitor_image = [];
-        break;
+    console.log(data);
+
+    if (visitor5Upload) {
+      data.extra_visitor_image = [visitor1Upload, visitor2Upload, visitor3Upload, visitor4Upload, visitor5Upload];
+    } else if (visitor4Upload) {
+      data.extra_visitor_image = [visitor1Upload, visitor2Upload, visitor3Upload, visitor4Upload];
+    } else if (visitor3Upload) {
+      data.extra_visitor_image = [visitor1Upload, visitor2Upload, visitor3Upload];
+    } else if (visitor2Upload) {
+      data.extra_visitor_image = [visitor1Upload, visitor2Upload];
+    } else if (visitor1Upload) {
+      data.extra_visitor_image = [visitor1Upload];
+    } else {
+      data.extra_visitor_image = [];
     }
 
-    switch (true) {
-      case visitor5Phone:
-        data.extra_visitor_phone = [visitor1Phone, visitor2Phone, visitor3Phone, visitor4Phone, visitor5Phone];
-        break;
-      case visitor4Phone:
-        data.extra_visitor_phone = [visitor1Phone, visitor2Phone, visitor3Phone, visitor4Phone];
-        break;
-      case visitor3Phone:
-        data.extra_visitor_phone = [visitor1Phone, visitor2Phone, visitor3Phone];
-        break;
-      case visitor2Phone:
-        data.extra_visitor_phone = [visitor1Phone, visitor2Phone];
-        break;
-      case visitor1Phone:
-        data.extra_visitor_phone = [visitor1Phone];
-        break;
-      default:
-        data.extra_visitor_phone = [];
-        break;
+    if (visitor5Phone) {
+      data.extra_visitor_phone = [visitor1Phone, visitor2Phone, visitor3Phone, visitor4Phone, visitor5Phone];
+    } else if (visitor4Phone) {
+      data.extra_visitor_phone = [visitor1Phone, visitor2Phone, visitor3Phone, visitor4Phone];
+    } else if (visitor3Phone) {
+      data.extra_visitor_phone = [visitor1Phone, visitor2Phone, visitor3Phone];
+    } else if (visitor2Phone) {
+      data.extra_visitor_phone = [visitor1Phone, visitor2Phone];
+    } else if (visitor1Phone) {
+      data.extra_visitor_phone = [visitor1Phone];
+    } else {
+      data.extra_visitor_phone = [];
     }
 
-    switch (true) {
-      case visitor5Name:
-        data.extra_visitor_name = [visitor1Name, visitor2Name, visitor3Name, visitor4Name, visitor5Name];
-        break;
-      case visitor4Name:
-        data.extra_visitor_name = [visitor1Name, visitor2Name, visitor3Name, visitor4Name];
-        break;
-      case visitor3Name:
-        data.extra_visitor_name = [visitor1Name, visitor2Name, visitor3Name];
-        break;
-      case visitor2Name:
-        data.extra_visitor_name = [visitor1Name, visitor2Name];
-        break;
-      case visitor1Name:
-        data.extra_visitor_name = [visitor1Name];
-        break;
-      default:
-        data.extra_visitor_name = [];
-        break;
+    if (visitor5Name) {
+      data.extra_visitor_name = [visitor1Name, visitor2Name, visitor3Name, visitor4Name, visitor5Name];
+    } else if (visitor4Name) {
+      data.extra_visitor_name = [visitor1Name, visitor2Name, visitor3Name, visitor4Name];
+    } else if (visitor3Name) {
+      data.extra_visitor_name = [visitor1Name, visitor2Name, visitor3Name];
+    } else if (visitor2Name) {
+      data.extra_visitor_name = [visitor1Name, visitor2Name];
+    } else if (visitor1Name) {
+      data.extra_visitor_name = [visitor1Name];
+    } else {
+      data.extra_visitor_name = [];
     }
 
     axiosInstance.post('https://api.hellokompass.com/reception/addmeeting', data).then((res) => {

@@ -11,6 +11,7 @@ import WaitingModal from 'components/modal/WaitingModal';
 import TableChip from 'components/chips/chip';
 import Checkout from 'components/modal/CheckoutModal';
 import NoDataImage from 'components/Image/NoDataImage';
+import Uppercase from 'components/Uppercase/Uppercase';
 
 export default function Waiting() {
   const { comId } = useAppContextReception();
@@ -88,7 +89,7 @@ export default function Waiting() {
         renderCell: (params) => {
           return (
             <>
-              {params.row.status === 'Active' ? (
+              {Uppercase(params.row.status) === 'Active' || Uppercase(params.row.status) === 'Cancel' ? (
                 <></>
               ) : (
                 <Button
@@ -101,7 +102,7 @@ export default function Waiting() {
                 </Button>
               )}
 
-              {params.row.status === 'Active' && (
+              {Uppercase(params.row.status) === 'Active' && (
                 <Button
                   onClick={() => handleCheckOutList(params.id)}
                   variant="outlined"
