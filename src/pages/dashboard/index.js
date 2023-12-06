@@ -13,7 +13,7 @@ const DashboardDefault = () => {
             <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
               <NavigateMeeting></NavigateMeeting>
             </Grid>
-            <Grid item sx={{ display: {sm: 'none', md: 'block' } }} md={6} lg={6} xl={6}>
+            <Grid item sx={{ display: { xs: 'none', sm: 'none', md: 'block' } }} md={6} lg={6} xl={6}>
               <BannerImg></BannerImg>
             </Grid>
           </Grid>
