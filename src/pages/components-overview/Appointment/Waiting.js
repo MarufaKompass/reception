@@ -52,6 +52,8 @@ export default function Waiting() {
       {
         field: 'host_name',
         headerName: 'Host name',
+        headerAlign: 'center',
+        align: 'center',
         width: 150,
         renderCell: (params) => (
           <Box>
@@ -63,6 +65,8 @@ export default function Waiting() {
       {
         field: 'guest_name',
         headerName: 'Guest name',
+        headerAlign: 'center',
+        align: 'center',
         width: 150,
         renderCell: (params) => (
           <Box>
@@ -71,23 +75,25 @@ export default function Waiting() {
           </Box>
         )
       },
-      { field: 'date', headerName: 'Date', flex: isSmallScreen ? 0 : 1 },
-      { field: 'time', headerName: 'Time', flex: isSmallScreen ? 0 : 1 },
+      { field: 'date', headerName: 'Date', headerAlign: 'center', align: 'center', flex: isSmallScreen ? 0 : 1 },
+      { field: 'time', headerName: 'Time', headerAlign: 'center', align: 'center', flex: isSmallScreen ? 0 : 1 },
       {
         field: 'status',
         headerName: 'Status',
+        headerAlign: 'center',
         align: 'center',
         flex: isSmallScreen ? 0 : 1,
         renderCell: (params) => {
           return <TableChip>{params.value}</TableChip>;
         }
       },
-      { field: 'text', headerName: 'Message', flex: isSmallScreen ? 0 : 1 },
+      { field: 'text', headerName: 'Message', headerAlign: 'center', align: 'center', flex: isSmallScreen ? 0 : 1 },
       {
         field: 'action',
         headerName: 'Action',
-        width: 200,
+        headerAlign: 'center',
         align: 'center',
+        width: 200,
         renderCell: (params) => {
           return (
             <>

@@ -38,11 +38,13 @@ export default function EventList() {
   const adjustColumnWidths = () => {
     const columns = [
       { field: 'id', headerName: 'SL' },
-      { field: 'evntname', headerName: 'Event name', flex: isSmallScreen ? 0 : 1 },
-      { field: 'date', headerName: 'Date', flex: isSmallScreen ? 0 : 1 },
+      { field: 'evntname', headerName: 'Event name', headerAlign: 'center', align: 'center', flex: isSmallScreen ? 0 : 1 },
+      { field: 'date', headerName: 'Date', headerAlign: 'center', align: 'center', flex: isSmallScreen ? 0 : 1 },
       {
         field: 'starttime',
         headerName: 'Time',
+        headerAlign: 'center',
+        align: 'center',
         width: 200,
         renderCell: (params) => (
           <Box>
@@ -55,6 +57,8 @@ export default function EventList() {
       {
         field: 'action',
         headerName: 'Action',
+        headerAlign: 'center',
+        align: 'center',
         flex: isSmallScreen ? 0 : 1,
         renderCell: (params) => (
           <Button

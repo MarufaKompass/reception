@@ -38,6 +38,8 @@ export default function CourierList() {
       {
         field: 'receiver_name',
         headerName: 'Receiver name',
+        headerAlign: 'center',
+        align: 'center',
         width: 150,
         renderCell: (params) => (
           <Box>
@@ -49,6 +51,8 @@ export default function CourierList() {
       {
         field: 'name',
         headerName: 'Person name',
+        headerAlign: 'center',
+        align: 'center',
         width: 150,
         renderCell: (params) => (
           <Box>
@@ -61,10 +65,12 @@ export default function CourierList() {
       {
         field: 'status',
         headerName: 'Status',
+        headerAlign: 'center',
+        align: 'center',
         flex: isSmallScreen ? 0 : 1,
         renderCell: (params) => <TableChip>{params.value}</TableChip>
       },
-      { field: 'message', headerName: 'Message', flex: isSmallScreen ? 0 : 1 }
+      { field: 'message', headerName: 'Message', headerAlign: 'center', align: 'center', flex: isSmallScreen ? 0 : 1 }
     ];
     return columns;
   };

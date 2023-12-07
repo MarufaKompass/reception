@@ -69,12 +69,14 @@ export default function GuestList() {
   const adjustColumnWidths = () => {
     const columns = [
       { field: 'id', headerName: 'SL' },
-      { field: 'guest_name', headerName: 'Guest name', flex: isSmallScreen ? 0 : 1 },
-      { field: 'guest_email', headerName: 'Email', flex: isSmallScreen ? 0 : 1 },
-      { field: 'guest_phone', headerName: 'Phone', flex: isSmallScreen ? 0 : 1 },
+      { field: 'guest_name', headerName: 'Guest name', headerAlign: 'center', align: 'center', flex: isSmallScreen ? 0 : 1 },
+      { field: 'guest_email', headerName: 'Email', headerAlign: 'center', align: 'center', flex: isSmallScreen ? 0 : 1 },
+      { field: 'guest_phone', headerName: 'Phone', headerAlign: 'center', align: 'center', flex: isSmallScreen ? 0 : 1 },
       {
         field: 'attendance',
         headerName: 'Attendance',
+        headerAlign: 'center',
+        align: 'center',
         flex: isSmallScreen ? 0 : 1,
         renderCell: (params) => (
           <Box>

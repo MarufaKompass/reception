@@ -37,7 +37,8 @@ export default function Visitors() {
       {
         field: 'guestName',
         headerName: 'Guest Name',
-
+        headerAlign: 'center',
+        align: 'center',
         width: 150,
         renderCell: (params) => (
           <Box>
@@ -49,6 +50,8 @@ export default function Visitors() {
       {
         field: 'guest_name',
         headerName: 'Visitor name',
+        headerAlign: 'center',
+        align: 'center',
         width: 150,
         renderCell: (params) => (
           <Box>
@@ -57,13 +60,14 @@ export default function Visitors() {
           </Box>
         )
       },
-      { field: 'ex_visitor_no', headerName: 'Extra visitors', flex: isSmallScreen ? 0 : 1 },
-      { field: 'visitorsCount', headerName: 'Visitors count', flex: isSmallScreen ? 0 : 1 },
-      { field: 'date', headerName: 'Date', width: 150 },
-      { field: 'time', headerName: 'Time', flex: isSmallScreen ? 0 : 1 },
+      { field: 'ex_visitor_no', headerName: 'Extra visitors', headerAlign: 'center', align: 'center', flex: isSmallScreen ? 0 : 1 },
+      { field: 'visitorsCount', headerName: 'Visitors count', headerAlign: 'center', align: 'center', flex: isSmallScreen ? 0 : 1 },
+      { field: 'date', headerName: 'Date', headerAlign: 'center', align: 'center', width: 150 },
+      { field: 'time', headerName: 'Time', headerAlign: 'center', align: 'center', flex: isSmallScreen ? 0 : 1 },
       {
         field: 'status',
         headerName: 'Status',
+        headerAlign: 'center',
         align: 'center',
         width: 150,
         renderCell: (params) => <TableChip>{params.value}</TableChip>
