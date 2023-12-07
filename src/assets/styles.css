@@ -2,6 +2,15 @@
     width: 100% !important
 }
 
+
+/* In your stylesheet or CSS file */
+.custom-header-class .MuiDataGrid-colCell {
+  justify-content: center;
+  text-align: center;
+}
+
+
+
 /* Customize scrollbar for webkit-based browsers */
 ::-webkit-scrollbar {
     width: 4px;

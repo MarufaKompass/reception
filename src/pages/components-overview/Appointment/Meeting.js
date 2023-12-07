@@ -10,6 +10,7 @@ import axiosInstance from 'utils/axios.config';
 import MeetingModal from 'components/modal/MeetingModal';
 import TableChip from '../../../components/chips/chip';
 import NoDataImage from 'components/Image/NoDataImage';
+import '../../../assets/styles.css';
 
 export default function Meeting() {
   const { comId } = useAppContextReception();
@@ -40,6 +41,8 @@ export default function Meeting() {
       {
         field: 'host_name',
         headerName: 'Host name',
+        headerAlign: 'center',
+        align: 'center',
         width: 150,
         renderCell: (params) => (
           <Box>
@@ -51,6 +54,8 @@ export default function Meeting() {
       {
         field: 'guest_name',
         headerName: 'Guest name',
+        headerAlign: 'center',
+        align: 'center',
         width: 150,
         renderCell: (params) => (
           <Box>
@@ -59,17 +64,25 @@ export default function Meeting() {
           </Box>
         )
       },
-      { field: 'date', headerName: 'Date', flex: isSmallScreen ? 0 : 1 },
-      { field: 'time', headerName: 'Time', flex: isSmallScreen ? 0 : 1 },
+      { field: 'date', headerName: 'Date', headerAlign: 'center', align: 'center', flex: isSmallScreen ? 0 : 1 },
+      { field: 'time', headerName: 'Time', headerAlign: 'center', align: 'center', flex: isSmallScreen ? 0 : 1 },
       {
         field: 'status',
-        headerName: 'Status',
+        headerAlign: 'center',
+        align: 'center',
+        headerName: (
+          <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+            <Typography>Status</Typography>
+          </Box>
+        ),
         flex: isSmallScreen ? 0 : 1,
         renderCell: (params) => <TableChip>{params.value}</TableChip>
       },
       {
         field: 'action',
         headerName: 'Action',
+        headerAlign: 'center',
+        align: 'center',
         flex: isSmallScreen ? 0 : 1,
         renderCell: (params) => (
           <Button
