@@ -51,6 +51,8 @@ export default function Courier() {
         .catch((err) => console.error(err));
     };
     fetchData();
+    const interval = setInterval(fetchData, 10000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
