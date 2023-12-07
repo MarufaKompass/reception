@@ -83,34 +83,6 @@ export default function InstantMeeting() {
     data.guest_image = uploadedPhoto;
     console.log(data);
 
-    if (visitor5Upload) {
-      data.extra_visitor_image = [visitor1Upload, visitor2Upload, visitor3Upload, visitor4Upload, visitor5Upload];
-    } else if (visitor4Upload) {
-      data.extra_visitor_image = [visitor1Upload, visitor2Upload, visitor3Upload, visitor4Upload];
-    } else if (visitor3Upload) {
-      data.extra_visitor_image = [visitor1Upload, visitor2Upload, visitor3Upload];
-    } else if (visitor2Upload) {
-      data.extra_visitor_image = [visitor1Upload, visitor2Upload];
-    } else if (visitor1Upload) {
-      data.extra_visitor_image = [visitor1Upload];
-    } else {
-      data.extra_visitor_image = [];
-    }
-
-    if (visitor5Phone) {
-      data.extra_visitor_phone = [visitor1Phone, visitor2Phone, visitor3Phone, visitor4Phone, visitor5Phone];
-    } else if (visitor4Phone) {
-      data.extra_visitor_phone = [visitor1Phone, visitor2Phone, visitor3Phone, visitor4Phone];
-    } else if (visitor3Phone) {
-      data.extra_visitor_phone = [visitor1Phone, visitor2Phone, visitor3Phone];
-    } else if (visitor2Phone) {
-      data.extra_visitor_phone = [visitor1Phone, visitor2Phone];
-    } else if (visitor1Phone) {
-      data.extra_visitor_phone = [visitor1Phone];
-    } else {
-      data.extra_visitor_phone = [];
-    }
-
     if (visitor5Name) {
       data.extra_visitor_name = [visitor1Name, visitor2Name, visitor3Name, visitor4Name, visitor5Name];
     } else if (visitor4Name) {
@@ -123,6 +95,34 @@ export default function InstantMeeting() {
       data.extra_visitor_name = [visitor1Name];
     } else {
       data.extra_visitor_name = [];
+    }
+
+    if (visitor5Name) {
+      data.extra_visitor_image = [visitor1Upload, visitor2Upload, visitor3Upload, visitor4Upload, visitor5Upload];
+    } else if (visitor4Name) {
+      data.extra_visitor_image = [visitor1Upload, visitor2Upload, visitor3Upload, visitor4Upload];
+    } else if (visitor3Name) {
+      data.extra_visitor_image = [visitor1Upload, visitor2Upload, visitor3Upload];
+    } else if (visitor2Name) {
+      data.extra_visitor_image = [visitor1Upload, visitor2Upload];
+    } else if (visitor1Name) {
+      data.extra_visitor_image = [visitor1Upload];
+    } else {
+      data.extra_visitor_image = [];
+    }
+
+    if (visitor5Name) {
+      data.extra_visitor_phone = [visitor1Phone, visitor2Phone, visitor3Phone, visitor4Phone, visitor5Phone];
+    } else if (visitor4Name) {
+      data.extra_visitor_phone = [visitor1Phone, visitor2Phone, visitor3Phone, visitor4Phone];
+    } else if (visitor3Name) {
+      data.extra_visitor_phone = [visitor1Phone, visitor2Phone, visitor3Phone];
+    } else if (visitor2Name) {
+      data.extra_visitor_phone = [visitor1Phone, visitor2Phone];
+    } else if (visitor1Name) {
+      data.extra_visitor_phone = [visitor1Phone];
+    } else {
+      data.extra_visitor_phone = [];
     }
 
     axiosInstance.post('https://api.hellokompass.com/reception/addmeeting', data).then((res) => {
