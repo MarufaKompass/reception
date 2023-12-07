@@ -57,11 +57,11 @@ export default function WaitingModal(props) {
     axiosInstance.post('https://api.hellokompass.com/reception/visitorcheckin', newData).then((res) => {
       if (res.data.code === 200) {
         toast.success(res.data.message);
-        handleOpen();
+        handleClose();
         reset();
       } else if (res.data.code === 400) {
         toast.error(res.data.message);
-        handleOpen();
+        handleClose();
         reset();
       } else {
         <></>;
@@ -112,7 +112,7 @@ export default function WaitingModal(props) {
         .catch((err) => console.error(err));
     };
     fetchData();
-  }, [waitingId]);
+  }, [waitingId, comId]);
 
   return (
     <Modal

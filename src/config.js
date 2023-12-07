@@ -12,7 +12,7 @@ const config = {
 };
 
 export default config;
-export const drawerWidth = 380;
+export const drawerWidth = 330;
 
 export const twitterColor = '#1DA1F2';
 export const facebookColor = '#3b5998';
