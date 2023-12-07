@@ -8,7 +8,7 @@ import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import { useAppContextReception } from 'AppContextReception';
 import axiosInstance from 'utils/axios.config';
 import WaitingModal from 'components/modal/WaitingModal';
-import TableChip from 'components/chips/chip';
+import TableChip from 'components/chips/TableChip';
 import Checkout from 'components/modal/CheckoutModal';
 import NoDataImage from 'components/Image/NoDataImage';
 import Uppercase from 'components/Uppercase/Uppercase';
@@ -76,6 +76,7 @@ export default function Waiting() {
       {
         field: 'status',
         headerName: 'Status',
+        align: 'center',
         flex: isSmallScreen ? 0 : 1,
         renderCell: (params) => {
           return <TableChip>{params.value}</TableChip>;
@@ -86,6 +87,7 @@ export default function Waiting() {
         field: 'action',
         headerName: 'Action',
         width: 200,
+        align: 'center',
         renderCell: (params) => {
           return (
             <>

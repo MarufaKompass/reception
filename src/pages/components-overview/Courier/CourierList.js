@@ -7,7 +7,7 @@ import MainCard from 'components/MainCard';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import axiosInstance from 'utils/axios.config';
 import { useAppContextReception } from 'AppContextReception';
-import TableChip from 'components/chips/chip';
+import TableChip from 'components/chips/TableChip';
 import NoDataImage from 'components/Image/NoDataImage';
 import { useNavigate } from '../../../../node_modules/react-router-dom/dist/index';
 export default function CourierList() {

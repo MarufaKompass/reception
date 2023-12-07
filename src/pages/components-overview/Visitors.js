@@ -7,7 +7,7 @@ import { useTheme } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
 import axiosInstance from 'utils/axios.config';
 import { useAppContextReception } from 'AppContextReception';
-import TableChip from 'components/chips/chip';
+import TableChip from 'components/chips/TableChip';
 import NoDataImage from 'components/Image/NoDataImage';
 
 export default function Visitors() {
@@ -37,6 +37,7 @@ export default function Visitors() {
       {
         field: 'guestName',
         headerName: 'Guest Name',
+
         width: 150,
         renderCell: (params) => (
           <Box>
@@ -63,6 +64,7 @@ export default function Visitors() {
       {
         field: 'status',
         headerName: 'Status',
+        align: 'center',
         width: 150,
         renderCell: (params) => <TableChip>{params.value}</TableChip>
       }
