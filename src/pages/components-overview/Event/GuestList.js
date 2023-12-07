@@ -55,6 +55,8 @@ export default function GuestList() {
     };
 
     fetchData();
+    const interval = setInterval(fetchData, 10000);
+    return () => clearInterval(interval);
   }, [idxe, comId]);
 
   const handleSearch = (e) => {
