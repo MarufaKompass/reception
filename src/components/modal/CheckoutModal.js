@@ -60,10 +60,10 @@ export default function Checkout(props) {
           setExtraVisitors(res.data.data.extravisitors);
           setVisitorBelongs(res.data.data.visitorbelong);
         })
-        .catch((err) => console.error(err));
+        .catch(() => <></>);
     };
     fetchData();
-  }, [waitingId]);
+  }, [comId, waitingId]);
 
   return (
     <Modal

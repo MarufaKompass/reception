@@ -191,9 +191,11 @@ export default function Courier() {
             </Grid>
 
             <Grid item xs={12} sm={12} md={6}>
-              <Box sx={{ display: { xs: 'none', md: 'block' } }}>
-                <img src={courier} alt="courier" />
+              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+                <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+                  <img src={courier} alt="courier" height="100%" width="100%" />
               </Box>
+             </Box>
             </Grid>
           </Grid>
           <Box sx={{ display: 'flex', justifyContent: 'end' }}>

@@ -15,7 +15,6 @@ export default function CourierList() {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
   const [courier, setCourier] = useState([]);
-  console.log(courier);
 
   useEffect(() => {
     const fetchData = () => {
