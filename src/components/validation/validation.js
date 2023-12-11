@@ -15,7 +15,7 @@ const guestCompanyValidation = yup.string().required('Guest company name is requ
 const purposeValidation = yup.string().required('Purpose is required');
 const timeValidation = yup.string().required('Meeting type is required');
 const extraVisitorValidation = yup.string().required('Extra visitor is required');
-const reference = yup.string().required('ref is required');
+const reference = yup.string().required('reference number is required');
 const quantities = yup.number().min(1, 'Quantity must be at least 1');
 
 

@@ -40,12 +40,11 @@ export default function MeetingModal(props) {
           setExtraVisitors(res.data.data.extravisitors);
           setVisitorBelongs(res.data.data.visitorbelong);
           setCancelNote(res.data.data.cancelnote);
-          console.log(res.data);
         })
-        .catch((err) => console.error(err));
+        .catch(() => <></>);
     };
     fetchData();
-  }, [selectedMeetingId]);
+  }, [comId, selectedMeetingId]);
 
   return (
     <Modal

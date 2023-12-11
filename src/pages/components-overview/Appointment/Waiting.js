@@ -38,8 +38,9 @@ export default function Waiting() {
         .then((res) => {
           setWaiting(res.data.data);
         })
-        .catch((error) => {
-          console.error(error);
+        .catch(() => {
+          // console.error(error);
+          <></>;
         });
     };
 

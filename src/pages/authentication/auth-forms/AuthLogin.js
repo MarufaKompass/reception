@@ -13,7 +13,7 @@ const AuthLogin = () => {
   const { register, handleSubmit, reset } = useForm();
   const { palette } = createTheme();
   const navigate = useNavigate();
- const{setUser} = useAppContextReception();
+  const { setUser,setComId } = useAppContextReception();
   //palette
   const { augmentColor } = palette;
   const createColor = (mainColor) => augmentColor({ color: { main: mainColor } });
@@ -43,7 +43,7 @@ const AuthLogin = () => {
         sessionStorage.setItem('com', JSON.stringify(response.data.data.com_id));
         sessionStorage.setItem('token', JSON.stringify(response.data.data.token));
         setUser(response.data.data.token);
-
+        setComId(response.data.data.com_id);
         navigate('/');
         reset();
       }

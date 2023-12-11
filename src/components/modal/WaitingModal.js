@@ -108,10 +108,10 @@ export default function WaitingModal(props) {
           setExtraVisitors(res.data.data.extravisitors);
           setCancelNote(res.data.data.cancelnote);
         })
-        .catch((err) => console.error(err));
+        .catch(() => <></>);
     };
     fetchData();
-  }, [waitingId]);
+  }, [waitingId, comId]);
 
   return (
     <Modal
