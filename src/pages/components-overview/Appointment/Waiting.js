@@ -11,7 +11,6 @@ import WaitingModal from 'components/modal/WaitingModal';
 import TableChip from 'components/chips/TableChip';
 import Checkout from 'components/modal/CheckoutModal';
 import NoDataImage from 'components/Image/NoDataImage';
-import Uppercase from 'components/Uppercase/Uppercase';
 
 export default function Waiting() {
   const { comId } = useAppContextReception();
@@ -21,6 +20,7 @@ export default function Waiting() {
   const [waitingId, setWaitingId] = useState('');
   const [waitingModal, setWaitingModal] = useState(false);
   const [checkOutModal, setCheckOutModal] = useState(false);
+  console.log(waiting);
 
   const handleWaitingList = (id) => {
     setWaitingModal(true);
@@ -100,9 +100,7 @@ export default function Waiting() {
         renderCell: (params) => {
           return (
             <>
-              {Uppercase(params.row.status) === 'Active' || Uppercase(params.row.status) === 'Cancel' ? (
-                <></>
-              ) : (
+              {params.row.signin === null && (
                 <Button
                   onClick={() => handleWaitingList(params.id)}
                   variant="outlined"
@@ -113,7 +111,7 @@ export default function Waiting() {
                 </Button>
               )}
 
-              {Uppercase(params.row.status) === 'Active' && (
+              {params.row.signin && (
                 <Button
                   onClick={() => handleCheckOutList(params.id)}
                   variant="outlined"

@@ -46,7 +46,6 @@ export default function WaitingModal(props) {
     const belongs = data.fields.map((field) => field.belongs);
     const qty = data.fields.map((field) => field.qty);
 
-    // Including the original 'fields' array along with separated arrays in 'data'
     const newData = {
       ...data,
       belongs,
@@ -57,11 +56,11 @@ export default function WaitingModal(props) {
     axiosInstance.post('https://api.hellokompass.com/reception/visitorcheckin', newData).then((res) => {
       if (res.data.code === 200) {
         toast.success(res.data.message);
-        handleOpen();
+        handleClose();
         reset();
       } else if (res.data.code === 400) {
         toast.error(res.data.message);
-        handleOpen();
+        handleClose();
         reset();
       } else {
         <></>;
