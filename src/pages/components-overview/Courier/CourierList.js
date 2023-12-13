@@ -41,7 +41,7 @@ export default function CourierList() {
         headerName: 'Receiver name',
         headerAlign: 'center',
         align: 'center',
-        width: 150,
+        width: 200,
         renderCell: (params) => (
           <Box>
             <Typography variant="body2">{params.row.receiver_name}</Typography>
@@ -54,7 +54,7 @@ export default function CourierList() {
         headerName: 'Person name',
         headerAlign: 'center',
         align: 'center',
-        width: 150,
+        width: 200,
         renderCell: (params) => (
           <Box>
             <Typography variant="body2">{params.row.name}</Typography>
@@ -62,8 +62,8 @@ export default function CourierList() {
           </Box>
         )
       },
-      { field: 'parcel_type', headerName: 'Parcel Type', flex: isSmallScreen ? 0 : 1 },
-      { field: 'percel_refno', headerName: 'Reference', width: 150 },
+      { field: 'parcel_type', headerName: 'Parcel Type', headerAlign: 'center', align: 'center', flex: isSmallScreen ? 0 : 1 },
+      { field: 'percel_refno', headerName: 'Reference', headerAlign: 'center', align: 'center', width: 150 },
       {
         field: 'status',
         headerName: 'Status',
