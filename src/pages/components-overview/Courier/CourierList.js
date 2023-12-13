@@ -31,6 +31,8 @@ export default function CourierList() {
     fetchData();
   }, [comId]);
 
+  console.log(courier);
+
   const adjustColumnWidths = () => {
     const columns = [
       { field: 'id', headerName: 'SL' },
@@ -61,6 +63,7 @@ export default function CourierList() {
         )
       },
       { field: 'parcel_type', headerName: 'Parcel Type', flex: isSmallScreen ? 0 : 1 },
+      { field: 'percel_refno', headerName: 'Reference', width: 150 },
       {
         field: 'status',
         headerName: 'Status',

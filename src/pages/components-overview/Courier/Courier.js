@@ -158,9 +158,11 @@ export default function Courier() {
                         Select
                       </InputLabel>
                     </MenuItem>
-                    <MenuItem value="document">Documents</MenuItem>
-                    <MenuItem value="small box">Small Box</MenuItem>
-                    <MenuItem value="medium box">Medium Box</MenuItem>
+                    <MenuItem value="Gift">Gift</MenuItem>
+                    <MenuItem value="Document">Document</MenuItem>
+                    <MenuItem value="Package">Package</MenuItem>
+                    <MenuItem value="Accessories">Accessories</MenuItem>
+                    <MenuItem value="Electronics">Electronics</MenuItem>
                   </Select>
                   <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.parcel_type?.message}</Typography>
                 </Box>
@@ -194,8 +196,8 @@ export default function Courier() {
               <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
                 <Box sx={{ display: { xs: 'none', md: 'block' } }}>
                   <img src={courier} alt="courier" height="100%" width="100%" />
+                </Box>
               </Box>
-             </Box>
             </Grid>
           </Grid>
           <Box sx={{ display: 'flex', justifyContent: 'end' }}>
