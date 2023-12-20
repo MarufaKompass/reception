@@ -75,7 +75,7 @@ export default function MeetingCode() {
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
       width: '100%',
-      height: '80%' // Remove this line or adjust if needed
+      height: '80%'
     }
   };
 
@@ -113,7 +113,8 @@ export default function MeetingCode() {
             >
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Box sx={{ display: { sm: 'flex', md: 'flex' }, justifyContent: 'center', alignItems: 'center', my: 2 }}>
-                  <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                  <Box>
+                    <Typography sx={{ color: '#12A9B2', fontSize: 15, fontWeight: 'bold' }}>*Scan code</Typography>
                     <QrReader
                       delay={delay}
                       style={{ height: '200px', width: '100%', border: 1, padding: 0, margin: 0, borderColor: '#12A9B2' }}
