@@ -99,7 +99,7 @@ export default function MeetingCode() {
               backgroundColor="#fff"
               sx={{
                 height: { xs: '80%', xl: '50%' },
-                width: { md: '70%', lg: '70%', xl: '50%' },
+                width: { md: '80%', lg: '80%', xl: '60%' },
                 mt: -8,
                 p: { xs: 2, md: 0 },
                 border: 1,
@@ -115,7 +115,7 @@ export default function MeetingCode() {
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Box sx={{ display: { md: 'flex' }, justifyContent: 'center', alignItems: 'center', my: 2 }}>
                   <Box>
-                    <Box sx={{ display: 'flex' }}>
+                    <Box sx={{ display: 'flex', mb: 1 }}>
                       <PuffLoader color="#12a9b2" size={38} />
                       <Typography sx={{ color: '#12A9B2', fontSize: 15, fontWeight: 'bold', mt: '8px', ml: '10px' }}>
                         Scanning code for Check-In

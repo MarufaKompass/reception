@@ -98,7 +98,7 @@ export default function CheckEvent() {
               backgroundColor="#fff"
               sx={{
                 height: { xs: '80%', xl: '50%' },
-                width: { md: '70%', lg: '70%', xl: '50%' },
+                width: { md: '80%', lg: '80%', xl: '60%' },
                 mt: -8,
                 p: { xs: 2, md: 0 },
                 border: 1,
