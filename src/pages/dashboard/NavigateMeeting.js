@@ -4,12 +4,16 @@ import DashCourier from 'components/svg/DashCourier';
 import DashEvent from 'components/svg/DashEvent';
 import CheckIn from 'components/svg/CheckIn';
 import InstantMeeting from 'components/svg/InstantMeeting';
+import DashboardCheckOut from 'components/svg/DashboardCheckOut';
 import { useState } from 'react';
 const NavigateMeeting = () => {
   const navigate = useNavigate();
 
   const handleCheckMeeting = () => {
     navigate('/checkMeeting');
+  };
+  const handleCheckMeetingOut = () => {
+    navigate('/MeetingCheckOut');
   };
   const handleCheckCourier = () => {
     navigate('/courier');
@@ -21,6 +25,7 @@ const NavigateMeeting = () => {
     navigate('/instantMeeting');
   };
   const [isHoveredCheckIn, setIsHoveredCheckIn] = useState(false);
+  const [isHoveredCheckOut, setIsHoveredCheckOut] = useState(false);
   const [isHoveredInstant, setIsHoveredInstant] = useState(false);
   const [isHoveredCourier, setIsHoveredCourier] = useState(false);
   const [isHoveredEvent, setIsHoveredEvent] = useState(false);
@@ -31,6 +36,14 @@ const NavigateMeeting = () => {
 
   const handleMouseCheckLeave = () => {
     setIsHoveredCheckIn(false);
+  };
+
+  const handleHoverCheckOut = () => {
+    setIsHoveredCheckOut(true);
+  };
+
+  const handleMouseCheckOutLeave = () => {
+    setIsHoveredCheckOut(false);
   };
 
   const handleHoverInstant = () => {
@@ -102,12 +115,48 @@ const NavigateMeeting = () => {
                     backgroundColor: '#12A9B2'
                   },
                   '& svg path': {
-                    stroke: isHoveredCheckIn ? '#fff' : '#12A9B2' // Change SVG path color on hover
+                    stroke: isHoveredCheckIn ? '#fff' : '#12A9B2'
                   }
                 }}
                 startIcon={<CheckIn></CheckIn>}
               >
                 <Typography variant="p">Meeting Check In</Typography>
+              </Button>
+            </Box>
+            <Box
+              sx={{
+                display: 'block',
+                '&:hover': {
+                  button: {
+                    color: '#fff',
+                    backgroundColor: '#12A9B2'
+                  }
+                }
+              }}
+              onMouseEnter={handleHoverCheckOut}
+              onMouseLeave={handleMouseCheckOutLeave}
+            >
+              <Button
+                onClick={handleCheckMeetingOut}
+                variant="outlined"
+                size="medium"
+                sx={{
+                  my: 1,
+                  color: isHoveredCheckOut ? '#fff' : '#12A9B2',
+                  border: 1,
+                  borderColor: '#12A9B2',
+                  fontSize: 20,
+                  '&:hover': {
+                    color: '#fff',
+                    backgroundColor: '#12A9B2'
+                  },
+                  '& svg path': {
+                    stroke: isHoveredCheckOut ? '#fff' : '#12A9B2' 
+                  }
+                }}
+                startIcon={<DashboardCheckOut></DashboardCheckOut>}
+              >
+                <Typography variant="p">Meeting Check Out</Typography>
               </Button>
             </Box>
 

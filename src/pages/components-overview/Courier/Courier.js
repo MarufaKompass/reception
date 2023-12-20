@@ -79,10 +79,10 @@ export default function Courier() {
                   <TextField
                     {...register('ref', { required: true })}
                     id="outlined-basic"
-                    name="name"
+                    name="ref"
                     size="medium"
                     variant="outlined"
-                    placeholder="ref"
+                    placeholder="reference"
                     sx={{ width: '100%', mt: 1 }}
                   />
                   <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.ref?.message}</Typography>

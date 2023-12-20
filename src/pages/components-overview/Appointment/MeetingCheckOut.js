@@ -2,7 +2,7 @@ import MainCard from 'components/MainCard';
 import React, { useEffect, useState } from 'react';
 import QrReader from 'react-qr-scanner';
 import { Box, OutlinedInput, Typography, Button, FormControl } from '@mui/material';
-import Image from '../../../assets/images/img/reception_background.png';
+import Image from '../../../assets/images/img/reception_background-out.png';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -11,7 +11,7 @@ import axiosInstance from 'utils/axios.config';
 import { useAppContextReception } from 'AppContextReception';
 import { toast } from 'react-toastify';
 
-export default function MeetingCode() {
+export default function MeetingCheckOut() {
   const delay = 500;
   const { comId } = useAppContextReception();
   const navigate = useNavigate();
@@ -90,17 +90,17 @@ export default function MeetingCode() {
               backgroundColor="#12A9B2"
               sx={{ px: 3, py: 2, borderRadius: 1, display: 'flex', justifyContent: 'center' }}
             >
-              Scanning Code/Enter Meeting Code For Check-In
+              Scanning Code/Enter Meeting Code
             </Typography>
           </Box>
           <Box display="flex" justifyContent="center" alignItems="center" height="80vh">
             <Box
               backgroundColor="#fff"
               sx={{
-                height: { xs: '85%', xl: '55%' },
-                width: { md: '80%', lg: '80%', xl: '60%' },
+                height: { xs: '80%', xl: '50%' },
+                width: { md: '70%', lg: '70%', xl: '50%' },
                 mt: -8,
-                p: { xs: 2, sm: 0 },
+                p: 2,
                 border: 1,
                 borderColor: '#fff',
                 borderRadius: 3,
@@ -116,19 +116,19 @@ export default function MeetingCode() {
                   <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     <QrReader
                       delay={delay}
-                      style={{ height: '200px', width: '100%', border: 1, padding: 0, margin: 0, borderColor: '#12A9B2' }}
+                      style={{ height: '180px', width: '100%', border: 1, padding: 0, margin: 0, borderColor: '#12A9B2' }}
                       onError={handleError}
                       onScan={handleScan}
                     />
                   </Box>
-                  <Box sx={{ ml: { xs: 0, sm: 2 }, mt: { xs: 2, sm: 0 }, width: { xs: '100%', sm: '40%' } }}>
+                  <Box sx={{ mx: { xs: 0, sm: 2 }, mt: { xs: 2, sm: 0 }, width: { xs: '100%', sm: '40%' } }}>
                     <Typography variant="h6">Meeting Code *</Typography>
-                    <FormControl sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <FormControl>
                       {resultQR && (
                         <OutlinedInput
                           {...register('code', { required: true })}
                           name="code"
-                          sx={{ border: 1, borderColor: '#12A9B2', mt: 1 }}
+                          sx={{ border: 1, borderColor: '#12A9B2', width: '100%', mt: 1 }}
                           size="small"
                           value={resultQR}
                         />
@@ -137,7 +137,7 @@ export default function MeetingCode() {
                         <OutlinedInput
                           {...register('code', { required: true })}
                           name="code"
-                          sx={{ border: 1, borderColor: '#12A9B2', mt: 1 }}
+                          sx={{ border: 1, borderColor: '#12A9B2', width: '100%', mt: 1 }}
                           size="small"
                         />
                       )}

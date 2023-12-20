@@ -9,6 +9,7 @@ import Visitors from 'pages/components-overview/Visitors';
 import EventList from 'pages/components-overview/Event/EventList';
 import CourierList from 'pages/components-overview/Courier/CourierList';
 import MeetingCode from 'pages/components-overview/Appointment/MeetingCode';
+import MeetingCheckOut from 'pages/components-overview/Appointment/MeetingCheckOut';
 import CheckEvent from 'pages/components-overview/Event/CheckEvent';
 import Courier from 'pages/components-overview/Courier/Courier';
 import InstantMeeting from 'pages/components-overview/InstantMeeting/InstantMeeting';
@@ -109,6 +110,16 @@ const MainRoutes = {
         <Suspense fallback={<Typography>Loading...</Typography>}>
           <PrivateRoutes>
             <MeetingCode />
+          </PrivateRoutes>
+        </Suspense>
+      )
+    },
+    {
+      path: 'MeetingCheckOut',
+      element: (
+        <Suspense fallback={<Typography>Loading...</Typography>}>
+          <PrivateRoutes>
+            <MeetingCheckOut />
           </PrivateRoutes>
         </Suspense>
       )

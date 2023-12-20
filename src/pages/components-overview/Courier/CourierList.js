@@ -41,7 +41,7 @@ export default function CourierList() {
         headerName: 'Receiver name',
         headerAlign: 'center',
         align: 'center',
-        width: 150,
+        width: 200,
         renderCell: (params) => (
           <Box>
             <Typography variant="body2">{params.row.receiver_name}</Typography>
@@ -54,7 +54,7 @@ export default function CourierList() {
         headerName: 'Person name',
         headerAlign: 'center',
         align: 'center',
-        width: 150,
+        width: 200,
         renderCell: (params) => (
           <Box>
             <Typography variant="body2">{params.row.name}</Typography>
