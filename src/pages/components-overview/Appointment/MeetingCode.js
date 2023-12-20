@@ -10,7 +10,7 @@ import { meetingCodeSchema } from 'components/validation/validation';
 import axiosInstance from 'utils/axios.config';
 import { useAppContextReception } from 'AppContextReception';
 import { toast } from 'react-toastify';
-import PuffLoader from '../../../../node_modules/react-spinners/PuffLoader';
+import PuffLoader from 'react-spinners/PuffLoader';
 
 export default function MeetingCode() {
   const delay = 500;
@@ -120,7 +120,7 @@ export default function MeetingCode() {
                       <Typography sx={{ color: '#12A9B2', fontSize: 15, fontWeight: 'bold', mt: '8px' }}>
                         Scanning code for Checking
                       </Typography>
-                </Box>
+                    </Box>
                     <QrReader
                       delay={delay}
                       style={{ height: '200px', width: '100%', border: 1, padding: 0, margin: 0, borderColor: '#12A9B2' }}
