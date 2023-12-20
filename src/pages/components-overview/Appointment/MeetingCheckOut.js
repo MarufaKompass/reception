@@ -29,7 +29,7 @@ export default function MeetingCheckOut() {
 
   useEffect(() => {
     if (resultQR) {
-      onSubmit({ code: resultQR, company_id: comId }); // Pass data to onSubmit
+      onSubmit({ code: resultQR, company_id: comId });
     }
   }, [resultQR, comId]);
 
