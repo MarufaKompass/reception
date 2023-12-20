@@ -129,7 +129,7 @@ export default function MeetingCode() {
                     />
                   </Box>
                   <Box sx={{ ml: { xs: 0, md: 2 }, mt: { xs: 2, md: 0 }, width: { xs: '100%', md: '40%' } }}>
-                    <Typography variant="h6">Meeting Code *</Typography>
+                    <Typography variant="h6">Meeting Check-In Code *</Typography>
                     <FormControl sx={{ display: 'flex', justifyContent: 'center' }}>
                       {resultQR && (
                         <OutlinedInput

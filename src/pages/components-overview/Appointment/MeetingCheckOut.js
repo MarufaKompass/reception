@@ -2,7 +2,7 @@ import MainCard from 'components/MainCard';
 import React, { useEffect, useState } from 'react';
 import QrReader from 'react-qr-scanner';
 import { Box, OutlinedInput, Typography, Button, FormControl } from '@mui/material';
-import Image from '../../../assets/images/img/reception_background.png';
+import Image from '../../../assets/images/img/reception_background-out.png';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -10,7 +10,7 @@ import { meetingCodeSchema } from 'components/validation/validation';
 import axiosInstance from 'utils/axios.config';
 import { useAppContextReception } from 'AppContextReception';
 import { toast } from 'react-toastify';
-
+import PuffLoader from 'react-spinners/PuffLoader';
 export default function MeetingCheckOut() {
   const delay = 500;
   const { comId } = useAppContextReception();
@@ -90,7 +90,7 @@ export default function MeetingCheckOut() {
               backgroundColor="#12A9B2"
               sx={{ px: 3, py: 2, borderRadius: 1, display: 'flex', justifyContent: 'center' }}
             >
-              Scanning Code/Enter Meeting Code For Check-Out
+              Scanning Code/Enter Meeting Code For Checkout
             </Typography>
           </Box>
           <Box display="flex" justifyContent="center" alignItems="center" height="80vh">
@@ -114,7 +114,12 @@ export default function MeetingCheckOut() {
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Box sx={{ display: { md: 'flex' }, justifyContent: 'center', alignItems: 'center', my: 2 }}>
                   <Box>
-                    <Typography sx={{ color: '#12A9B2', fontSize: 15, fontWeight: 'bold' }}>*Scan code</Typography>
+                  <Box sx={{ display: 'flex' }}>
+                      <PuffLoader color="#12a9b2" size={38} />
+                      <Typography sx={{ color: '#12A9B2', fontSize: 15, fontWeight: 'bold', mt: '8px', ml: '10px' }}>
+                        Scanning code for Checkout
+                      </Typography>
+                    </Box>
                     <QrReader
                       delay={delay}
                       style={{ height: '200px', width: '100%', border: 1, padding: 0, margin: 0, borderColor: '#12A9B2' }}
