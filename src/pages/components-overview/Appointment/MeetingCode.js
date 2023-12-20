@@ -116,9 +116,9 @@ export default function MeetingCode() {
                 <Box sx={{ display: { md: 'flex' }, justifyContent: 'center', alignItems: 'center', my: 2 }}>
                   <Box>
                     <Box sx={{ display: 'flex' }}>
-                      <PuffLoader color="#12a9b2" size={42} />
-                      <Typography sx={{ color: '#12A9B2', fontSize: 15, fontWeight: 'bold', mt: '8px' }}>
-                        Scanning code for Checking
+                      <PuffLoader color="#12a9b2" size={38} />
+                      <Typography sx={{ color: '#12A9B2', fontSize: 15, fontWeight: 'bold', mt: '8px', ml: '10px' }}>
+                        Scanning code for Check-In
                       </Typography>
                     </Box>
                     <QrReader
