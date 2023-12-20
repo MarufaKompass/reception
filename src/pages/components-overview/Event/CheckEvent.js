@@ -10,7 +10,7 @@ import { eventCodeSchema } from 'components/validation/validation';
 import { useAppContextReception } from 'AppContextReception';
 import axiosInstance from 'utils/axios.config';
 import { toast } from 'react-toastify';
-
+import PuffLoader from 'react-spinners/PuffLoader';
 export default function CheckEvent() {
   const { comId } = useAppContextReception();
   const [resultQR, setResultQR] = useState('');
@@ -90,7 +90,7 @@ export default function CheckEvent() {
               backgroundColor="#12A9B2"
               sx={{ px: 3, py: 2, borderRadius: 1, display: 'flex', justifyContent: 'center' }}
             >
-              Enter Event Code
+              Scanning Code/Enter Event Code
             </Typography>
           </Box>
           <Box display="flex" justifyContent="center" alignItems="center" height="80vh">
@@ -114,7 +114,12 @@ export default function CheckEvent() {
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Box sx={{ display: { md: 'flex' }, justifyContent: 'center', alignItems: 'center', my: 2 }}>
                   <Box>
-                    <Typography sx={{ color: '#12A9B2', fontSize: 15, fontWeight: 'bold' }}>*Scan code</Typography>
+                    <Box sx={{ display: 'flex' }}>
+                      <PuffLoader color="#12a9b2" size={38} />
+                      <Typography sx={{ color: '#12A9B2', fontSize: 15, fontWeight: 'bold', mt: '8px', ml: '10px' }}>
+                        Scanning code for Event
+                      </Typography>
+                    </Box>
                     <QrReader
                       delay={delay}
                       style={{ height: '200px', width: '100%', border: 1, padding: 0, margin: 0, borderColor: '#12A9B2' }}
@@ -123,7 +128,7 @@ export default function CheckEvent() {
                     />
                   </Box>
                   <Box sx={{ ml: { xs: 0, md: 2 }, mt: { xs: 2, md: 0 }, width: { xs: '100%', md: '40%' } }}>
-                    <Typography variant="h6">Event Code *</Typography>
+                    <Typography variant="h6">Scanning Event Code *</Typography>
                     <FormControl sx={{ display: 'flex', justifyContent: 'center' }}>
                       {resultQR && (
                         <OutlinedInput
