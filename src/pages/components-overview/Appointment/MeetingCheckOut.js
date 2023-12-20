@@ -2,7 +2,7 @@ import MainCard from 'components/MainCard';
 import React, { useEffect, useState } from 'react';
 import QrReader from 'react-qr-scanner';
 import { Box, OutlinedInput, Typography, Button, FormControl } from '@mui/material';
-import Image from '../../../assets/images/img/reception_background-out.png';
+import Image from '../../../assets/images/img/reception_background.png';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -75,7 +75,7 @@ export default function MeetingCheckOut() {
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
       width: '100%',
-      height: '80%' // Remove this line or adjust if needed
+      height: '80%'
     }
   };
 
@@ -90,7 +90,7 @@ export default function MeetingCheckOut() {
               backgroundColor="#12A9B2"
               sx={{ px: 3, py: 2, borderRadius: 1, display: 'flex', justifyContent: 'center' }}
             >
-              Scanning Code/Enter Meeting Code
+              Scanning Code/Enter Meeting Code For Check-Out
             </Typography>
           </Box>
           <Box display="flex" justifyContent="center" alignItems="center" height="80vh">
@@ -100,7 +100,7 @@ export default function MeetingCheckOut() {
                 height: { xs: '80%', xl: '50%' },
                 width: { md: '70%', lg: '70%', xl: '50%' },
                 mt: -8,
-                p: 2,
+                p: { xs: 2, md: 0 },
                 border: 1,
                 borderColor: '#fff',
                 borderRadius: 3,
@@ -112,23 +112,24 @@ export default function MeetingCheckOut() {
               }}
             >
               <form onSubmit={handleSubmit(onSubmit)}>
-                <Box sx={{ display: { sm: 'flex', md: 'flex' }, justifyContent: 'center', alignItems: 'center', my: 2 }}>
-                  <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <Box sx={{ display: { md: 'flex' }, justifyContent: 'center', alignItems: 'center', my: 2 }}>
+                  <Box>
+                    <Typography sx={{ color: '#12A9B2', fontSize: 15, fontWeight: 'bold' }}>*Scan code</Typography>
                     <QrReader
                       delay={delay}
-                      style={{ height: '180px', width: '100%', border: 1, padding: 0, margin: 0, borderColor: '#12A9B2' }}
+                      style={{ height: '200px', width: '100%', border: 1, padding: 0, margin: 0, borderColor: '#12A9B2' }}
                       onError={handleError}
                       onScan={handleScan}
                     />
                   </Box>
-                  <Box sx={{ mx: { xs: 0, sm: 2 }, mt: { xs: 2, sm: 0 }, width: { xs: '100%', sm: '40%' } }}>
-                    <Typography variant="h6">Meeting Code *</Typography>
-                    <FormControl>
+                  <Box sx={{ ml: { xs: 0, md: 2 }, mt: { xs: 2, md: 0 }, width: { xs: '100%', md: '40%' } }}>
+                    <Typography variant="h6">Meeting Checkout Code</Typography>
+                    <FormControl sx={{ display: 'flex', justifyContent: 'center' }}>
                       {resultQR && (
                         <OutlinedInput
                           {...register('code', { required: true })}
                           name="code"
-                          sx={{ border: 1, borderColor: '#12A9B2', width: '100%', mt: 1 }}
+                          sx={{ border: 1, borderColor: '#12A9B2', mt: 1 }}
                           size="small"
                           value={resultQR}
                         />
@@ -137,7 +138,7 @@ export default function MeetingCheckOut() {
                         <OutlinedInput
                           {...register('code', { required: true })}
                           name="code"
-                          sx={{ border: 1, borderColor: '#12A9B2', width: '100%', mt: 1 }}
+                          sx={{ border: 1, borderColor: '#12A9B2', mt: 1 }}
                           size="small"
                         />
                       )}
