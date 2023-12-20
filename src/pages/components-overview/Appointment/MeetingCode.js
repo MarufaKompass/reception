@@ -98,10 +98,10 @@ export default function MeetingCode() {
             <Box
               backgroundColor="#fff"
               sx={{
-                height: { xs: '85%', xl: '55%' },
-                width: { md: '80%', lg: '80%', xl: '60%' },
+                height: { xs: '80%', xl: '50%' },
+                width: { md: '70%', lg: '70%', xl: '50%' },
                 mt: -8,
-                p: { xs: 2, sm: 0 },
+                p: { xs: 2, md: 0 },
                 border: 1,
                 borderColor: '#fff',
                 borderRadius: 3,
@@ -113,7 +113,7 @@ export default function MeetingCode() {
               }}
             >
               <form onSubmit={handleSubmit(onSubmit)}>
-                <Box sx={{ display: { sm: 'flex', md: 'flex' }, justifyContent: 'center', alignItems: 'center', my: 2 }}>
+                <Box sx={{ display: { md: 'flex' }, justifyContent: 'center', alignItems: 'center', my: 2 }}>
                   <Box>
                     <Box sx={{ display: 'flex' }}>
                       <PuffLoader color="#12a9b2" size={38} />
@@ -128,7 +128,7 @@ export default function MeetingCode() {
                       onScan={handleScan}
                     />
                   </Box>
-                  <Box sx={{ ml: { xs: 0, sm: 2 }, mt: { xs: 2, sm: 0 }, width: { xs: '100%', sm: '40%' } }}>
+                  <Box sx={{ ml: { xs: 0, md: 2 }, mt: { xs: 2, md: 0 }, width: { xs: '100%', md: '40%' } }}>
                     <Typography variant="h6">Meeting Code *</Typography>
                     <FormControl sx={{ display: 'flex', justifyContent: 'center' }}>
                       {resultQR && (
