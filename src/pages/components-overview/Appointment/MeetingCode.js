@@ -95,10 +95,10 @@ export default function MeetingCode() {
             <Box
               backgroundColor="#fff"
               sx={{
-                height: { xs: '80%', xl: '50%' },
-                width: { md: '70%', lg: '70%', xl: '50%' },
+                height: { xs: '85%', xl: '55%' },
+                width: { md: '80%', lg: '80%', xl: '60%' },
                 mt: -8,
-                p: 2,
+                p: { xs: 2, sm: 0 },
                 border: 1,
                 borderColor: '#fff',
                 borderRadius: 3,
@@ -114,19 +114,19 @@ export default function MeetingCode() {
                   <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     <QrReader
                       delay={delay}
-                      style={{ height: '180px', width: '100%', border: 1, padding: 0, margin: 0, borderColor: '#12A9B2' }}
+                      style={{ height: '200px', width: '100%', border: 1, padding: 0, margin: 0, borderColor: '#12A9B2' }}
                       onError={handleError}
                       onScan={handleScan}
                     />
                   </Box>
-                  <Box sx={{ mx: { xs: 0, sm: 2 }, mt: { xs: 2, sm: 0 }, width: { xs: '100%', sm: '40%' } }}>
+                  <Box sx={{ ml: { xs: 0, sm: 2 }, mt: { xs: 2, sm: 0 }, width: { xs: '100%', sm: '40%' } }}>
                     <Typography variant="h6">Meeting Code *</Typography>
-                    <FormControl>
+                    <FormControl sx={{ display: 'flex', justifyContent: 'center' }}>
                       {resultQR && (
                         <OutlinedInput
                           {...register('code', { required: true })}
                           name="code"
-                          sx={{ border: 1, borderColor: '#12A9B2', width: '100%', mt: 1 }}
+                          sx={{ border: 1, borderColor: '#12A9B2', mt: 1 }}
                           size="small"
                           value={resultQR}
                         />
@@ -135,7 +135,7 @@ export default function MeetingCode() {
                         <OutlinedInput
                           {...register('code', { required: true })}
                           name="code"
-                          sx={{ border: 1, borderColor: '#12A9B2', width: '100%', mt: 1 }}
+                          sx={{ border: 1, borderColor: '#12A9B2', mt: 1 }}
                           size="small"
                         />
                       )}

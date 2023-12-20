@@ -62,8 +62,8 @@ export default function CourierList() {
           </Box>
         )
       },
-      { field: 'parcel_type', headerName: 'Parcel Type', flex: isSmallScreen ? 0 : 1 },
-      { field: 'percel_refno', headerName: 'Reference', width: 150 },
+      { field: 'parcel_type', headerName: 'Parcel Type', headerAlign: 'center', align: 'center', flex: isSmallScreen ? 0 : 1 },
+      { field: 'percel_refno', headerName: 'Reference', headerAlign: 'center', align: 'center', width: 150 },
       {
         field: 'status',
         headerName: 'Status',
