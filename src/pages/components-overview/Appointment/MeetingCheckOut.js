@@ -2,7 +2,7 @@ import MainCard from 'components/MainCard';
 import React, { useEffect, useState } from 'react';
 import QrReader from 'react-qr-scanner';
 import { Box, OutlinedInput, Typography, Button, FormControl } from '@mui/material';
-import Image from '../../../assets/images/img/reception_background.png';
+import Image from '../../../assets/images/img/reception_background-out.png';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -11,7 +11,7 @@ import axiosInstance from 'utils/axios.config';
 import { useAppContextReception } from 'AppContextReception';
 import { toast } from 'react-toastify';
 
-export default function MeetingCode() {
+export default function MeetingCheckOut() {
   const delay = 500;
   const { comId } = useAppContextReception();
   const navigate = useNavigate();
@@ -90,7 +90,7 @@ export default function MeetingCode() {
               backgroundColor="#12A9B2"
               sx={{ px: 3, py: 2, borderRadius: 1, display: 'flex', justifyContent: 'center' }}
             >
-              Scanning Code/Enter Meeting Code For Check-In
+              Scanning Code/Enter Meeting Code
             </Typography>
           </Box>
           <Box display="flex" justifyContent="center" alignItems="center" height="80vh">
