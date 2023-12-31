@@ -5,6 +5,9 @@ import meetingList from '../../src/components/svg/MeetingList';
 import visitorList from '../../src/components/svg/VisitorList';
 import courier from '../../src/components/svg/Courier';
 import event from '../../src/components/svg/Event';
+import checkIn from '../../src/components/svg/CheckIn';
+import checkOut from '../../src/components/svg/CheckOut';
+import instantMeeting from '../../src/components/svg/InstantMeeting';
 // import event from "../../src/components/svg/Event";
 // icons
 const icons = {
@@ -12,7 +15,10 @@ const icons = {
   meetingList,
   visitorList,
   courier,
-  event
+  event,
+  checkIn,
+  checkOut,
+  instantMeeting
 };
 // ==============================|| MENU ITEMS - UTILITIES ||============================== //
 
@@ -21,6 +27,27 @@ const allListed = {
   title: 'list',
   type: 'group',
   children: [
+    {
+      id: 'checkIn',
+      title: 'Meeting Check In',
+      type: 'item',
+      url: '/checkMeeting',
+      icon: icons.checkIn
+    },
+    {
+      id: 'CheckOut',
+      title: 'Meeting Check Out',
+      type: 'item',
+      url: '/MeetingCheckOut',
+      icon: icons.checkOut
+    },
+    {
+      id: 'instantMeeting',
+      title: 'Instant Meeting',
+      type: 'item',
+      url: '/instantMeeting',
+      icon: icons.instantMeeting
+    },
     {
       id: 'waitingList',
       title: "Today's Waiting List",
@@ -42,6 +69,7 @@ const allListed = {
       url: '/visitor',
       icon: icons.visitorList
     },
+   
     {
       id: 'courier',
       title: 'Courier',

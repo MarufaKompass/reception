@@ -3,29 +3,18 @@ import { forwardRef } from 'react';
 function Root() {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M12.3701 8.87988H17.6201" stroke="#12a9b2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M8 2V5" stroke="#fff" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M16 2V5" stroke="#fff" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
       <path
-        d="M6.37988 8.87988L7.12988 9.62988L9.37988 7.37988"
-        stroke="#12a9b2"
+        d="M21 8.5V17C21 20 19.5 22 16 22H8C4.5 22 3 20 3 17V8.5C3 5.5 4.5 3.5 8 3.5H16C19.5 3.5 21 5.5 21 8.5Z"
+        stroke="#fff"
         strokeWidth="1.5"
+        strokeMiterlimit="10"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <path d="M12.3701 15.8799H17.6201" stroke="#12a9b2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      <path
-        d="M6.37988 15.8799L7.12988 16.6299L9.37988 14.3799"
-        stroke="#12a9b2"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z"
-        stroke="#12a9b2"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path d="M8 11H16" stroke="#fff" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M8 16H12" stroke="#fff" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
