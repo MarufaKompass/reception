@@ -169,7 +169,7 @@ export default function Courier() {
                 </Box>
                 <Box sx={{ my: 2 }}>
                   <Typography variant="p" sx={{ display: 'block' }} fontSize="14px">
-                    Employee
+                    Delivery For (Employee)
                   </Typography>
                   <Select
                     {...register('person_id', { required: true })}
