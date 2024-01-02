@@ -2,8 +2,8 @@ import { Box, Typography, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import DashCourier from 'components/svg/DashCourier';
 import DashEvent from 'components/svg/DashEvent';
-import CheckIn from 'components/svg/CheckIn';
-import InstantMeeting from 'components/svg/InstantMeeting';
+import DashboardCheckIn from 'components/svg/DashboardCheckIn';
+import DashboardInstantMeeting from 'components/svg/DashboardInstantMeeting';
 import DashboardCheckOut from 'components/svg/DashboardCheckOut';
 import { useState } from 'react';
 const NavigateMeeting = () => {
@@ -118,7 +118,7 @@ const NavigateMeeting = () => {
                     stroke: isHoveredCheckIn ? '#fff' : '#12A9B2'
                   }
                 }}
-                startIcon={<CheckIn></CheckIn>}
+                startIcon={<DashboardCheckIn></DashboardCheckIn>}
               >
                 <Typography variant="p">Meeting Check In</Typography>
               </Button>
@@ -191,7 +191,7 @@ const NavigateMeeting = () => {
                     stroke: isHoveredInstant ? '#fff' : '#12A9B2' // Change SVG path color on hover
                   }
                 }}
-                startIcon={<InstantMeeting></InstantMeeting>}
+                startIcon={<DashboardInstantMeeting></DashboardInstantMeeting>}
               >
                 <Typography variant="p">Instant Meeting </Typography>
               </Button>

@@ -159,6 +159,7 @@ export default function Courier() {
                       </InputLabel>
                     </MenuItem>
                     <MenuItem value="Gift">Gift</MenuItem>
+                    <MenuItem value="Gift">Food</MenuItem>
                     <MenuItem value="Document">Document</MenuItem>
                     <MenuItem value="Package">Package</MenuItem>
                     <MenuItem value="Accessories">Accessories</MenuItem>
@@ -168,7 +169,7 @@ export default function Courier() {
                 </Box>
                 <Box sx={{ my: 2 }}>
                   <Typography variant="p" sx={{ display: 'block' }} fontSize="14px">
-                    Employee
+                    Delivery For (Employee)
                   </Typography>
                   <Select
                     {...register('person_id', { required: true })}
