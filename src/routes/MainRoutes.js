@@ -18,6 +18,7 @@ import PrivateRoutes from 'components/PrivateRoutes/PrivateRoutes';
 import NotFoundPage from 'pages/components-overview/NotFoundPage';
 import { Typography } from '@mui/material';
 import Test from 'pages/components-overview/Test';
+import Document from 'pages/components-overview/Document';
 
 // render - dashboard
 const DashboardDefault = Loadable(lazy(() => import('pages/dashboard')));
@@ -160,6 +161,16 @@ const MainRoutes = {
         <Suspense fallback={<Typography>Loading...</Typography>}>
           <PrivateRoutes>
             <Courier />
+          </PrivateRoutes>
+        </Suspense>
+      )
+    },
+    {
+      path: 'document',
+      element: (
+        <Suspense fallback={<Typography>Loading...</Typography>}>
+          <PrivateRoutes>
+            <Document />
           </PrivateRoutes>
         </Suspense>
       )
