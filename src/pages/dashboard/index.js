@@ -1,10 +1,10 @@
 import { Box, Grid } from '@mui/material';
 import NavigateMeeting from './NavigateMeeting';
 import BannerImg from './BannerImg';
-
 import MainCard from 'components/MainCard';
 
 const DashboardDefault = () => {
+
   return (
     <Box>
       <MainCard>

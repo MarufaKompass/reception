@@ -69,7 +69,7 @@ const allListed = {
       url: '/visitor',
       icon: icons.visitorList
     },
-   
+
     {
       id: 'courier',
       title: 'Courier',
@@ -88,3 +88,6 @@ const allListed = {
 };
 
 export default allListed;
+
+
+
