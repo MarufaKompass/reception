@@ -6,6 +6,7 @@ import DashboardCheckIn from 'components/svg/DashboardCheckIn';
 import DashboardInstantMeeting from 'components/svg/DashboardInstantMeeting';
 import DashboardCheckOut from 'components/svg/DashboardCheckOut';
 import { useState } from 'react';
+import { useAppContextReception } from 'AppContextReception';
 const NavigateMeeting = () => {
   const navigate = useNavigate();
 
@@ -24,11 +25,16 @@ const NavigateMeeting = () => {
   const handleCheckInstantMeeting = () => {
     navigate('/instantMeeting');
   };
+  const handleHoverHotel = () => {
+    navigate('/hotelBookingList');
+  };
+
   const [isHoveredCheckIn, setIsHoveredCheckIn] = useState(false);
   const [isHoveredCheckOut, setIsHoveredCheckOut] = useState(false);
   const [isHoveredInstant, setIsHoveredInstant] = useState(false);
   const [isHoveredCourier, setIsHoveredCourier] = useState(false);
   const [isHoveredEvent, setIsHoveredEvent] = useState(false);
+  const [isHoveredHotel, setIsHoveredHotel] = useState(false);
 
   const handleHoverCheck = () => {
     setIsHoveredCheckIn(true);
@@ -69,7 +75,10 @@ const NavigateMeeting = () => {
   const handleHoverEventLeave = () => {
     setIsHoveredEvent(false);
   };
-
+  const handleHoverHotelLeave = () => {
+    setIsHoveredHotel(false);
+  };
+  const { user } = useAppContextReception();
   return (
     <Box>
       <Box height="85vh" display="flex" justifyContent="center" alignItems="center">
@@ -86,118 +95,305 @@ const NavigateMeeting = () => {
             </Typography>
           </Box>
 
-          <Box sx={{ mt: 3 }}>
-            <Box
-              sx={{
-                display: 'block',
-                '&:hover': {
-                  button: {
-                    color: '#fff',
-                    backgroundColor: '#12A9B2'
-                  }
-                }
-              }}
-              onMouseEnter={handleHoverCheck}
-              onMouseLeave={handleMouseCheckLeave}
-            >
-              <Button
-                onClick={handleCheckMeeting}
-                variant="outlined"
-                size="medium"
+          {user.user_type === 'company' ? (
+            <Box sx={{ mt: 3 }}>
+              <Box
                 sx={{
-                  my: 1,
-                  color: isHoveredCheckIn ? '#fff' : '#12A9B2',
-                  border: 1,
-                  borderColor: '#12A9B2',
-                  fontSize: 20,
+                  display: 'block',
                   '&:hover': {
-                    color: '#fff',
-                    backgroundColor: '#12A9B2'
-                  },
-                  '& svg path': {
-                    stroke: isHoveredCheckIn ? '#fff' : '#12A9B2'
+                    button: {
+                      color: '#fff',
+                      backgroundColor: '#12A9B2'
+                    }
                   }
                 }}
-                startIcon={<DashboardCheckIn></DashboardCheckIn>}
+                onMouseEnter={handleHoverCheck}
+                onMouseLeave={handleMouseCheckLeave}
               >
-                <Typography variant="p">Meeting Check In</Typography>
-              </Button>
-            </Box>
-            <Box
-              sx={{
-                display: 'block',
-                '&:hover': {
-                  button: {
-                    color: '#fff',
-                    backgroundColor: '#12A9B2'
-                  }
-                }
-              }}
-              onMouseEnter={handleHoverCheckOut}
-              onMouseLeave={handleMouseCheckOutLeave}
-            >
-              <Button
-                onClick={handleCheckMeetingOut}
-                variant="outlined"
-                size="medium"
+                <Button
+                  onClick={handleCheckMeeting}
+                  variant="outlined"
+                  size="medium"
+                  sx={{
+                    my: 1,
+                    color: isHoveredCheckIn ? '#fff' : '#12A9B2',
+                    border: 1,
+                    borderColor: '#12A9B2',
+                    fontSize: 20,
+                    '&:hover': {
+                      color: '#fff',
+                      backgroundColor: '#12A9B2'
+                    },
+                    '& svg path': {
+                      stroke: isHoveredCheckIn ? '#fff' : '#12A9B2'
+                    }
+                  }}
+                  startIcon={<DashboardCheckIn></DashboardCheckIn>}
+                >
+                  <Typography variant="p">Meeting Check In</Typography>
+                </Button>
+              </Box>
+              <Box
                 sx={{
-                  my: 1,
-                  color: isHoveredCheckOut ? '#fff' : '#12A9B2',
-                  border: 1,
-                  borderColor: '#12A9B2',
-                  fontSize: 20,
+                  display: 'block',
                   '&:hover': {
-                    color: '#fff',
-                    backgroundColor: '#12A9B2'
-                  },
-                  '& svg path': {
-                    stroke: isHoveredCheckOut ? '#fff' : '#12A9B2' 
+                    button: {
+                      color: '#fff',
+                      backgroundColor: '#12A9B2'
+                    }
                   }
                 }}
-                startIcon={<DashboardCheckOut></DashboardCheckOut>}
+                onMouseEnter={handleHoverCheckOut}
+                onMouseLeave={handleMouseCheckOutLeave}
               >
-                <Typography variant="p">Meeting Check Out</Typography>
-              </Button>
-            </Box>
+                <Button
+                  onClick={handleCheckMeetingOut}
+                  variant="outlined"
+                  size="medium"
+                  sx={{
+                    my: 1,
+                    color: isHoveredCheckOut ? '#fff' : '#12A9B2',
+                    border: 1,
+                    borderColor: '#12A9B2',
+                    fontSize: 20,
+                    '&:hover': {
+                      color: '#fff',
+                      backgroundColor: '#12A9B2'
+                    },
+                    '& svg path': {
+                      stroke: isHoveredCheckOut ? '#fff' : '#12A9B2'
+                    }
+                  }}
+                  startIcon={<DashboardCheckOut></DashboardCheckOut>}
+                >
+                  <Typography variant="p">Meeting Check Out</Typography>
+                </Button>
+              </Box>
 
-            <Box
-              sx={{
-                display: 'block',
-                '&:hover': {
-                  button: {
-                    color: '#fff',
-                    backgroundColor: '#12A9B2'
-                  }
-                }
-              }}
-              onMouseEnter={handleHoverInstant}
-              onMouseLeave={handleHoverInstantLeave}
-            >
-              <Button
-                onClick={handleCheckInstantMeeting}
-                variant="outlined"
-                size="medium"
+              <Box
                 sx={{
-                  my: 1,
-                  color: isHoveredInstant ? '#fff' : '#12A9B2',
-                  border: 1,
-                  borderColor: '#12A9B2',
-                  fontSize: 20,
+                  display: 'block',
                   '&:hover': {
-                    color: '#fff',
-                    backgroundColor: '#12A9B2'
-                  },
-                  '& svg path': {
-                    stroke: isHoveredInstant ? '#fff' : '#12A9B2' // Change SVG path color on hover
+                    button: {
+                      color: '#fff',
+                      backgroundColor: '#12A9B2'
+                    }
                   }
                 }}
-                startIcon={<DashboardInstantMeeting></DashboardInstantMeeting>}
+                onMouseEnter={handleHoverInstant}
+                onMouseLeave={handleHoverInstantLeave}
               >
-                <Typography variant="p">Instant Meeting </Typography>
-              </Button>
-            </Box>
+                <Button
+                  onClick={handleCheckInstantMeeting}
+                  variant="outlined"
+                  size="medium"
+                  sx={{
+                    my: 1,
+                    color: isHoveredInstant ? '#fff' : '#12A9B2',
+                    border: 1,
+                    borderColor: '#12A9B2',
+                    fontSize: 20,
+                    '&:hover': {
+                      color: '#fff',
+                      backgroundColor: '#12A9B2'
+                    },
+                    '& svg path': {
+                      stroke: isHoveredInstant ? '#fff' : '#12A9B2' // Change SVG path color on hover
+                    }
+                  }}
+                  startIcon={<DashboardInstantMeeting></DashboardInstantMeeting>}
+                >
+                  <Typography variant="p">Instant Meeting </Typography>
+                </Button>
+              </Box>
 
-            <Box
+              <Box
+                sx={{
+                  display: 'block',
+                  '&:hover': {
+                    button: {
+                      color: '#fff',
+                      backgroundColor: '#12A9B2'
+                    }
+                  }
+                }}
+                onMouseEnter={handleHoverCourier}
+                onMouseLeave={handleHoverCourierLeave}
+              >
+                <Button
+                  onClick={handleCheckCourier}
+                  variant="outlined"
+                  size="medium"
+                  sx={{
+                    my: 1,
+                    color: isHoveredCourier ? '#fff' : '#12A9B2',
+                    border: 1,
+                    borderColor: '#12A9B2',
+                    fontSize: 20,
+                    '&:hover': {
+                      color: '#fff',
+                      backgroundColor: '#12A9B2'
+                    },
+                    '& svg path': {
+                      stroke: isHoveredCourier ? '#fff' : '#12A9B2' // Change SVG path color on hover
+                    }
+                  }}
+                  startIcon={<DashCourier></DashCourier>}
+                >
+                  <Typography variant="p">Courier </Typography>
+                </Button>
+              </Box>
+
+              <Box
+                sx={{
+                  display: 'block',
+                  '&:hover': {
+                    button: {
+                      color: '#fff',
+                      backgroundColor: '#12A9B2'
+                    }
+                  }
+                }}
+                onMouseEnter={handleHoverEvent}
+                onMouseLeave={handleHoverEventLeave}
+              >
+                <Button
+                  onClick={handleCheckEvent}
+                  variant="outlined"
+                  size="medium"
+                  sx={{
+                    my: 1,
+                    color: isHoveredEvent ? '#fff' : '#12A9B2',
+                    border: 1,
+                    borderColor: '#12A9B2',
+                    fontSize: 20,
+                    '&:hover': {
+                      color: '#fff',
+                      backgroundColor: '#12A9B2'
+                    },
+                    '& svg path': {
+                      stroke: isHoveredEvent ? '#fff' : '#12A9B2' // Change SVG path color on hover
+                    }
+                  }}
+                  startIcon={<DashEvent></DashEvent>}
+                >
+                  <Typography variant="p">Event </Typography>
+                </Button>
+              </Box>
+            </Box>
+          ) : (
+            <Box sx={{ mt: 3 }}>
+              <Box
+                sx={{
+                  display: 'block',
+                  '&:hover': {
+                    button: {
+                      color: '#fff',
+                      backgroundColor: '#12A9B2'
+                    }
+                  }
+                }}
+                onMouseEnter={handleHoverCheck}
+                onMouseLeave={handleHoverHotelLeave}
+              >
+                <Button
+                  onClick={handleHoverHotel}
+                  variant="outlined"
+                  size="medium"
+                  sx={{
+                    my: 1,
+                    color: isHoveredHotel ? '#fff' : '#12A9B2',
+                    border: 1,
+                    borderColor: '#12A9B2',
+                    fontSize: 20,
+                    '&:hover': {
+                      color: '#fff',
+                      backgroundColor: '#12A9B2'
+                    },
+                    '& svg path': {
+                      stroke: isHoveredHotel ? '#fff' : '#12A9B2'
+                    }
+                  }}
+                  startIcon={<DashboardCheckIn></DashboardCheckIn>}
+                >
+                  <Typography variant="p">Hotel Check In</Typography>
+                </Button>
+              </Box>
+              {/* <Box
+                sx={{
+                  display: 'block',
+                  '&:hover': {
+                    button: {
+                      color: '#fff',
+                      backgroundColor: '#12A9B2'
+                    }
+                  }
+                }}
+                onMouseEnter={handleHoverCheckOut}
+                onMouseLeave={handleMouseCheckOutLeave}
+              >
+                <Button
+                  onClick={handleCheckMeetingOut}
+                  variant="outlined"
+                  size="medium"
+                  sx={{
+                    my: 1,
+                    color: isHoveredCheckOut ? '#fff' : '#12A9B2',
+                    border: 1,
+                    borderColor: '#12A9B2',
+                    fontSize: 20,
+                    '&:hover': {
+                      color: '#fff',
+                      backgroundColor: '#12A9B2'
+                    },
+                    '& svg path': {
+                      stroke: isHoveredCheckOut ? '#fff' : '#12A9B2'
+                    }
+                  }}
+                  startIcon={<DashboardCheckOut></DashboardCheckOut>}
+                >
+                  <Typography variant="p">Meeting Check Out</Typography>
+                </Button>
+              </Box> */}
+
+              {/* <Box
+                sx={{
+                  display: 'block',
+                  '&:hover': {
+                    button: {
+                      color: '#fff',
+                      backgroundColor: '#12A9B2'
+                    }
+                  }
+                }}
+                onMouseEnter={handleHoverInstant}
+                onMouseLeave={handleHoverInstantLeave}
+              >
+                <Button
+                  onClick={handleCheckInstantMeeting}
+                  variant="outlined"
+                  size="medium"
+                  sx={{
+                    my: 1,
+                    color: isHoveredInstant ? '#fff' : '#12A9B2',
+                    border: 1,
+                    borderColor: '#12A9B2',
+                    fontSize: 20,
+                    '&:hover': {
+                      color: '#fff',
+                      backgroundColor: '#12A9B2'
+                    },
+                    '& svg path': {
+                      stroke: isHoveredInstant ? '#fff' : '#12A9B2' // Change SVG path color on hover
+                    }
+                  }}
+                  startIcon={<DashboardInstantMeeting></DashboardInstantMeeting>}
+                >
+                  <Typography variant="p">Instant Meeting </Typography>
+                </Button>
+              </Box> */}
+
+              {/* <Box
               sx={{
                 display: 'block',
                 '&:hover': {
@@ -232,9 +428,9 @@ const NavigateMeeting = () => {
               >
                 <Typography variant="p">Courier </Typography>
               </Button>
-            </Box>
+            </Box> */}
 
-            <Box
+              {/* <Box
               sx={{
                 display: 'block',
                 '&:hover': {
@@ -269,8 +465,9 @@ const NavigateMeeting = () => {
               >
                 <Typography variant="p">Event </Typography>
               </Button>
+            </Box> */}
             </Box>
-          </Box>
+          )}
         </Box>
       </Box>
     </Box>
