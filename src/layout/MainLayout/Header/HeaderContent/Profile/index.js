@@ -9,7 +9,7 @@ const Profile = () => {
   const handleLogout = async () => {
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('com');
-    sessionStorage.removeItem('user_type');
+    sessionStorage.removeItem('user');
     navigate('/login');
   };
 

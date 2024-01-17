@@ -26,7 +26,7 @@ const NavigateMeeting = () => {
     navigate('/instantMeeting');
   };
   const handleHoverHotel = () => {
-    navigate('/hotelBookingList');
+    navigate('/hotelCheckIn');
   };
 
   const [isHoveredCheckIn, setIsHoveredCheckIn] = useState(false);
