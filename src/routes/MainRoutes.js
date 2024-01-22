@@ -1,4 +1,5 @@
 import { lazy, Suspense } from 'react';
+import { Typography } from '@mui/material';
 
 // project import
 import MainLayout from 'layout/MainLayout';
@@ -16,10 +17,10 @@ import InstantMeeting from 'pages/components-overview/InstantMeeting/InstantMeet
 import GuestList from 'pages/components-overview/Event/GuestList';
 import PrivateRoutes from 'components/PrivateRoutes/PrivateRoutes';
 import NotFoundPage from 'pages/components-overview/NotFoundPage';
-import { Typography } from '@mui/material';
 import Test from 'pages/components-overview/Test';
 import Document from 'pages/components-overview/Document';
 import HotelBookingList from 'pages/components-overview-hotel/hotelBookingList/HotelBookingList';
+const HotelView = Loadable(lazy(() => import('pages/components-overview-hotel/hotelBookingList/HotelView')));
 const HotelCheckIn = Loadable(lazy(() => import('pages/components-overview-hotel/hotel-checkIn/HotelCheckIn')));
 
 // render - dashboard
@@ -203,6 +204,16 @@ const MainRoutes = {
         <Suspense fallback={<Typography>Loading...</Typography>}>
           <PrivateRoutes>
             <HotelBookingList />
+          </PrivateRoutes>
+        </Suspense>
+      )
+    },
+    {
+      path: 'hotelView',
+      element: (
+        <Suspense fallback={<Typography>Loading...</Typography>}>
+          <PrivateRoutes>
+            <HotelView />
           </PrivateRoutes>
         </Suspense>
       )

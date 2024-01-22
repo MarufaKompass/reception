@@ -4,6 +4,8 @@ const userStorage = JSON.parse(sessionStorage.getItem('user'));
 const comStorage = JSON.parse(sessionStorage.getItem('com'));
 const tokenStorage = JSON.parse(sessionStorage.getItem('token'));
 
+
+
 export const AppContext = createContext();
 
 export default function AppContextReception({ children }) {

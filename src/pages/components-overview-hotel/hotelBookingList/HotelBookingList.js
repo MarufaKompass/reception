@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Box, Typography, Button, OutlinedInput, InputAdornment, IconButton } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { useTheme } from '@mui/material/styles';
@@ -7,18 +7,19 @@ import MainCard from 'components/MainCard';
 import Search from 'components/svg/Search';
 import { useAppContextReception } from 'AppContextReception';
 import axiosInstance from 'utils/axios.config';
-import MeetingModal from 'components/modal/MeetingModal';
+// import MeetingModal from 'components/modal/MeetingModal';
 import TableChip from '../../../components/chips/TableChip';
 import NoDataImage from 'components/Image/NoDataImage';
 import '../../../assets/styles.css';
-
+import { useNavigate } from 'react-router-dom';
 export default function HotelBookingList() {
   const { comId, lobbyData, setLobbyData } = useAppContextReception();
+  console.log(lobbyData)
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
-  const [selectedMeetingId, setSelectedMeetingId] = useState(null);
-  const [showMeetingModal, setShowMeetingModal] = useState(false);
+  // const [selectedMeetingId, setSelectedMeetingId] = useState(null);
+  // const [showMeetingModal, setShowMeetingModal] = useState(false);
 
   useEffect(() => {
     const fetchData = () => {
@@ -26,7 +27,6 @@ export default function HotelBookingList() {
         .get(`https://api.hellokompass.com/reception/bookinglist/${comId}`)
         .then((res) => {
           setLobbyData(res.data.data);
-          console.log(res.data.data);
         })
         .catch((error) => {
           console.error(error);
@@ -37,6 +37,11 @@ export default function HotelBookingList() {
     const interval = setInterval(fetchData, 10000);
     return () => clearInterval(interval);
   }, [comId]);
+
+  const navigate = useNavigate();
+  const handleBookingView = () => {
+    navigate('/hotelView');
+  };
 
   const adjustColumnWidths = () => {
     const columns = [
@@ -130,18 +135,7 @@ export default function HotelBookingList() {
         flex: isSmallScreen ? 0 : 1,
         renderCell: (params) => <TableChip>{params.row.status}</TableChip>
       },
-      {
-        field: 'sta',
-        headerAlign: 'center',
-        align: 'center',
-        headerName: (
-          <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-            <Typography></Typography>
-          </Box>
-        ),
-        flex: isSmallScreen ? 0 : 1,
-        renderCell: (params) => <Box>{params.row.status === 'checkin' ? <Button>checkout</Button> : <></>}</Box>
-      },
+
       {
         field: 'action',
         headerName: 'Action',
@@ -152,7 +146,7 @@ export default function HotelBookingList() {
           <Button
             variant="outlined"
             size="small"
-            onClick={() => handleMeetingShow(params.row.id)}
+            onClick={() => handleBookingView(params.row.id)}
             sx={{ color: '#12A9B2', borderColor: '#12A9B2', borderRadius: 1, '&:focus': { border: 'none' } }}
           >
             View
@@ -168,10 +162,10 @@ export default function HotelBookingList() {
     originalId: index + 1
   }));
 
-  const handleMeetingShow = (id) => {
-    setSelectedMeetingId(id);
-    setShowMeetingModal(true);
-  };
+  // const handleMeetingShow = (id) => {
+  //   setSelectedMeetingId(id);
+  //   setShowMeetingModal(true);
+  // };
 
   // Usage in your component
   const adjustedColumns = adjustColumnWidths();
@@ -225,13 +219,15 @@ export default function HotelBookingList() {
           <NoDataImage />
         )}
 
-        {selectedMeetingId && (
+        {/* {selectedMeetingId && (
           <MeetingModal
             selectedMeetingId={selectedMeetingId}
             showMeetingModal={showMeetingModal}
             handleClose={() => setShowMeetingModal(false)}
           />
-        )}
+
+          
+        )} */}
       </MainCard>
     </Box>
   );
