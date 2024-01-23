@@ -13,12 +13,11 @@ import NoDataImage from 'components/Image/NoDataImage';
 import '../../../assets/styles.css';
 import { useNavigate } from 'react-router-dom';
 export default function HotelBookingList() {
-  const { comId, lobbyData, setLobbyData } = useAppContextReception();
-  console.log(lobbyData)
+  const { comId, lobbyData, setLobbyData, setHotelViewId } = useAppContextReception();
+
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
-
-  // const [selectedMeetingId, setSelectedMeetingId] = useState(null);
+    
   // const [showMeetingModal, setShowMeetingModal] = useState(false);
 
   useEffect(() => {
@@ -39,8 +38,10 @@ export default function HotelBookingList() {
   }, [comId]);
 
   const navigate = useNavigate();
-  const handleBookingView = () => {
-    navigate('/hotelView');
+  const handleBookingView = (booking_id) => {
+    sessionStorage.setItem('Book', JSON.stringify(booking_id));
+     setHotelViewId(booking_id);
+     navigate('/hotelView');
   };
 
   const adjustColumnWidths = () => {
@@ -146,7 +147,7 @@ export default function HotelBookingList() {
           <Button
             variant="outlined"
             size="small"
-            onClick={() => handleBookingView(params.row.id)}
+            onClick={() => handleBookingView(params.row.booking_id)}
             sx={{ color: '#12A9B2', borderColor: '#12A9B2', borderRadius: 1, '&:focus': { border: 'none' } }}
           >
             View
@@ -162,7 +163,7 @@ export default function HotelBookingList() {
     originalId: index + 1
   }));
 
-  // const handleMeetingShow = (id) => {
+  // const handleBookingView = (id) => {
   //   setSelectedMeetingId(id);
   //   setShowMeetingModal(true);
   // };
