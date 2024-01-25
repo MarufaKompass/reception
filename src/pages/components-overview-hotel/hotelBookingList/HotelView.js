@@ -32,6 +32,7 @@ export default function HotelView() {
     room,
     pay_status,
     code,
+    nid_image_front,
     adults,
     childrens
   } = hotelView;
@@ -100,84 +101,36 @@ export default function HotelView() {
                   <Typography>{first_name}</Typography>
                 </Typography>
               </Box>
-            </Grid>
 
-            <Grid item xs={4}>
-              <Box>
-                <Typography sx={{ fontSize: '15px', display: 'flex' }}>
-                  <Typography sx={{ width: '150px' }}>Last name </Typography>
-                  <Typography sx={{ width: '10px' }}>:</Typography>
-                  <Typography>{last_name}</Typography>
-                </Typography>
-              </Box>
-            </Grid>
-
-            <Grid item xs={4}>
-              <Box sx={{ w: '120px' }}>
+              <Box sx={{ mt: '7px' }}>
                 <Typography sx={{ fontSize: '15px', display: 'flex' }}>
                   <Typography sx={{ width: '150px' }}>Phone </Typography>
                   <Typography sx={{ width: '10px' }}>:</Typography>
                   <Typography>{phone}</Typography>
                 </Typography>
               </Box>
-            </Grid>
-            <Grid item xs={4}>
-              <Box>
-                <Typography sx={{ fontSize: '15px', display: 'flex' }}>
-                  <Typography sx={{ width: '150px' }}>Email </Typography>
-                  <Typography sx={{ width: '10px' }}>:</Typography>
-                  <Typography>{email}</Typography>
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={4}>
-              <Box>
-                <Typography sx={{ fontSize: '15px', display: 'flex' }}>
-                  <Typography sx={{ width: '150px' }}>Nationality </Typography>
-                  <Typography sx={{ width: '10px' }}>:</Typography>
-                  <Typography>{nationality}</Typography>
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={4}>
-              <Box>
-                <Typography sx={{ fontSize: '15px', display: 'flex' }}>
-                  <Typography sx={{ width: '150px' }}>Nid No </Typography>
-                  <Typography sx={{ width: '10px' }}>:</Typography>
-                  <Typography>{nid_no}</Typography>
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={4}>
-              <Box>
+              <Box sx={{ mt: '7px' }}>
                 <Typography sx={{ fontSize: '15px', display: 'flex' }}>
                   <Typography sx={{ width: '150px' }}>Profession </Typography>
                   <Typography sx={{ width: '10px' }}>:</Typography>
                   <Typography>{profession}</Typography>
                 </Typography>
               </Box>
-            </Grid>
-            <Grid item xs={4}>
-              <Box>
+              <Box sx={{ mt: '7px' }}>
                 <Typography sx={{ fontSize: '15px', display: 'flex' }}>
-                  <Typography sx={{ width: '150px' }}>Job Location </Typography>
+                  <Typography sx={{ width: '150px' }}>Nid No </Typography>
                   <Typography sx={{ width: '10px' }}>:</Typography>
-                  <Typography>{job_location}</Typography>
+                  <Typography>{nid_no}</Typography>
                 </Typography>
               </Box>
-            </Grid>
-
-            <Grid item xs={4}>
-              <Box>
+              <Box sx={{ mt: '7px' }}>
                 <Typography sx={{ fontSize: '15px', display: 'flex' }}>
                   <Typography sx={{ width: '150px' }}>Father/Spouse Name </Typography>
                   <Typography sx={{ width: '10px' }}>: </Typography>
                   <Typography> {father_name}</Typography>
                 </Typography>
               </Box>
-            </Grid>
-            <Grid item xs={4}>
-              <Box>
+              <Box sx={{ mt: '7px' }}>
                 <Typography sx={{ fontSize: '15px', display: 'flex' }}>
                   <Typography sx={{ width: '150px' }}>Present address</Typography>
                   <Typography sx={{ width: '10px' }}>: </Typography>
@@ -185,8 +138,39 @@ export default function HotelView() {
                 </Typography>
               </Box>
             </Grid>
+
             <Grid item xs={4}>
-              <Box>
+              <Box sx={{ mt: '7px' }}>
+                <Typography sx={{ fontSize: '15px', display: 'flex' }}>
+                  <Typography sx={{ width: '150px' }}>Last name </Typography>
+                  <Typography sx={{ width: '10px' }}>:</Typography>
+                  <Typography>{last_name}</Typography>
+                </Typography>
+              </Box>
+              <Box sx={{ mt: '7px' }}>
+                <Typography sx={{ fontSize: '15px', display: 'flex' }}>
+                  <Typography sx={{ width: '150px' }}>Email </Typography>
+                  <Typography sx={{ width: '10px' }}>:</Typography>
+                  <Typography>{email}</Typography>
+                </Typography>
+              </Box>
+
+              <Box sx={{ mt: '7px' }}>
+                <Typography sx={{ fontSize: '15px', display: 'flex' }}>
+                  <Typography sx={{ width: '150px' }}>Job Location </Typography>
+                  <Typography sx={{ width: '10px' }}>:</Typography>
+                  <Typography>{job_location}</Typography>
+                </Typography>
+              </Box>
+
+              <Box sx={{ mt: '7px' }}>
+                <Typography sx={{ fontSize: '15px', display: 'flex' }}>
+                  <Typography sx={{ width: '150px' }}>Nationality </Typography>
+                  <Typography sx={{ width: '10px' }}>:</Typography>
+                  <Typography>{nationality}</Typography>
+                </Typography>
+              </Box>
+              <Box sx={{ mt: '7px' }}>
                 <Typography sx={{ fontSize: '15px', display: 'flex' }}>
                   <Typography sx={{ width: '150px' }}>Permanent address</Typography>
                   <Typography sx={{ width: '10px' }}>: </Typography>
@@ -194,11 +178,19 @@ export default function HotelView() {
                 </Typography>
               </Box>
             </Grid>
+
+            <Grid item xs={4}>
+              <Box sx={{ mt: '7px' }}>
+                <Typography sx={{ fontSize: '15px', display: 'flex' }}>
+                  <Typography sx={{ width: '150px' }}>Permanent address</Typography>
+                  <Typography sx={{ width: '10px' }}>: </Typography>
+                  <Typography>{nid_image_front}</Typography>
+                </Typography>
+              </Box>
+            </Grid>
           </Grid>
         </Box>
 
-
-        
         {/* another part */}
         <Box sx={{ border: '1px solid #f1f1f1', mt: '30px', p: '20px' }}>
           <Typography sx={{ fontSize: '15px', fontWeight: 'bold', mb: '20px', color: '#12a9b2' }}>Package Information</Typography>
@@ -335,6 +327,17 @@ export default function HotelView() {
                       </Typography>
                     </Box>
                   </Grid>
+                  {/* <Grid item xs={6}>
+                    <Box sx={{ w: '120px' }}>
+                      <Typography sx={{ fontSize: '15px', display: 'flex' }}>
+                        <Typography sx={{ width: '150px' }}>Nid/Passport</Typography>
+                        <Typography sx={{ width: '10px' }}>:</Typography>
+                        <Box sx={{ width: '10px', height: '10px' }}>
+                          <img src={adult.nid_image_back} alt="" className="width:10px , height:10px" />
+                        </Box>
+                      </Typography>
+                    </Box>
+                  </Grid> */}
                 </Grid>
               </Box>
             ))}
