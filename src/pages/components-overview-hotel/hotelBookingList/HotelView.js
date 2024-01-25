@@ -8,15 +8,41 @@ export default function HotelView() {
   const [hotelView, setHotelView] = useState('');
   const { comId, hotelViewId } = useAppContextReception();
 
-  const { status } = hotelView;
+  const {
+    status,
+    number_adults,
+    number_childs,
+    first_name,
+    last_name,
+    phone,
+    email,
+    nationality,
+    nid_no,
+    profession,
+    job_location,
+    father_name,
+    pre_address,
+    per_address,
+    package_name,
+    package_price,
+    package_facility,
+    date_from,
+    date_to,
+    number_guest,
+    room,
+    pay_status,
+    code,
+    adults,
+    childrens
+  } = hotelView;
 
   useEffect(() => {
     const fetchData = () => {
       axiosInstance
         .get(`https://api.hellokompass.com/reception/showbooking?booking_id=${hotelViewId}&company_id=${comId}`)
         .then((res) => {
-          console.log(res.data.data);
           setHotelView(res.data.data);
+          console.log(res.data.data);
         })
         .catch((error) => {
           console.error(error);
@@ -26,7 +52,7 @@ export default function HotelView() {
     fetchData();
     const interval = setInterval(fetchData, 10000);
     return () => clearInterval(interval);
-  }, [comId]);
+  }, [comId, hotelViewId]);
 
   return (
     <MainCard>
@@ -66,110 +92,113 @@ export default function HotelView() {
         <Box sx={{ border: '1px solid #f1f1f1', mt: '30px', p: '20px' }}>
           <Typography sx={{ fontSize: '15px', fontWeight: 'bold', mb: '20px', color: '#12a9b2' }}>Guest Information</Typography>
           <Grid container spacing={2}>
-            <Grid item xs={6}>
+            <Grid item xs={4}>
               <Box>
                 <Typography sx={{ fontSize: '15px', display: 'flex' }}>
                   <Typography sx={{ width: '150px' }}>First name </Typography>
                   <Typography sx={{ width: '10px' }}>:</Typography>
-                  <Typography>ffsdfsd</Typography>
+                  <Typography>{first_name}</Typography>
                 </Typography>
               </Box>
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={4}>
               <Box>
                 <Typography sx={{ fontSize: '15px', display: 'flex' }}>
                   <Typography sx={{ width: '150px' }}>Last name </Typography>
                   <Typography sx={{ width: '10px' }}>:</Typography>
-                  <Typography>ffsdfsd</Typography>
+                  <Typography>{last_name}</Typography>
                 </Typography>
               </Box>
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={4}>
               <Box sx={{ w: '120px' }}>
                 <Typography sx={{ fontSize: '15px', display: 'flex' }}>
                   <Typography sx={{ width: '150px' }}>Phone </Typography>
                   <Typography sx={{ width: '10px' }}>:</Typography>
-                  <Typography>ffsdfsd</Typography>
+                  <Typography>{phone}</Typography>
                 </Typography>
               </Box>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={4}>
               <Box>
                 <Typography sx={{ fontSize: '15px', display: 'flex' }}>
                   <Typography sx={{ width: '150px' }}>Email </Typography>
                   <Typography sx={{ width: '10px' }}>:</Typography>
-                  <Typography>ffsdfsd</Typography>
+                  <Typography>{email}</Typography>
                 </Typography>
               </Box>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={4}>
               <Box>
                 <Typography sx={{ fontSize: '15px', display: 'flex' }}>
                   <Typography sx={{ width: '150px' }}>Nationality </Typography>
                   <Typography sx={{ width: '10px' }}>:</Typography>
-                  <Typography>ffsdfsd</Typography>
+                  <Typography>{nationality}</Typography>
                 </Typography>
               </Box>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={4}>
               <Box>
                 <Typography sx={{ fontSize: '15px', display: 'flex' }}>
                   <Typography sx={{ width: '150px' }}>Nid No </Typography>
                   <Typography sx={{ width: '10px' }}>:</Typography>
-                  <Typography>ffsdfsd</Typography>
+                  <Typography>{nid_no}</Typography>
                 </Typography>
               </Box>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={4}>
               <Box>
                 <Typography sx={{ fontSize: '15px', display: 'flex' }}>
                   <Typography sx={{ width: '150px' }}>Profession </Typography>
                   <Typography sx={{ width: '10px' }}>:</Typography>
-                  <Typography>ffsdfsd</Typography>
+                  <Typography>{profession}</Typography>
                 </Typography>
               </Box>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={4}>
               <Box>
                 <Typography sx={{ fontSize: '15px', display: 'flex' }}>
                   <Typography sx={{ width: '150px' }}>Job Location </Typography>
                   <Typography sx={{ width: '10px' }}>:</Typography>
-                  <Typography>ffsdfsd</Typography>
+                  <Typography>{job_location}</Typography>
                 </Typography>
               </Box>
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={4}>
               <Box>
                 <Typography sx={{ fontSize: '15px', display: 'flex' }}>
                   <Typography sx={{ width: '150px' }}>Father/Spouse Name </Typography>
                   <Typography sx={{ width: '10px' }}>: </Typography>
-                  <Typography> ffsdfsd</Typography>
+                  <Typography> {father_name}</Typography>
                 </Typography>
               </Box>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={4}>
               <Box>
                 <Typography sx={{ fontSize: '15px', display: 'flex' }}>
                   <Typography sx={{ width: '150px' }}>Present address</Typography>
                   <Typography sx={{ width: '10px' }}>: </Typography>
-                  <Typography> ffsdfsd</Typography>
+                  <Typography>{pre_address}</Typography>
                 </Typography>
               </Box>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={4}>
               <Box>
-                <Typography sx={{ fontSize: '15px', display: 'flex'  }}>
+                <Typography sx={{ fontSize: '15px', display: 'flex' }}>
                   <Typography sx={{ width: '150px' }}>Permanent address</Typography>
                   <Typography sx={{ width: '10px' }}>: </Typography>
-                  <Typography> ffsdfsd</Typography>
+                  <Typography>{per_address}</Typography>
                 </Typography>
               </Box>
             </Grid>
           </Grid>
         </Box>
+
+
+        
         {/* another part */}
         <Box sx={{ border: '1px solid #f1f1f1', mt: '30px', p: '20px' }}>
           <Typography sx={{ fontSize: '15px', fontWeight: 'bold', mb: '20px', color: '#12a9b2' }}>Package Information</Typography>
@@ -179,7 +208,7 @@ export default function HotelView() {
                 <Typography sx={{ fontSize: '15px', display: 'flex' }}>
                   <Typography sx={{ width: '150px' }}>Package Name</Typography>
                   <Typography sx={{ width: '10px' }}>:</Typography>
-                  <Typography>ffsdfsd</Typography>
+                  <Typography>{package_name}</Typography>
                 </Typography>
               </Box>
             </Grid>
@@ -189,7 +218,7 @@ export default function HotelView() {
                 <Typography sx={{ fontSize: '15px', display: 'flex' }}>
                   <Typography sx={{ width: '150px' }}>Package Price </Typography>
                   <Typography sx={{ width: '10px' }}>:</Typography>
-                  <Typography>ffsdfsd</Typography>
+                  <Typography>{package_price}</Typography>
                 </Typography>
               </Box>
             </Grid>
@@ -199,98 +228,18 @@ export default function HotelView() {
                 <Typography sx={{ fontSize: '15px', display: 'flex' }}>
                   <Typography sx={{ width: '150px' }}>Package Facility </Typography>
                   <Typography sx={{ width: '10px' }}>:</Typography>
-                  <Typography>ffsdfsd</Typography>
+                  <Typography>{package_facility}</Typography>
                 </Typography>
               </Box>
             </Grid>
             <Grid item xs={6}>
               <Box>
                 <Typography sx={{ fontSize: '15px', display: 'flex' }}>
-                  <Typography sx={{ width: '150px' }}>Date </Typography>
+                  <Typography sx={{ width: '150px' }}>Date From</Typography>
                   <Typography sx={{ width: '10px' }}>:</Typography>
-                  <Typography>ffsdfsd</Typography>
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={6}>
-              <Box>
-                <Typography sx={{ fontSize: '15px', display: 'flex' }}>
-                  <Typography sx={{ width: '150px' }}>Total Guest </Typography>
-                  <Typography sx={{ width: '10px' }}>:</Typography>
-                  <Typography>ffsdfsd</Typography>
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={6}>
-              <Box>
-                <Typography sx={{ fontSize: '15px', display: 'flex' }}>
-                  <Typography sx={{ width: '150px' }}>Total Room </Typography>
-                  <Typography sx={{ width: '10px' }}>:</Typography>
-                  <Typography>ffsdfsd</Typography>
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={6}>
-              <Box>
-                <Typography sx={{ fontSize: '15px', display: 'flex' }}>
-                  <Typography sx={{ width: '150px' }}>Profession </Typography>
-                  <Typography sx={{ width: '10px' }}>:</Typography>
-                  <Typography>ffsdfsd</Typography>
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={6}>
-              <Box>
-                <Typography sx={{ fontSize: '15px', display: 'flex' }}>
-                  <Typography sx={{ width: '150px' }}>Code </Typography>
-                  <Typography sx={{ width: '10px' }}>:</Typography>
-                  <Typography>ffsdfsd</Typography>
-                </Typography>
-              </Box>
-            </Grid>
-          </Grid>
-        </Box>
-
-
-   {/* another part */}
-   <Box sx={{ border: '1px solid #f1f1f1', mt: '30px', p: '20px' }}>
-          <Typography sx={{ fontSize: '15px', fontWeight: 'bold', mb: '20px', color: '#12a9b2' }}>Adult 1 Information</Typography>
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <Box>
-                <Typography sx={{ fontSize: '15px', display: 'flex' }}>
-                  <Typography sx={{ width: '150px' }}>Package Name</Typography>
-                  <Typography sx={{ width: '10px' }}>:</Typography>
-                  <Typography>ffsdfsd</Typography>
-                </Typography>
-              </Box>
-            </Grid>
-
-            <Grid item xs={6}>
-              <Box>
-                <Typography sx={{ fontSize: '15px', display: 'flex' }}>
-                  <Typography sx={{ width: '150px' }}>Package Price </Typography>
-                  <Typography sx={{ width: '10px' }}>:</Typography>
-                  <Typography>ffsdfsd</Typography>
-                </Typography>
-              </Box>
-            </Grid>
-
-            <Grid item xs={6}>
-              <Box sx={{ w: '120px' }}>
-                <Typography sx={{ fontSize: '15px', display: 'flex' }}>
-                  <Typography sx={{ width: '150px' }}>Package Facility </Typography>
-                  <Typography sx={{ width: '10px' }}>:</Typography>
-                  <Typography>ffsdfsd</Typography>
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={6}>
-              <Box>
-                <Typography sx={{ fontSize: '15px', display: 'flex' }}>
-                  <Typography sx={{ width: '150px' }}>Date </Typography>
-                  <Typography sx={{ width: '10px' }}>:</Typography>
-                  <Typography>ffsdfsd</Typography>
+                  <Typography>
+                    {date_from} <span>(to)</span> {date_to}
+                  </Typography>
                 </Typography>
               </Box>
             </Grid>
@@ -299,7 +248,7 @@ export default function HotelView() {
                 <Typography sx={{ fontSize: '15px', display: 'flex' }}>
                   <Typography sx={{ width: '150px' }}>Total Guest </Typography>
                   <Typography sx={{ width: '10px' }}>:</Typography>
-                  <Typography>ffsdfsd</Typography>
+                  <Typography>{number_guest}</Typography>
                 </Typography>
               </Box>
             </Grid>
@@ -308,16 +257,7 @@ export default function HotelView() {
                 <Typography sx={{ fontSize: '15px', display: 'flex' }}>
                   <Typography sx={{ width: '150px' }}>Total Room </Typography>
                   <Typography sx={{ width: '10px' }}>:</Typography>
-                  <Typography>ffsdfsd</Typography>
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={6}>
-              <Box>
-                <Typography sx={{ fontSize: '15px', display: 'flex' }}>
-                  <Typography sx={{ width: '150px' }}>Profession </Typography>
-                  <Typography sx={{ width: '10px' }}>:</Typography>
-                  <Typography>ffsdfsd</Typography>
+                  <Typography>{room}</Typography>
                 </Typography>
               </Box>
             </Grid>
@@ -326,95 +266,136 @@ export default function HotelView() {
                 <Typography sx={{ fontSize: '15px', display: 'flex' }}>
                   <Typography sx={{ width: '150px' }}>Code </Typography>
                   <Typography sx={{ width: '10px' }}>:</Typography>
-                  <Typography>ffsdfsd</Typography>
+                  <Typography>{code}</Typography>
+                </Typography>
+              </Box>
+            </Grid>
+            <Grid item xs={6}>
+              <Box>
+                <Typography sx={{ fontSize: '15px', display: 'flex' }}>
+                  <Typography sx={{ width: '150px' }}>Payment Status</Typography>
+                  <Typography sx={{ width: '10px' }}>:</Typography>
+                  <Typography>{pay_status}</Typography>
                 </Typography>
               </Box>
             </Grid>
           </Grid>
         </Box>
 
+        {number_adults > 0 ? (
+          <>
+            {adults.map((adult, index) => (
+              <Box sx={{ border: '1px solid #f1f1f1', mt: '30px', p: '20px' }} key={index}>
+                <Typography sx={{ fontSize: '15px', fontWeight: 'bold', mb: '20px', color: '#12a9b2' }}>
+                  Adult {index + 1} Information
+                </Typography>
+                <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    <Box>
+                      <Typography sx={{ fontSize: '15px', display: 'flex' }}>
+                        <Typography sx={{ width: '150px' }}>First Name</Typography>
+                        <Typography sx={{ width: '10px' }}>:</Typography>
+                        <Typography>{adult.first_name}</Typography>
+                      </Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Box>
+                      <Typography sx={{ fontSize: '15px', display: 'flex' }}>
+                        <Typography sx={{ width: '150px' }}>Last Name </Typography>
+                        <Typography sx={{ width: '10px' }}>:</Typography>
+                        <Typography>{adult.last_name}</Typography>
+                      </Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Box>
+                      <Typography sx={{ fontSize: '15px', display: 'flex' }}>
+                        <Typography sx={{ width: '150px' }}>Phone </Typography>
+                        <Typography sx={{ width: '10px' }}>:</Typography>
+                        <Typography>{adult.phone}</Typography>
+                      </Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Box>
+                      <Typography sx={{ fontSize: '15px', display: 'flex' }}>
+                        <Typography sx={{ width: '150px' }}>Nationality</Typography>
+                        <Typography sx={{ width: '10px' }}>:</Typography>
+                        <Typography>{adult.nationality}</Typography>
+                      </Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Box sx={{ w: '120px' }}>
+                      <Typography sx={{ fontSize: '15px', display: 'flex' }}>
+                        <Typography sx={{ width: '150px' }}>Nid/Passport No</Typography>
+                        <Typography sx={{ width: '10px' }}>:</Typography>
+                        <Typography>{adult.nid_no}</Typography>
+                      </Typography>
+                    </Box>
+                  </Grid>
+                </Grid>
+              </Box>
+            ))}
+          </>
+        ) : (
+          <></>
+        )}
 
-   {/* another part */}
-   <Box sx={{ border: '1px solid #f1f1f1', mt: '30px', p: '20px' }}>
-          <Typography sx={{ fontSize: '15px', fontWeight: 'bold', mb: '20px', color: '#12a9b2' }}>Child 1 Information</Typography>
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <Box>
-                <Typography sx={{ fontSize: '15px', display: 'flex' }}>
-                  <Typography sx={{ width: '150px' }}>Package Name</Typography>
-                  <Typography sx={{ width: '10px' }}>:</Typography>
-                  <Typography>ffsdfsd</Typography>
+        {number_childs > 0 ? (
+          <>
+            {childrens.map((child, index) => (
+              <Box sx={{ border: '1px solid #f1f1f1', mt: '30px', p: '20px' }} key={index}>
+                <Typography sx={{ fontSize: '15px', fontWeight: 'bold', mb: '20px', color: '#12a9b2' }}>
+                  Child {index + 1} Information
                 </Typography>
-              </Box>
-            </Grid>
+                <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    <Box>
+                      <Typography sx={{ fontSize: '15px', display: 'flex' }}>
+                        <Typography sx={{ width: '150px' }}>First Name</Typography>
+                        <Typography sx={{ width: '10px' }}>:</Typography>
+                        <Typography>{child.first_name}</Typography>
+                      </Typography>
+                    </Box>
+                  </Grid>
 
-            <Grid item xs={6}>
-              <Box>
-                <Typography sx={{ fontSize: '15px', display: 'flex' }}>
-                  <Typography sx={{ width: '150px' }}>Package Price </Typography>
-                  <Typography sx={{ width: '10px' }}>:</Typography>
-                  <Typography>ffsdfsd</Typography>
-                </Typography>
-              </Box>
-            </Grid>
+                  <Grid item xs={6}>
+                    <Box>
+                      <Typography sx={{ fontSize: '15px', display: 'flex' }}>
+                        <Typography sx={{ width: '150px' }}>Last Price </Typography>
+                        <Typography sx={{ width: '10px' }}>:</Typography>
+                        <Typography>{child.last_name}</Typography>
+                      </Typography>
+                    </Box>
+                  </Grid>
 
-            <Grid item xs={6}>
-              <Box sx={{ w: '120px' }}>
-                <Typography sx={{ fontSize: '15px', display: 'flex' }}>
-                  <Typography sx={{ width: '150px' }}>Package Facility </Typography>
-                  <Typography sx={{ width: '10px' }}>:</Typography>
-                  <Typography>ffsdfsd</Typography>
-                </Typography>
+                  <Grid item xs={6}>
+                    <Box sx={{ w: '120px' }}>
+                      <Typography sx={{ fontSize: '15px', display: 'flex' }}>
+                        <Typography sx={{ width: '150px' }}>Age</Typography>
+                        <Typography sx={{ width: '10px' }}>:</Typography>
+                        <Typography>{child.age}</Typography>
+                      </Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Box>
+                      <Typography sx={{ fontSize: '15px', display: 'flex' }}>
+                        <Typography sx={{ width: '150px' }}>Nationality</Typography>
+                        <Typography sx={{ width: '10px' }}>:</Typography>
+                        <Typography>{child.nationality}</Typography>
+                      </Typography>
+                    </Box>
+                  </Grid>
+                </Grid>
               </Box>
-            </Grid>
-            <Grid item xs={6}>
-              <Box>
-                <Typography sx={{ fontSize: '15px', display: 'flex' }}>
-                  <Typography sx={{ width: '150px' }}>Date </Typography>
-                  <Typography sx={{ width: '10px' }}>:</Typography>
-                  <Typography>ffsdfsd</Typography>
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={6}>
-              <Box>
-                <Typography sx={{ fontSize: '15px', display: 'flex' }}>
-                  <Typography sx={{ width: '150px' }}>Total Guest </Typography>
-                  <Typography sx={{ width: '10px' }}>:</Typography>
-                  <Typography>ffsdfsd</Typography>
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={6}>
-              <Box>
-                <Typography sx={{ fontSize: '15px', display: 'flex' }}>
-                  <Typography sx={{ width: '150px' }}>Total Room </Typography>
-                  <Typography sx={{ width: '10px' }}>:</Typography>
-                  <Typography>ffsdfsd</Typography>
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={6}>
-              <Box>
-                <Typography sx={{ fontSize: '15px', display: 'flex' }}>
-                  <Typography sx={{ width: '150px' }}>Profession </Typography>
-                  <Typography sx={{ width: '10px' }}>:</Typography>
-                  <Typography>ffsdfsd</Typography>
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={6}>
-              <Box>
-                <Typography sx={{ fontSize: '15px', display: 'flex' }}>
-                  <Typography sx={{ width: '150px' }}>Code </Typography>
-                  <Typography sx={{ width: '10px' }}>:</Typography>
-                  <Typography>ffsdfsd</Typography>
-                </Typography>
-              </Box>
-            </Grid>
-          </Grid>
-        </Box>
-
+            ))}
+          </>
+        ) : (
+          <></>
+        )}
       </Box>
     </MainCard>
   );

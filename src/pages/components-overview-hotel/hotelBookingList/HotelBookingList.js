@@ -17,7 +17,6 @@ export default function HotelBookingList() {
 
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
-    
   // const [showMeetingModal, setShowMeetingModal] = useState(false);
 
   useEffect(() => {
