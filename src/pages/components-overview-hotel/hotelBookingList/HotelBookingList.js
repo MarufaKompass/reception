@@ -14,6 +14,7 @@ import '../../../assets/styles.css';
 import { useNavigate } from 'react-router-dom';
 export default function HotelBookingList() {
   const { comId, lobbyData, setLobbyData, setHotelViewId } = useAppContextReception();
+  console.log(setHotelViewId);
 
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -25,7 +26,6 @@ export default function HotelBookingList() {
         .get(`https://api.hellokompass.com/reception/bookinglist/${comId}`)
         .then((res) => {
           setLobbyData(res.data.data);
-          console.log(res.data.data);
         })
         .catch((error) => {
           console.error(error);

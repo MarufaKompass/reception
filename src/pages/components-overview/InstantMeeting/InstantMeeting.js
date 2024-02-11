@@ -24,7 +24,6 @@ import 'rc-time-picker/assets/index.css';
 import moment from 'moment';
 import '../../../assets/styles.css';
 import { styled } from '@mui/material/styles';
-
 import 'react-datepicker/dist/react-datepicker.css';
 import axiosInstance from 'utils/axios.config';
 import { useAppContextReception } from 'AppContextReception';
@@ -60,6 +59,11 @@ export default function InstantMeeting() {
   const navigate = useNavigate();
   const defaultTime = moment();
   const [selectedTime, setSelectedTime] = useState(defaultTime);
+  const [selectTime, setSelectTime] = useState('');
+
+  const handleChangeTime = (event) => {
+    setSelectTime(event.target.value);
+  };
 
   const handleCancelButton = () => {
     navigate('/');
@@ -668,9 +672,9 @@ export default function InstantMeeting() {
                       <TextField
                         {...register('guest_company', { required: true })}
                         fullWidth
+                        name="guest_company"
                         id="standard-basic"
                         sx={{ mt: '9px' }}
-                        name="guest_company"
                         size="small"
                         placeholder="Company Name"
                       />
@@ -777,7 +781,69 @@ export default function InstantMeeting() {
                 </Grid>
               </Box>
               <Box>
+
+
                 <Grid container>
+                  <Grid item xs={12} sm={6} md={6} lg={6} xl={6} sx={{ mt: 1, pr: 3 }}>
+                    <Box>
+                      <FormHelperText sx={{ mt: 1.5 }}>
+                        <Typography variant="h6" component="h2" color="#4e4d4e">
+                          Meeting Duration
+                        </Typography>
+                      </FormHelperText>
+
+                      <FormControl fullWidth sx={{ mb: 2, mt: 1 }}>
+                        <Select
+                          {...register('duration', { required: true })}
+                          name="duration"
+                          // variant="standard"
+                          sx={{ mt: 0.8 }}
+                          displayEmpty
+                          inputProps={{ 'aria-label': 'Without label' }}
+                          size="small"
+                          defaultValue=""
+                          value={selectTime}
+                          onChange={handleChangeTime}
+                        >
+                          <MenuItem value="" selected>
+                            <InputLabel htmlFor="outlined-Location">Select Meeting Duration</InputLabel>
+                          </MenuItem>
+                          <MenuItem value="15">15 minutes</MenuItem>
+                          <MenuItem value="30">30 minutes</MenuItem>
+                          <MenuItem value="45">45 minutes</MenuItem>
+                          <MenuItem value="60">60 minutes</MenuItem>
+                          <MenuItem value="custom minutes"> Add Custom Time</MenuItem>
+                        </Select>
+
+                        {selectTime === 'custom minutes' ? (
+                          <Box sx={{ mt: 2 }}>
+                            <Grid container>
+                              <Grid item xs={12}>
+                                <Typography variant="h6" component="h2" color="#4e4d4e">
+                                  Slots Duration
+                                </Typography>
+                                <TextField
+                                  name="duration"
+                                  placeholder="minutes"
+                                  {...register('duration', { required: true })}
+                                  sx={{ mt: 1, color: '#4e4d4e', pr: 1 }}
+                                  id="standard-basic"
+                                  fullWidth
+                                  type="text"
+                                  size="small"
+                                />
+                              </Grid>
+                            </Grid>
+                          </Box>
+                        ) : (
+                          <></>
+                        )}
+
+                        <Typography sx={{ color: '#FF0000', fontSize: '12px' }}>{errors.duration?.message}</Typography>
+                      </FormControl>
+                    </Box>
+                  </Grid>
+
                   <Grid item xs={12} sm={6} md={6} lg={6} xl={6} sx={{ mt: 1, pr: 3 }}>
                     <Box>
                       <FormHelperText sx={{ mt: 1, mb: 1 }}>
@@ -794,8 +860,16 @@ export default function InstantMeeting() {
                         style={{ width: '100%' }}
                         {...register('note', { required: false })}
                       />
+
+                      
                     </Box>
                   </Grid>
+                </Grid>
+              </Box>
+
+              <Box>
+                <Grid container>
+                 
                   <Grid item xs={12} sm={6} md={6} lg={6} xl={6} sx={{ pr: 3 }}>
                     <Box>
                       <FormHelperText sx={{ mt: 2, mb: 1 }}>
