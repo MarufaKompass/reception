@@ -35,7 +35,7 @@ export default function MeetingCheckOut() {
 
   const onSubmit = (data) => {
     axiosInstance
-      .post('https://api.hellokompass.com/reception/meetingcheck', data)
+      .post('https://api.hellokompass.com/reception/meetingcheckout', data)
       .then((res) => {
         if (res.data.code === 200) {
           toast.success(res.data.message);
