@@ -57,6 +57,7 @@ export default function Checkout(props) {
         .get(`https://api.hellokompass.com/reception/meetingview?meeting_id=${waitingId}&com_id=${comId}`)
         .then((res) => {
           setMeetingShow(res.data.data.meeting);
+          console.log(res.data.data.meeting);
           setExtraVisitors(res.data.data.extravisitors);
           setVisitorBelongs(res.data.data.visitorbelong);
         })

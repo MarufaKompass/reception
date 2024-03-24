@@ -20,7 +20,6 @@ export default function Waiting() {
   const [waitingId, setWaitingId] = useState('');
   const [waitingModal, setWaitingModal] = useState(false);
   const [checkOutModal, setCheckOutModal] = useState(false);
-  console.log(waiting);
 
   const handleWaitingList = (id) => {
     setWaitingModal(true);
@@ -101,16 +100,17 @@ export default function Waiting() {
         renderCell: (params) => {
           return (
             <>
-              {params.row.signin === null && (
-                <Button
-                  onClick={() => handleWaitingList(params.id)}
-                  variant="outlined"
-                  size="small"
-                  sx={{ color: '#12A9B2', borderColor: '#12A9B2', borderRadius: 1, mr: 1, '&:focus': { border: 'none' } }}
-                >
-                  Checkin
-                </Button>
-              )}
+              {/* {params.row.signout === null && (
+                
+              )} */}
+              <Button
+                onClick={() => handleWaitingList(params.id)}
+                variant="outlined"
+                size="small"
+                sx={{ color: '#12A9B2', borderColor: '#12A9B2', borderRadius: 1, mr: 1, '&:focus': { border: 'none' } }}
+              >
+                Checkin
+              </Button>
 
               {params.row.signin && (
                 <Button
