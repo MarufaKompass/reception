@@ -7,6 +7,7 @@ import InvisibleEye from 'components/svg/InvisibleEye';
 import VisibleEye from 'components/svg/VisibleEye';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { useAppContextReception } from 'AppContextReception';
 const AuthLogin = () => {
   // const [checked, setChecked] = useState(false);
@@ -50,7 +51,7 @@ const AuthLogin = () => {
         reset();
       }
     } catch (error) {
-      console.error('Error:', error);
+      toast.error(error.response.data.message);
     } finally {
       setIsSubmitting(false);
     }
