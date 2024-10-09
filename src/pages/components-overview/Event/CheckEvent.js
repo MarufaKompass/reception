@@ -34,30 +34,46 @@ export default function CheckEvent() {
     }
   }, [resultQR, comId]);
 
+  const speak = (message) => {
+    const synth = window.speechSynthesis;
+    const utterance = new SpeechSynthesisUtterance(message);
+    utterance.lang = 'en-US';
+    synth.speak(utterance);
+  };
+
+  
+
   const onSubmit = (data) => {
     axiosInstance
       .post('https://api.hellokompass.com/reception/eventcheck', data)
       .then((res) => {
         if (res.data.code === 200) {
           toast.success(res.data.message);
+          speak('Event Check-In successful. Thank you!');
           navigate('/event');
           reset();
         } else {
           toast.error(res.data.message);
+          speak('Event Check-In failed. Please try again.');
           navigate('/dashboard');
           reset();
         }
       })
       .catch((error) => {
-        if (error.response.status === 400) {
-          toast.error(error.response.data.message);
+        if (error.response && error.response.status === 400) {
+          const errorMessage = error.response.data.message || 'Invalid request. Please check your input and try again.';
+          toast.error(errorMessage);
+          speak('Event Check-In failed due to an invalid request.');
           navigate('/dashboard');
           reset();
         } else {
           console.error(error);
+          toast.error('An unexpected error occurred.');
+          speak('An unexpected error occurred. Please try again later.');
         }
       });
   };
+  
 
   const handleScan = (result) => {
     if (result) {

@@ -30,9 +30,18 @@ export default function MeetingCode() {
 
   useEffect(() => {
     if (resultQR) {
-      onSubmit({ code: resultQR, company_id: comId }); // Pass data to onSubmit
+      onSubmit({ code: resultQR, company_id: comId });
     }
   }, [resultQR, comId]);
+
+  const speak = (message) => {
+    const synth = window.speechSynthesis;
+    const utterance = new SpeechSynthesisUtterance(message);
+    utterance.lang = 'en-US'; // Set the language
+    synth.speak(utterance);
+  };
+
+
 
   const onSubmit = (data) => {
     axiosInstance
@@ -40,21 +49,27 @@ export default function MeetingCode() {
       .then((res) => {
         if (res.data.code === 200) {
           toast.success(res.data.message);
+          speak('Check-in successful. Welcome!');
           navigate('/dashboard');
           reset();
         } else {
           toast.error(res.data.message);
+          speak('Check-in failed!');
           navigate('/dashboard');
           reset();
         }
       })
       .catch((error) => {
-        if (error.response.status === 400) {
-          toast.error(error.response.data.message);
+        if (error.response && error.response.status === 400) {
+          const errorMessage = error.response.data.message || 'Invalid request. Please try again.';
+          toast.error(errorMessage);
+          speak('Check-in failed due to invalid request.');
           navigate('/dashboard');
           reset();
         } else {
           console.error(error);
+          toast.error('An unexpected error occurred.');
+          speak('An unexpected error occurred.');
         }
       });
   };
@@ -72,7 +87,7 @@ export default function MeetingCode() {
   const styles = {
     paperContainer: {
       backgroundImage: `url(${Image})`,
-      backgroundSize: '100% 80%', // This will cover the entire container
+      backgroundSize: '100% 80%',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
       width: '100%',

@@ -33,6 +33,13 @@ export default function MeetingCheckOut() {
     }
   }, [resultQR, comId]);
 
+  const speak = (message) => {
+    const synth = window.speechSynthesis;
+    const utterance = new SpeechSynthesisUtterance(message);
+    utterance.lang = 'en-US';
+    synth.speak(utterance);
+  };
+
   const onSubmit = (data) => {
     axiosInstance
       .post('https://api.hellokompass.com/reception/meetingcheckout', data)
@@ -40,20 +47,26 @@ export default function MeetingCheckOut() {
         if (res.data.code === 200) {
           toast.success(res.data.message);
           navigate('/dashboard');
+          speak('Check-Out successful. Thank you!');
           reset();
         } else {
           toast.error(res.data.message);
+          speak('Check-Out failed. Please try again.');
           navigate('/dashboard');
           reset();
         }
       })
       .catch((error) => {
-        if (error.response.status === 400) {
-          toast.error(error.response.data.message);
+        if (error.response && error.response.status === 400) {
+          const errorMessage = error.response.data.message || 'Invalid request. Please try again.';
+          toast.error(errorMessage);
+          speak('Check-Out failed due to an invalid request.');
           navigate('/dashboard');
           reset();
         } else {
           console.error(error);
+          toast.error('An unexpected error occurred.');
+          speak('An unexpected error occurred. Please try again later.');
         }
       });
   };
@@ -71,7 +84,7 @@ export default function MeetingCheckOut() {
   const styles = {
     paperContainer: {
       backgroundImage: `url(${Image})`,
-      backgroundSize: '100% 80%', // This will cover the entire container
+      backgroundSize: '100% 80%',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
       width: '100%',
@@ -114,7 +127,7 @@ export default function MeetingCheckOut() {
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Box sx={{ display: { md: 'flex' }, justifyContent: 'center', alignItems: 'center', my: 2 }}>
                   <Box>
-                  <Box sx={{ display: 'flex' }}>
+                    <Box sx={{ display: 'flex' }}>
                       <PuffLoader color="#12a9b2" size={38} />
                       <Typography sx={{ color: '#12A9B2', fontSize: 15, fontWeight: 'bold', mt: '8px', ml: '10px' }}>
                         Scanning code for Checkout
