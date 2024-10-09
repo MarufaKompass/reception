@@ -41,8 +41,6 @@ export default function CheckEvent() {
     synth.speak(utterance);
   };
 
-  
-
   const onSubmit = (data) => {
     axiosInstance
       .post('https://api.hellokompass.com/reception/eventcheck', data)
@@ -73,7 +71,6 @@ export default function CheckEvent() {
         }
       });
   };
-  
 
   const handleScan = (result) => {
     if (result) {
