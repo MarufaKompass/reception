@@ -20,6 +20,7 @@ import NotFoundPage from 'pages/components-overview/NotFoundPage';
 import Test from 'pages/components-overview/Test';
 import Document from 'pages/components-overview/Document';
 import HotelBookingList from 'pages/components-overview-hotel/hotelBookingList/HotelBookingList';
+import DoctorInstantMeeting from 'pages/components-overview/DoctorInstantMeeting/DoctorInstantMeeting';
 const HotelView = Loadable(lazy(() => import('pages/components-overview-hotel/hotelBookingList/HotelView')));
 const HotelCheckIn = Loadable(lazy(() => import('pages/components-overview-hotel/hotel-checkIn/HotelCheckIn')));
 
@@ -214,6 +215,16 @@ const MainRoutes = {
         <Suspense fallback={<Typography>Loading...</Typography>}>
           <PrivateRoutes>
             <HotelView />
+          </PrivateRoutes>
+        </Suspense>
+      )
+    },
+    {
+      path: 'doctorInstantMeeting',
+      element: (
+        <Suspense fallback={<Typography>Loading...</Typography>}>
+          <PrivateRoutes>
+            <DoctorInstantMeeting />
           </PrivateRoutes>
         </Suspense>
       )

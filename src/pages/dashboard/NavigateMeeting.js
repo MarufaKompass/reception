@@ -28,6 +28,9 @@ const NavigateMeeting = () => {
   const handleHoverHotel = () => {
     navigate('/hotelCheckIn');
   };
+  const handleInstantDoctor = () => {
+    navigate('/doctorInstantMeeting');
+  };
 
   const [isHoveredCheckIn, setIsHoveredCheckIn] = useState(false);
   const [isHoveredCheckOut, setIsHoveredCheckOut] = useState(false);
@@ -35,6 +38,19 @@ const NavigateMeeting = () => {
   const [isHoveredCourier, setIsHoveredCourier] = useState(false);
   const [isHoveredEvent, setIsHoveredEvent] = useState(false);
   const [isHoveredHotel, setIsHoveredHotel] = useState(false);
+  const [isHoveredDoctor, setIsHoveredDoctor] = useState(false);
+
+  const handleHoverInstantDoctor = () => {
+    setIsHoveredDoctor(true);
+  };
+
+  const handleHoverInstantDoctorLeave = () => {
+    setIsHoveredDoctor(false);
+  };
+
+
+
+
 
   const handleHoverCheck = () => {
     setIsHoveredCheckIn(true);
@@ -97,6 +113,43 @@ const NavigateMeeting = () => {
 
           {user.user_type === 'company' ? (
             <Box sx={{ mt: 3 }}>
+                <Box
+                sx={{
+                  display: 'block',
+                  '&:hover': {
+                    button: {
+                      color: '#fff',
+                      backgroundColor: '#12A9B2'
+                    }
+                  }
+                }}
+                onMouseEnter={handleHoverInstantDoctor}
+                onMouseLeave={handleHoverInstantDoctorLeave}
+              >
+                <Button
+                  onClick={handleInstantDoctor}
+                  variant="outlined"
+                  size="medium"
+                  sx={{
+                    my: 1,
+                    color: isHoveredDoctor ? '#fff' : '#12A9B2',
+                    border: 1,
+                    borderColor: '#12A9B2',
+                    fontSize: 20,
+                    '&:hover': {
+                      color: '#fff',
+                      backgroundColor: '#12A9B2'
+                    },
+                    '& svg path': {
+                      stroke: isHoveredDoctor ? '#fff' : '#12A9B2' // Change SVG path color on hover
+                    }
+                  }}
+                  startIcon={<DashboardInstantMeeting></DashboardInstantMeeting>}
+                >
+                  <Typography variant="p">Instant Doctor Appointment </Typography>
+                </Button>
+              </Box>
+
               <Box
                 sx={{
                   display: 'block',
@@ -206,6 +259,7 @@ const NavigateMeeting = () => {
                   <Typography variant="p">Instant Meeting </Typography>
                 </Button>
               </Box>
+            
 
               <Box
                 sx={{
