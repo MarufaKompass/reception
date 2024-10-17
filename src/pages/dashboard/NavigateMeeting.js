@@ -29,7 +29,7 @@ const NavigateMeeting = () => {
     navigate('/hotelCheckIn');
   };
   const handleInstantDoctor = () => {
-    navigate('/doctorInstantMeeting');
+    navigate('/patientInstantMeeting');
   };
 
   const [isHoveredCheckIn, setIsHoveredCheckIn] = useState(false);

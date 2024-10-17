@@ -49,6 +49,13 @@ const allListed = {
       icon: icons.instantMeeting
     },
     {
+      id: 'instantPatientsAppointment',
+      title: 'Instant Doctor Appointment',
+      type: 'item',
+      url: '/patientInstantMeeting',
+      icon: icons.instantMeeting
+    },
+    {
       id: 'waitingList',
       title: "Today's Waiting List",
       type: 'item',

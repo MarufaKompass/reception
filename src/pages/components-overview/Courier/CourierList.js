@@ -9,7 +9,7 @@ import axiosInstance from 'utils/axios.config';
 import { useAppContextReception } from 'AppContextReception';
 import TableChip from 'components/chips/TableChip';
 import NoDataImage from 'components/Image/NoDataImage';
-import { useNavigate } from '../../../../node_modules/react-router-dom/dist/index';
+import { useNavigate } from 'react-router-dom';
 export default function CourierList() {
   const { comId } = useAppContextReception();
   const theme = useTheme();
