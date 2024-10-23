@@ -47,7 +47,7 @@ export default function MeetingCheckOut() {
         if (res.data.code === 200) {
           toast.success(res.data.message);
           navigate('/dashboard');
-          speak('Check-Out successful. Thank you!');
+          speak('thank you for visiting kompass');
           reset();
         } else {
           toast.error(res.data.message);

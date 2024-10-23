@@ -49,7 +49,7 @@ export default function MeetingCode() {
       .then((res) => {
         if (res.data.code === 200) {
           toast.success(res.data.message);
-          speak('Check-in successful. Welcome!');
+          speak('welcome to kompass');
           navigate('/dashboard');
           reset();
         } else {

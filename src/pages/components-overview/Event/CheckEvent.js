@@ -47,7 +47,7 @@ export default function CheckEvent() {
       .then((res) => {
         if (res.data.code === 200) {
           toast.success(res.data.message);
-          speak('Event Check-In successful. Thank you!');
+          speak('welcome to kompass!');
           navigate('/event');
           reset();
         } else {
