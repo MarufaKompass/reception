@@ -4,6 +4,7 @@ import DashCourier from 'components/svg/DashCourier';
 import DashEvent from 'components/svg/DashEvent';
 import DashboardCheckIn from 'components/svg/DashboardCheckIn';
 import DashboardInstantMeeting from 'components/svg/DashboardInstantMeeting';
+import DoctorUser from 'components/svg/DoctorUser';
 import DashboardCheckOut from 'components/svg/DashboardCheckOut';
 import { useState } from 'react';
 import { useAppContextReception } from 'AppContextReception';
@@ -47,10 +48,6 @@ const NavigateMeeting = () => {
   const handleHoverInstantDoctorLeave = () => {
     setIsHoveredDoctor(false);
   };
-
-
-
-
 
   const handleHoverCheck = () => {
     setIsHoveredCheckIn(true);
@@ -100,20 +97,26 @@ const NavigateMeeting = () => {
       <Box height="85vh" display="flex" justifyContent="center" alignItems="center">
         <Box>
           <Box variant="p" sx={{ fontSize: 30 }}>
-            <Typography sx={{ color: '#12A9B2', fontSize: 30 }} variant="p">
+            <Typography
+              sx={{ color: '#12A9B2', fontSize: 30, font: 'poppins', fontWeight: 'bold', textTransform: 'uppercase' }}
+              variant="p"
+            >
               Welcome
             </Typography>{' '}
-            <Typography variant="p" sx={{ fontSize: 30 }}>
+            <Typography variant="p" sx={{ fontSize: 30, font: 'poppins', fontWeight: 'bold', textTransform: 'uppercase' }}>
               To
             </Typography>{' '}
-            <Typography sx={{ color: '#12A9B2', fontSize: 30 }} variant="p">
+            <Typography
+              sx={{ color: '#12A9B2', fontSize: 30, font: 'poppins', fontWeight: 'bold', textTransform: 'uppercase' }}
+              variant="p"
+            >
               KOMPASS
             </Typography>
           </Box>
 
           {user.user_type === 'company' ? (
             <Box sx={{ mt: 3 }}>
-                <Box
+              <Box
                 sx={{
                   display: 'block',
                   '&:hover': {
@@ -144,7 +147,7 @@ const NavigateMeeting = () => {
                       stroke: isHoveredDoctor ? '#fff' : '#12A9B2' // Change SVG path color on hover
                     }
                   }}
-                  startIcon={<DashboardInstantMeeting></DashboardInstantMeeting>}
+                  startIcon={<DoctorUser></DoctorUser>}
                 >
                   <Typography variant="p">Instant Doctor Appointment </Typography>
                 </Button>
@@ -259,7 +262,6 @@ const NavigateMeeting = () => {
                   <Typography variant="p">Instant Meeting </Typography>
                 </Button>
               </Box>
-            
 
               <Box
                 sx={{

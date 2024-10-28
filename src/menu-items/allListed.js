@@ -1,5 +1,3 @@
-// assets
-
 import waitingList from '../../src/components/svg/WaitingList';
 import meetingList from '../../src/components/svg/MeetingList';
 import visitorList from '../../src/components/svg/VisitorList';
@@ -8,8 +6,8 @@ import event from '../../src/components/svg/Event';
 import checkIn from '../../src/components/svg/CheckIn';
 import checkOut from '../../src/components/svg/CheckOut';
 import instantMeeting from '../../src/components/svg/InstantMeeting';
-// import event from "../../src/components/svg/Event";
-// icons
+import DashboardDoctorUser from '../../src/components/svg/DashboardDoctorUser';
+
 const icons = {
   waitingList,
   meetingList,
@@ -18,7 +16,8 @@ const icons = {
   event,
   checkIn,
   checkOut,
-  instantMeeting
+  instantMeeting,
+  DashboardDoctorUser
 };
 // ==============================|| MENU ITEMS - UTILITIES ||============================== //
 
@@ -53,7 +52,7 @@ const allListed = {
       title: 'Instant Doctor Appointment',
       type: 'item',
       url: '/patientInstantMeeting',
-      icon: icons.instantMeeting
+      icon: icons.DashboardDoctorUser
     },
     {
       id: 'waitingList',
