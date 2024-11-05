@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useAppContextReception } from 'AppContextReception';
 import axiosInstance from 'utils/axios.config';
 import MainCard from 'components/MainCard';
-import { Box, Typography } from '@mui/material';
-import { Grid } from '../../../../node_modules/@mui/material/index';
+import { Box, Typography, Grid } from '@mui/material';
+
 export default function HotelView() {
   const [hotelView, setHotelView] = useState('');
   const { comId, hotelViewId } = useAppContextReception();

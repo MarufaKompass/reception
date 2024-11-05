@@ -8,9 +8,9 @@ import Search from 'components/svg/Search';
 import { useAppContextReception } from 'AppContextReception';
 import axiosInstance from 'utils/axios.config';
 // import MeetingModal from 'components/modal/MeetingModal';
-import TableChip from '../../../components/chips/TableChip';
+import TableChip from '../../../../components/chips/TableChip';
 import NoDataImage from 'components/Image/NoDataImage';
-import '../../../assets/styles.css';
+import '../../../../assets/styles.css';
 import { useNavigate } from 'react-router-dom';
 export default function HotelBookingList() {
   const { comId, lobbyData, setLobbyData, setHotelViewId } = useAppContextReception();

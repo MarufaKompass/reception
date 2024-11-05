@@ -15,6 +15,7 @@ const AuthLogin = () => {
   const { palette } = createTheme();
   const navigate = useNavigate();
   const { setUser, setComId, setToken } = useAppContextReception();
+
   //palette
   const { augmentColor } = palette;
   const createColor = (mainColor) => augmentColor({ color: { main: mainColor } });

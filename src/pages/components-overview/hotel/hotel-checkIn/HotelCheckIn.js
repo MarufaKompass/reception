@@ -2,7 +2,7 @@ import MainCard from 'components/MainCard';
 import React, { useEffect, useState } from 'react';
 import QrReader from 'react-qr-scanner';
 import { Box, OutlinedInput, Typography, Button, FormControl } from '@mui/material';
-import Image from '../../../assets/images/img/reception_background.png';
+import Image from '../../../../assets/images/img/reception_background.png';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -14,7 +14,7 @@ import PuffLoader from 'react-spinners/PuffLoader';
 
 export default function HotelCheckIn() {
   const delay = 500;
-  const { comId} = useAppContextReception();
+  const { comId } = useAppContextReception();
   const navigate = useNavigate();
   const [resultQR, setResultQR] = useState('');
   const handleCancelButton = () => {
@@ -33,7 +33,6 @@ export default function HotelCheckIn() {
       onSubmit({ code: resultQR, company_id: comId }); // Pass data to onSubmit
     }
   }, [resultQR, comId]);
-
 
   const onSubmit = (data) => {
     axiosInstance
