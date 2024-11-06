@@ -31,28 +31,28 @@ const property = {
       id: 'visitors',
       title: 'visitors',
       type: 'item',
-      url: '/',
+      url: '/#',
       icon: icons.checkIn
     },
     {
       id: 'delivery',
       title: 'Delivery',
       type: 'item',
-      url: '/',
+      url: '/#1',
       icon: icons.checkIn
     },
     {
       id: 'scan',
       title: 'Scan',
       type: 'item',
-      url: '/',
+      url: '/#2',
       icon: icons.checkIn
     },
     {
-      id: 'phone book',
+      id: 'phoneBook',
       title: 'Phone Book',
       type: 'item',
-      url: '/',
+      url: '/#3',
       icon: icons.checkIn
     }
   ]

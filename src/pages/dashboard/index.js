@@ -1,8 +1,9 @@
 import { Box, Grid } from '@mui/material';
-import NavigateMeeting from './NavigateMeeting';
+import NavigateMeeting from './MeetingAppointment/NavigateMeeting';
 import BannerImg from './BannerImg';
 import MainCard from 'components/MainCard';
 import { useAppContextReception } from 'AppContextReception';
+import PropertyDashboard from './propertyDashboard/PropertyDashboard';
 
 const DashboardDefault = () => {
   const { user } = useAppContextReception();
@@ -32,7 +33,9 @@ const DashboardDefault = () => {
             </Grid>
           </Box>
         ) : user.user_type === 'property' ? (
-          <Box>sdgsdgsdgsdgsdgsdgsdd</Box>
+          <Box>
+            <PropertyDashboard></PropertyDashboard>
+          </Box>
         ) : (
           <></>
         )}
