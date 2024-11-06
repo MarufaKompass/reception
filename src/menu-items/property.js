@@ -1,24 +1,16 @@
 // assets
 
-import waitingList from '../components/svg/WaitingList';
-import meetingList from '../components/svg/MeetingList';
-import visitorList from '../components/svg/VisitorList';
-import courier from '../components/svg/Courier';
-import event from '../components/svg/Event';
-import checkIn from '../components/svg/CheckIn';
-import checkOut from '../components/svg/CheckOut';
-import instantMeeting from '../components/svg/InstantMeeting';
+import propertyVisitors from '../components/svg/PropertyVisitors';
+import propertyDelivery from '../components/svg/PropertyDelivery';
+import propertyScanner from '../components/svg/PropertyScanner';
+import propertyPhoneBook from '../components/svg/PropertyPhoneBook';
 // import event from "../../src/components/svg/Event";
 // icons
 const icons = {
-  waitingList,
-  meetingList,
-  visitorList,
-  courier,
-  event,
-  checkIn,
-  checkOut,
-  instantMeeting
+  propertyVisitors,
+  propertyDelivery,
+  propertyScanner,
+  propertyPhoneBook
 };
 // ==============================|| MENU ITEMS - UTILITIES ||============================== //
 
@@ -31,29 +23,29 @@ const property = {
       id: 'visitors',
       title: 'visitors',
       type: 'item',
-      url: '/#',
-      icon: icons.checkIn
+      url: '/visitors',
+      icon: icons.propertyVisitors
     },
     {
       id: 'delivery',
       title: 'Delivery',
       type: 'item',
-      url: '/#1',
-      icon: icons.checkIn
+      url: '/delivery',
+      icon: icons.propertyDelivery
     },
     {
       id: 'scan',
-      title: 'Scan',
+      title: 'Code Scan',
       type: 'item',
-      url: '/#2',
-      icon: icons.checkIn
+      url: '/scan',
+      icon: icons.propertyScanner
     },
     {
       id: 'phoneBook',
       title: 'Phone Book',
       type: 'item',
-      url: '/#3',
-      icon: icons.checkIn
+      url: '/phoneBook',
+      icon: icons.propertyPhoneBook
     }
   ]
 };

@@ -17,11 +17,14 @@ import InstantMeeting from 'pages/components-overview/InstantMeeting/InstantMeet
 import GuestList from 'pages/components-overview/Event/GuestList';
 import PrivateRoutes from 'components/PrivateRoutes/PrivateRoutes';
 import NotFoundPage from 'pages/components-overview/NotFoundPage';
-import Test from 'pages/components-overview/Test';
 import Document from 'pages/components-overview/Document';
 import HotelBookingList from 'pages/components-overview-hotel/hotel/hotelBookingList/HotelBookingList';
 import DoctorInstantMeeting from 'pages/components-overview/DoctorInstantMeeting/DoctorInstantMeeting';
 import AddDoctorInstantMeeting from 'pages/components-overview/DoctorInstantMeeting/AddDoctorInstantMeeting';
+import PropertyVisitors from 'pages/components-overview-property/visitors/PropertyVisitors';
+import PhoneBook from 'pages/components-overview-property/phoneBook/PhoneBook';
+import Scan from 'pages/components-overview-property/scan/Scan';
+import Delivery from 'pages/components-overview-property/delivery/Delivery';
 const HotelView = Loadable(lazy(() => import('pages/components-overview-hotel/hotel/hotelBookingList/HotelView')));
 const HotelCheckIn = Loadable(lazy(() => import('pages/components-overview-hotel/hotel/hotel-checkIn/HotelCheckIn')));
 
@@ -241,8 +244,44 @@ const MainRoutes = {
       )
     },
     {
-      path: 'test',
-      element: <Test />
+      path: 'visitors',
+      element: (
+        <Suspense fallback={<Typography>Loading...</Typography>}>
+          <PrivateRoutes>
+            <PropertyVisitors />
+          </PrivateRoutes>
+        </Suspense>
+      )
+    },
+    {
+      path: 'delivery',
+      element: (
+        <Suspense fallback={<Typography>Loading...</Typography>}>
+          <PrivateRoutes>
+            <Delivery />
+          </PrivateRoutes>
+        </Suspense>
+      )
+    },
+    {
+      path: 'scan',
+      element: (
+        <Suspense fallback={<Typography>Loading...</Typography>}>
+          <PrivateRoutes>
+            <Scan />
+          </PrivateRoutes>
+        </Suspense>
+      )
+    },
+    {
+      path: 'phoneBook',
+      element: (
+        <Suspense fallback={<Typography>Loading...</Typography>}>
+          <PrivateRoutes>
+            <PhoneBook />
+          </PrivateRoutes>
+        </Suspense>
+      )
     }
   ]
 };
