@@ -8,6 +8,7 @@ import DoctorUser from 'components/svg/DoctorUser';
 import DashboardCheckOut from 'components/svg/DashboardCheckOut';
 import { useState } from 'react';
 import { useAppContextReception } from 'AppContextReception';
+import PropertyDashboard from './propertyDashboard/PropertyDashboard';
 const NavigateMeeting = () => {
   const navigate = useNavigate();
 
@@ -337,7 +338,7 @@ const NavigateMeeting = () => {
                 </Button>
               </Box>
             </Box>
-          ) : (
+          ) : user.user_type === 'hotel' ? (
             <Box sx={{ mt: 3 }}>
               <Box
                 sx={{
@@ -375,154 +376,11 @@ const NavigateMeeting = () => {
                   <Typography variant="p">Hotel Check In</Typography>
                 </Button>
               </Box>
-              {/* <Box
-                sx={{
-                  display: 'block',
-                  '&:hover': {
-                    button: {
-                      color: '#fff',
-                      backgroundColor: '#12A9B2'
-                    }
-                  }
-                }}
-                onMouseEnter={handleHoverCheckOut}
-                onMouseLeave={handleMouseCheckOutLeave}
-              >
-                <Button
-                  onClick={handleCheckMeetingOut}
-                  variant="outlined"
-                  size="medium"
-                  sx={{
-                    my: 1,
-                    color: isHoveredCheckOut ? '#fff' : '#12A9B2',
-                    border: 1,
-                    borderColor: '#12A9B2',
-                    fontSize: 20,
-                    '&:hover': {
-                      color: '#fff',
-                      backgroundColor: '#12A9B2'
-                    },
-                    '& svg path': {
-                      stroke: isHoveredCheckOut ? '#fff' : '#12A9B2'
-                    }
-                  }}
-                  startIcon={<DashboardCheckOut></DashboardCheckOut>}
-                >
-                  <Typography variant="p">Meeting Check Out</Typography>
-                </Button>
-              </Box> */}
-
-              {/* <Box
-                sx={{
-                  display: 'block',
-                  '&:hover': {
-                    button: {
-                      color: '#fff',
-                      backgroundColor: '#12A9B2'
-                    }
-                  }
-                }}
-                onMouseEnter={handleHoverInstant}
-                onMouseLeave={handleHoverInstantLeave}
-              >
-                <Button
-                  onClick={handleCheckInstantMeeting}
-                  variant="outlined"
-                  size="medium"
-                  sx={{
-                    my: 1,
-                    color: isHoveredInstant ? '#fff' : '#12A9B2',
-                    border: 1,
-                    borderColor: '#12A9B2',
-                    fontSize: 20,
-                    '&:hover': {
-                      color: '#fff',
-                      backgroundColor: '#12A9B2'
-                    },
-                    '& svg path': {
-                      stroke: isHoveredInstant ? '#fff' : '#12A9B2' // Change SVG path color on hover
-                    }
-                  }}
-                  startIcon={<DashboardInstantMeeting></DashboardInstantMeeting>}
-                >
-                  <Typography variant="p">Instant Meeting </Typography>
-                </Button>
-              </Box> */}
-
-              {/* <Box
-              sx={{
-                display: 'block',
-                '&:hover': {
-                  button: {
-                    color: '#fff',
-                    backgroundColor: '#12A9B2'
-                  }
-                }
-              }}
-              onMouseEnter={handleHoverCourier}
-              onMouseLeave={handleHoverCourierLeave}
-            >
-              <Button
-                onClick={handleCheckCourier}
-                variant="outlined"
-                size="medium"
-                sx={{
-                  my: 1,
-                  color: isHoveredCourier ? '#fff' : '#12A9B2',
-                  border: 1,
-                  borderColor: '#12A9B2',
-                  fontSize: 20,
-                  '&:hover': {
-                    color: '#fff',
-                    backgroundColor: '#12A9B2'
-                  },
-                  '& svg path': {
-                    stroke: isHoveredCourier ? '#fff' : '#12A9B2' // Change SVG path color on hover
-                  }
-                }}
-                startIcon={<DashCourier></DashCourier>}
-              >
-                <Typography variant="p">Courier </Typography>
-              </Button>
-            </Box> */}
-
-              {/* <Box
-              sx={{
-                display: 'block',
-                '&:hover': {
-                  button: {
-                    color: '#fff',
-                    backgroundColor: '#12A9B2'
-                  }
-                }
-              }}
-              onMouseEnter={handleHoverEvent}
-              onMouseLeave={handleHoverEventLeave}
-            >
-              <Button
-                onClick={handleCheckEvent}
-                variant="outlined"
-                size="medium"
-                sx={{
-                  my: 1,
-                  color: isHoveredEvent ? '#fff' : '#12A9B2',
-                  border: 1,
-                  borderColor: '#12A9B2',
-                  fontSize: 20,
-                  '&:hover': {
-                    color: '#fff',
-                    backgroundColor: '#12A9B2'
-                  },
-                  '& svg path': {
-                    stroke: isHoveredEvent ? '#fff' : '#12A9B2' // Change SVG path color on hover
-                  }
-                }}
-                startIcon={<DashEvent></DashEvent>}
-              >
-                <Typography variant="p">Event </Typography>
-              </Button>
-            </Box> */}
             </Box>
+          ) : user.user_type === 'property' ? (
+           <PropertyDashboard></PropertyDashboard>
+          ) : (
+            <></>
           )}
         </Box>
       </Box>

@@ -19,11 +19,11 @@ import PrivateRoutes from 'components/PrivateRoutes/PrivateRoutes';
 import NotFoundPage from 'pages/components-overview/NotFoundPage';
 import Test from 'pages/components-overview/Test';
 import Document from 'pages/components-overview/Document';
-import HotelBookingList from 'pages/components-overview/hotel/hotelBookingList/HotelBookingList';
+import HotelBookingList from 'pages/components-overview-hotel/hotel/hotelBookingList/HotelBookingList';
 import DoctorInstantMeeting from 'pages/components-overview/DoctorInstantMeeting/DoctorInstantMeeting';
 import AddDoctorInstantMeeting from 'pages/components-overview/DoctorInstantMeeting/AddDoctorInstantMeeting';
-const HotelView = Loadable(lazy(() => import('pages/components-overview/hotel/hotelBookingList/HotelView')));
-const HotelCheckIn = Loadable(lazy(() => import('pages/components-overview/hotel/hotel-checkIn/HotelCheckIn')));
+const HotelView = Loadable(lazy(() => import('pages/components-overview-hotel/hotel/hotelBookingList/HotelView')));
+const HotelCheckIn = Loadable(lazy(() => import('pages/components-overview-hotel/hotel/hotel-checkIn/HotelCheckIn')));
 
 // render - dashboard
 const DashboardDefault = Loadable(lazy(() => import('pages/dashboard')));
