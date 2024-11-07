@@ -14,6 +14,8 @@ export default function AppContextReception({ children }) {
   const [token, setToken] = useState(tokenStorage);
   const [lobbyData, setLobbyData] = useState([]);
   const [hotelViewId, setHotelViewId] = useState(hotelIdStorage);
+  const [apartmentId, setApartmentId] = useState('');
+  const [rentalId, setRentalId] = useState('');
   return (
     <AppContext.Provider
       value={{
@@ -28,7 +30,11 @@ export default function AppContextReception({ children }) {
         hotelViewId,
         setHotelViewId,
         propertyUser,
-        setPropertyUser
+        setPropertyUser,
+        apartmentId,
+        setApartmentId,
+        rentalId,
+        setRentalId
       }}
     >
       {children}
