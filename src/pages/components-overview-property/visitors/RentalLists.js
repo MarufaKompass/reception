@@ -4,6 +4,7 @@ import { Box, Typography } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import axiosInstance from 'utils/axios.config';
 import RentalList from './RentalList';
+import FloorModal from './FloorModal';
 
 const style = {
   position: 'absolute',
@@ -34,7 +35,9 @@ export default function RentalLists({ handleCloseApartment, apartmentList }) {
     };
     fetchData();
   }, [apartmentId]);
-
+  const [floor, setFloor] = useState(false);
+  const handleOpenFloor = () => setFloor(true);
+  const handleCloseFloor = () => setFloor(false);
   return (
     <Box>
       <Modal
@@ -50,13 +53,14 @@ export default function RentalLists({ handleCloseApartment, apartmentList }) {
           <Box>
             {apartmentLists.map((apartmentList) => (
               <Box key={apartmentList.apartment_contactid}>
-                <RentalList apartmentList={apartmentList}></RentalList>
+                <RentalList apartmentList={apartmentList} handleCloseApartment={handleCloseApartment} handleOpenFloor={handleOpenFloor}></RentalList>
               </Box>
             ))}
           </Box>
         </Box>
       </Modal>
 
+      <FloorModal floor={floor} handleOpenFloor={handleOpenFloor} handleCloseFloor={handleCloseFloor}></FloorModal>
     </Box>
   );
 }

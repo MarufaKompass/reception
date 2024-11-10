@@ -16,6 +16,7 @@ export default function AppContextReception({ children }) {
   const [hotelViewId, setHotelViewId] = useState(hotelIdStorage);
   const [apartmentId, setApartmentId] = useState('');
   const [rentalId, setRentalId] = useState('');
+  const [buildingId, setBuildingId] = useState('');
   return (
     <AppContext.Provider
       value={{
@@ -34,7 +35,8 @@ export default function AppContextReception({ children }) {
         apartmentId,
         setApartmentId,
         rentalId,
-        setRentalId
+        setRentalId,
+        buildingId, setBuildingId
       }}
     >
       {children}

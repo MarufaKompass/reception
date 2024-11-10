@@ -20,13 +20,16 @@ export default function PropertyDashboard() {
   const handlePhoneBook = () => {
     navigate('/phoneBook');
   };
+  const handlePropertyList = () => {
+    navigate('/PropertyList');
+  };
   return (
     <Box>
       <Box sx={{ display: 'flex', gap: 4, justifyContent: 'end', pr: 1, mb: 3, mt: 1 }}>
         <Typography sx={{ color: '#333', fontSize: '20px', fontWeight: 'bolder' }} style={{ fontFamily: 'noe display' }}>
           Choose your action
         </Typography>
-        <Box>
+        <Box onClick={handlePropertyList} sx={{ cursor: 'pointer' }}>
           <Typography
             sx={{ color: '#F7941D', fontFamily: 'poppins', fontSize: '16px', fontWeight: 'medium', textDecoration: 'underline', pt: 0.5 }}
           >

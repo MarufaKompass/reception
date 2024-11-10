@@ -2,22 +2,24 @@ import React from 'react';
 
 import { Box, Typography } from '@mui/material';
 import { useAppContextReception } from 'AppContextReception';
-import FloorModal from './FloorModal';
+// import FloorModal from './FloorModal';
 
-export default function RentalList({ apartmentList }) {
-  const { apartment_contactname, apartment_contactphone } = apartmentList;
+export default function RentalList({ apartmentList, handleCloseApartment,handleOpenFloor }) {
+  const { apartment_contactname, apartment_contactphone, krgid,building_id  } = apartmentList;
 
-  const { rentalId, setRentalId } = useAppContextReception();
-  console.log('rentalId', rentalId);
+
+
+  const {setRentalId, setBuildingId } = useAppContextReception();
+
 
   const handleRentalId = () => {
-    setRentalId(rentalId);
-    // handleOpenApartment();
+    setRentalId(krgid);
+    setBuildingId(building_id);
+    handleCloseApartment();
+    handleOpenFloor();
+
   };
 
-//   const [floor, setFloor] = useState(false);
-//   const handleOpenFloor = () => setFloor(true);
-//   const handleCloseFloor = () => setFloor(false);
   return (
     <Box>
       <Box
@@ -27,9 +29,6 @@ export default function RentalList({ apartmentList }) {
         <Typography sx={{ fontSize: '14px', fontWeight: 'bolder', font: 'poppins', color: '#333' }}>{apartment_contactname}</Typography>
         <Typography sx={{ fontSize: '14px', fontWeight: 'bolder', font: 'poppins', color: '#333' }}>{apartment_contactphone}</Typography>
       </Box>
-
-      <FloorModal ></FloorModal>
     </Box>
   );
 }
-// floor={floor} handleOpenFloor={handleOpenFloor} handleCloseFloor={handleCloseFloor} 
