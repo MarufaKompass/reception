@@ -1,50 +1,118 @@
-import React from 'react';
-import { Box, Typography, Chip, Button, OutlinedInput, InputAdornment, IconButton } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Box, Typography, Button, OutlinedInput, InputAdornment, IconButton } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
+import { useTheme } from '@mui/material/styles';
+import { useMediaQuery } from '@mui/material';
 import MainCard from 'components/MainCard';
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-
-const columns = [
-  { field: 'id', headerName: 'SL' },
-  { field: 'hostName', headerName: 'Host name', width: 150 },
-  { field: 'guestName', headerName: 'Guest name', width: 150 },
-  { field: 'date', headerName: 'Date', width: 150 },
-  { field: 'time', headerName: 'Time', width: 150 },
-  { field: 'status', headerName: 'Status', width: 150, renderCell: (params) => <Chip label={params.value} color="primary" /> },
-  {
-    field: 'action',
-    headerName: 'Action',
-    width: 150,
-    renderCell: (params) => (
-      <Button variant="outlined" size="small" sx={{ color: '#12A9B2', borderColor: '#12A9B2', '&:focus': { border: 'none' } }}>
-        {params.value}
-      </Button>
-    )
-  }
-];
-
-const rows = [
-  {
-    id: 1,
-    hostName: 'Snow',
-    guestName: 'Jon',
-    date: '1 Nov,2023',
-    time: '3.30pm',
-    status: 'Complete',
-    action: 'Checkin'
-  },
-  {
-    id: 2,
-    hostName: 'Snow',
-    guestName: 'Jon',
-    time: '3.30pm',
-    date: '1 Nov,2023',
-    status: 'Complete',
-    action: 'Checkin'
-  }
-];
+import Search from 'components/svg/Search';
+import { useAppContextReception } from 'AppContextReception';
+import axiosInstance from 'utils/axios.config';
+import MeetingModal from 'components/modal/MeetingModal';
+import TableChip from '../../../components/chips/TableChip';
+import NoDataImage from 'components/Image/NoDataImage';
+import '../../../assets/styles.css';
 
 export default function Meeting() {
+  const { comId } = useAppContextReception();
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const [meetings, setMeetings] = useState([]);
+  const [selectedMeetingId, setSelectedMeetingId] = useState(null);
+  const [showMeetingModal, setShowMeetingModal] = useState(false);
+
+  useEffect(() => {
+    const fetchData = () => {
+      axiosInstance
+        .get(`https://api.hellokompass.com/reception/list/${comId}`)
+        .then((res) => {
+          setMeetings(res.data.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+
+    fetchData();
+    const interval = setInterval(fetchData, 10000);
+    return () => clearInterval(interval);
+  }, [comId]);
+
+  const adjustColumnWidths = () => {
+    const columns = [
+      { field: 'originalId', headerName: 'SL', width: 30 },
+      {
+        field: 'host_name',
+        headerName: 'Host name',
+        headerAlign: 'center',
+        align: 'center',
+        width: 150,
+        renderCell: (params) => (
+          <Box>
+            <Typography variant="body2">{params.row.guest_name}</Typography>
+            <Typography variant="body2">{params.row.guest_phone}</Typography>
+          </Box>
+        )
+      },
+      {
+        field: 'guest_name',
+        headerName: 'Guest name',
+        headerAlign: 'center',
+        align: 'center',
+        width: 150,
+        renderCell: (params) => (
+          <Box>
+            <Typography variant="body2">{params.row.host_name}</Typography>
+            <Typography variant="body2">{params.row.host_phone}</Typography>
+          </Box>
+        )
+      },
+      { field: 'date', headerName: 'Date', headerAlign: 'center', align: 'center', flex: isSmallScreen ? 0 : 1 },
+      { field: 'time', headerName: 'Time', headerAlign: 'center', align: 'center', flex: isSmallScreen ? 0 : 1 },
+      {
+        field: 'status',
+        headerAlign: 'center',
+        align: 'center',
+        headerName: (
+          <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+            <Typography>Status</Typography>
+          </Box>
+        ),
+        flex: isSmallScreen ? 0 : 1,
+        renderCell: (params) => <TableChip>{params.value}</TableChip>
+      },
+      {
+        field: 'action',
+        headerName: 'Action',
+        headerAlign: 'center',
+        align: 'center',
+        flex: isSmallScreen ? 0 : 1,
+        renderCell: (params) => (
+          <Button
+            variant="outlined"
+            size="small"
+            onClick={() => handleMeetingShow(params.row.id)}
+            sx={{ color: '#12A9B2', borderColor: '#12A9B2', borderRadius: 1, '&:focus': { border: 'none' } }}
+          >
+            View
+          </Button>
+        )
+      }
+    ];
+    return columns;
+  };
+
+  const rowsWithCount = meetings.map((meeting, index) => ({
+    ...meeting,
+    originalId: index + 1
+  }));
+
+  const handleMeetingShow = (id) => {
+    setSelectedMeetingId(id);
+    setShowMeetingModal(true);
+  };
+
+  // Usage in your component
+  const adjustedColumns = adjustColumnWidths();
   return (
     <Box>
       <MainCard>
@@ -58,36 +126,50 @@ export default function Meeting() {
             Today’s Meeting Schedule
           </Typography>
         </Box>
-        <Box sx={{ display: 'flex', justifyContent: 'end', py: 2 }}>
-          <OutlinedInput
-            id="outlined-adornment-weight"
-            aria-describedby="outlined-weight-helper-text"
-            placeholder="Search"
-            sx={{ border: 1, borderColor: '#12A9B2' }}
-            size="small"
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton>
-                  <SearchOutlinedIcon sx={{ color: '#12A9B2', mr: -2 }} />
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-        </Box>
-        <Box>
-          <Box style={{ width: '100%' }}>
-            <DataGrid
-              rows={rows}
-              columns={columns}
-              initialState={{
-                pagination: {
-                  paginationModel: { page: 0, pageSize: 10 }
+        {meetings.length != 0 ? (
+          <Box>
+            <Box sx={{ display: 'flex', justifyContent: 'end', py: 2 }}>
+              <OutlinedInput
+                id="outlined-adornment-weight"
+                aria-describedby="outlined-weight-helper-text"
+                placeholder="Search"
+                sx={{ border: 1, borderColor: '#12A9B2' }}
+                size="small"
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton>
+                      <Search></Search>
+                    </IconButton>
+                  </InputAdornment>
                 }
-              }}
-              pageSizeOptions={[10, 25, 50, 100]}
-            />
+              />
+            </Box>
+            <Box>
+              <Box style={{ width: '95%' }}>
+                <DataGrid
+                  rows={rowsWithCount}
+                  columns={adjustedColumns}
+                  initialState={{
+                    pagination: {
+                      paginationModel: { page: 0, pageSize: 10 }
+                    }
+                  }}
+                  pageSizeOptions={[10, 25, 50, 100]}
+                />
+              </Box>
+            </Box>
           </Box>
-        </Box>
+        ) : (
+          <NoDataImage />
+        )}
+
+        {selectedMeetingId && (
+          <MeetingModal
+            selectedMeetingId={selectedMeetingId}
+            showMeetingModal={showMeetingModal}
+            handleClose={() => setShowMeetingModal(false)}
+          />
+        )}
       </MainCard>
     </Box>
   );

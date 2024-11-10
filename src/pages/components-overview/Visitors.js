@@ -1,34 +1,91 @@
-import React from 'react';
-import { Box, Typography, Chip, OutlinedInput, InputAdornment, IconButton } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Box, Typography, OutlinedInput, InputAdornment, IconButton } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import MainCard from 'components/MainCard';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-
-const columns = [
-  { field: 'id', headerName: 'SL' },
-  { field: 'hostName', headerName: 'Host name', width: 130 },
-  { field: 'visitorName', headerName: 'Visitor name', width: 130 },
-  { field: 'extraVisitors', headerName: 'Extra visitors', width: 130 },
-  { field: 'visitorsCount', headerName: 'Visitors count', width: 130 },
-  { field: 'date', headerName: 'Date', width: 130 },
-  { field: 'time', headerName: 'Time', width: 130 },
-  { field: 'status', headerName: 'Status', width: 130, renderCell: (params) => <Chip label={params.value} color="primary" /> }
-];
-
-const rows = [
-  {
-    id: 1,
-    hostName: 'Snow',
-    visitorName: 'Jon',
-    extraVisitors: '3',
-    visitorsCount: '3',
-    date: '1 Nov,2023',
-    time: '3.30pm',
-    status: 'Complete'
-  }
-];
+import { useTheme } from '@mui/material/styles';
+import { useMediaQuery } from '@mui/material';
+import axiosInstance from 'utils/axios.config';
+import { useAppContextReception } from 'AppContextReception';
+import TableChip from 'components/chips/TableChip';
+import NoDataImage from 'components/Image/NoDataImage';
 
 export default function Visitors() {
+  const { comId } = useAppContextReception();
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const [visitors, setVisitors] = useState([]);
+
+  useEffect(() => {
+    const fetchData = () => {
+      axiosInstance
+        .get(`https://api.hellokompass.com/reception/visitor/${comId}`)
+        .then((res) => {
+          setVisitors(res.data.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+
+    fetchData();
+    const interval = setInterval(fetchData, 10000);
+    return () => clearInterval(interval);
+  }, [comId]);
+
+  const adjustColumnWidths = () => {
+    const columns = [
+      { field: 'id', headerName: 'SL', width: 30 },
+      {
+        field: 'guestName',
+        headerName: 'Guest Name',
+        headerAlign: 'center',
+        align: 'center',
+        width: 150,
+        renderCell: (params) => (
+          <Box>
+            <Typography variant="body2">{params.row.guest_name}</Typography>
+            <Typography variant="body2">{params.row.guest_phone}</Typography>
+          </Box>
+        )
+      },
+      {
+        field: 'guest_name',
+        headerName: 'Visitor name',
+        headerAlign: 'center',
+        align: 'center',
+        width: 150,
+        renderCell: (params) => (
+          <Box>
+            <Typography variant="body2">{params.row.host_name}</Typography>
+            <Typography variant="body2">{params.row.host_phone}</Typography>
+          </Box>
+        )
+      },
+      { field: 'ex_visitor_no', headerName: 'Extra visitors', headerAlign: 'center', align: 'center', flex: isSmallScreen ? 0 : 1 },
+      { field: 'visitorsCount', headerName: 'Visitors count', headerAlign: 'center', align: 'center', flex: isSmallScreen ? 0 : 1 },
+      { field: 'date', headerName: 'Date', headerAlign: 'center', align: 'center', width: 150 },
+      { field: 'time', headerName: 'Time', headerAlign: 'center', align: 'center', flex: isSmallScreen ? 0 : 1 },
+      {
+        field: 'status',
+        headerName: 'Status',
+        headerAlign: 'center',
+        align: 'center',
+        width: 150,
+        renderCell: (params) => <TableChip>{params.value}</TableChip>
+      }
+    ];
+    return columns;
+  };
+
+  const rowsWithCount = visitors.map((visitor, index) => ({
+    ...visitor,
+    visitorsCount: 1 + parseInt(visitor.ex_visitor_no),
+    id: index + 1
+  }));
+
+  // Usage in your component
+  const adjustedColumns = adjustColumnWidths();
   return (
     <Box>
       <MainCard>
@@ -42,41 +99,47 @@ export default function Visitors() {
             Today’s Visitors List
           </Typography>
         </Box>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', py: 2 }}>
+        {visitors.length != 0 ? (
           <Box>
-            <Typography variant="p" sx={{ color: '#12A9B2' }}>
-              Total Visitors: 2
-            </Typography>
-          </Box>
-          <OutlinedInput
-            id="outlined-adornment-weight"
-            aria-describedby="outlined-weight-helper-text"
-            placeholder="Search"
-            sx={{ border: 1, borderColor: '#12A9B2' }}
-            size="small"
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton>
-                  <SearchOutlinedIcon sx={{ color: '#12A9B2', mr: -2 }} />
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-        </Box>
-        <Box>
-          <Box style={{ width: '100%' }}>
-            <DataGrid
-              rows={rows}
-              columns={columns}
-              initialState={{
-                pagination: {
-                  paginationModel: { page: 0, pageSize: 10 }
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', py: 2 }}>
+              <Box>
+                <Typography variant="p" sx={{ color: '#12A9B2' }}>
+                  Total Visitors: {visitors.length}
+                </Typography>
+              </Box>
+              <OutlinedInput
+                id="outlined-adornment-weight"
+                aria-describedby="outlined-weight-helper-text"
+                placeholder="Search"
+                sx={{ border: 1, borderColor: '#12A9B2' }}
+                size="small"
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton>
+                      <SearchOutlinedIcon sx={{ color: '#12A9B2', mr: -2 }} />
+                    </IconButton>
+                  </InputAdornment>
                 }
-              }}
-              pageSizeOptions={[10, 25, 50, 100]}
-            />
+              />
+            </Box>
+            <Box>
+              <Box style={{ width: '95%' }}>
+                <DataGrid
+                  rows={rowsWithCount}
+                  columns={adjustedColumns}
+                  initialState={{
+                    pagination: {
+                      paginationModel: { page: 0, pageSize: 10 }
+                    }
+                  }}
+                  pageSizeOptions={[10, 25, 50, 100]}
+                />
+              </Box>
+            </Box>
           </Box>
-        </Box>
+        ) : (
+          <NoDataImage />
+        )}
       </MainCard>
     </Box>
   );

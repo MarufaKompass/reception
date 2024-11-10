@@ -1,53 +1,143 @@
-import React from 'react';
-import { Box, Typography, Chip, Button, OutlinedInput, InputAdornment, IconButton } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Box, Typography, Button, OutlinedInput, InputAdornment, IconButton } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
+import { useTheme } from '@mui/material/styles';
+import { useMediaQuery } from '@mui/material';
 import MainCard from 'components/MainCard';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-
-const columns = [
-  { field: 'id', headerName: 'SL' },
-  { field: 'hostName', headerName: 'Host name', width: 130 },
-  { field: 'guestName', headerName: 'Guest name', width: 130 },
-  { field: 'date', headerName: 'Date', width: 130 },
-  { field: 'time', headerName: 'Time', width: 130 },
-  { field: 'status', headerName: 'Status', width: 130, renderCell: (params) => <Chip label={params.value} color="primary" /> },
-  { field: 'message', headerName: 'Message', width: 130 },
-  {
-    field: 'action',
-    headerName: 'Action',
-    width: 130,
-    renderCell: (params) => (
-      <Button variant="outlined" size="small" sx={{ color: '#12A9B2', borderColor: '#12A9B2', '&:focus': { border: 'none' } }}>
-        {params.value}
-      </Button>
-    )
-  }
-];
-
-const rows = [
-  {
-    id: 1,
-    hostName: 'Snow',
-    guestName: 'Jon',
-    date: '1 Nov,2023',
-    time: '3.30pm',
-    status: 'Complete',
-    message: 'Complete',
-    action: 'Checkin'
-  },
-  {
-    id: 2,
-    hostName: 'Snow',
-    guestName: 'Jon',
-    time: '3.30pm',
-    date: '1 Nov,2023',
-    status: 'Complete',
-    message: 'Complete',
-    action: 'Checkin'
-  }
-];
+import { useAppContextReception } from 'AppContextReception';
+import axiosInstance from 'utils/axios.config';
+import WaitingModal from 'components/modal/WaitingModal';
+import TableChip from 'components/chips/TableChip';
+import Checkout from 'components/modal/CheckoutModal';
+import NoDataImage from 'components/Image/NoDataImage';
 
 export default function Waiting() {
+  const { comId } = useAppContextReception();
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const [waiting, setWaiting] = useState([]);
+  const [waitingId, setWaitingId] = useState('');
+  const [waitingModal, setWaitingModal] = useState(false);
+  const [checkOutModal, setCheckOutModal] = useState(false);
+
+  const handleWaitingList = (id) => {
+    setWaitingModal(true);
+    setWaitingId(id);
+  };
+  const handleCheckOutList = (id) => {
+    setCheckOutModal(true);
+    setWaitingId(id);
+  };
+
+  useEffect(() => {
+    const fetchData = () => {
+      axiosInstance
+        .get(`https://api.hellokompass.com/reception/waiting/${comId}`)
+        .then((res) => {
+          setWaiting(res.data.data);
+        })
+        .catch(() => {
+          // console.error(error);
+          <></>;
+        });
+    };
+
+    fetchData();
+
+    const interval = setInterval(fetchData, 10000);
+    return () => clearInterval(interval);
+  }, [comId]);
+
+  const adjustColumnWidths = () => {
+    const columns = [
+      { field: 'originalId', headerName: 'SL', width: 30 },
+      {
+        field: 'host_name',
+        headerName: 'Host name',
+        headerAlign: 'center',
+        align: 'center',
+        width: 150,
+        renderCell: (params) => (
+          <Box>
+            <Typography variant="body2">{params.row.guest_name}</Typography>
+            <Typography variant="body2">{params.row.guest_phone}</Typography>
+          </Box>
+        )
+      },
+      {
+        field: 'guest_name',
+        headerName: 'Guest name',
+        headerAlign: 'center',
+        align: 'center',
+        width: 150,
+        renderCell: (params) => (
+          <Box>
+            <Typography variant="body2">{params.row.host_name}</Typography>
+            <Typography variant="body2">{params.row.host_phone}</Typography>
+          </Box>
+        )
+      },
+      { field: 'date', headerName: 'Date', headerAlign: 'center', align: 'center', flex: isSmallScreen ? 0 : 1 },
+      { field: 'time', headerName: 'Time', headerAlign: 'center', align: 'center', flex: isSmallScreen ? 0 : 1 },
+      {
+        field: 'status',
+        headerName: 'Status',
+        headerAlign: 'center',
+        align: 'center',
+        flex: isSmallScreen ? 0 : 1,
+        renderCell: (params) => {
+          return <TableChip>{params.value}</TableChip>;
+        }
+      },
+      { field: 'text', headerName: 'Message', headerAlign: 'center', align: 'center', flex: isSmallScreen ? 0 : 1 },
+      {
+        field: 'action',
+        headerName: 'Action',
+        headerAlign: 'center',
+        align: 'center',
+        width: 200,
+        renderCell: (params) => {
+          return (
+            <>
+              {/* {params.row.signout === null && (
+                
+              )} */}
+              <Button
+                onClick={() => handleWaitingList(params.id)}
+                variant="outlined"
+                size="small"
+                sx={{ color: '#12A9B2', borderColor: '#12A9B2', borderRadius: 1, mr: 1, '&:focus': { border: 'none' } }}
+              >
+                Checkin
+              </Button>
+
+              {params.row.signin && (
+                <Button
+                  onClick={() => handleCheckOutList(params.id)}
+                  variant="outlined"
+                  size="small"
+                  sx={{ color: '#12A9B2', borderColor: '#12A9B2', borderRadius: 1, mr: 1, px: 1, '&:focus': { border: 'none' } }}
+                >
+                  Check Out
+                </Button>
+              )}
+            </>
+          );
+        }
+      }
+    ];
+
+    return columns;
+  };
+
+  const rowsWithCount = waiting.map((wait, index) => ({
+    ...wait,
+    originalId: index + 1
+  }));
+  // Usage in your component
+  const adjustedColumns = adjustColumnWidths();
+
   return (
     <Box>
       <MainCard>
@@ -61,36 +151,50 @@ export default function Waiting() {
             Today’s Waiting List
           </Typography>
         </Box>
-        <Box sx={{ display: 'flex', justifyContent: 'end', py: 2 }}>
-          <OutlinedInput
-            id="outlined-adornment-weight"
-            aria-describedby="outlined-weight-helper-text"
-            placeholder="Search"
-            sx={{ border: 1, borderColor: '#12A9B2' }}
-            size="small"
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton>
-                  <SearchOutlinedIcon sx={{ color: '#12A9B2', mr: -2 }} />
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-        </Box>
-        <Box>
-          <Box style={{ width: '100%' }}>
-            <DataGrid
-              rows={rows}
-              columns={columns}
-              initialState={{
-                pagination: {
-                  paginationModel: { page: 0, pageSize: 10 }
+        {waiting.length != 0 ? (
+          <Box>
+            <Box sx={{ display: 'flex', justifyContent: 'end', py: 2 }}>
+              <OutlinedInput
+                id="outlined-adornment-weight"
+                aria-describedby="outlined-weight-helper-text"
+                placeholder="Search"
+                sx={{ border: 1, borderColor: '#12A9B2' }}
+                size="small"
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton>
+                      <SearchOutlinedIcon sx={{ color: '#12A9B2', mr: -2 }} />
+                    </IconButton>
+                  </InputAdornment>
                 }
-              }}
-              pageSizeOptions={[10, 25, 50, 100]}
-            />
+              />
+            </Box>
+            <Box>
+              <Box style={{ width: '95%' }}>
+                <DataGrid
+                  rows={rowsWithCount}
+                  columns={adjustedColumns}
+                  initialState={{
+                    pagination: {
+                      paginationModel: { page: 0, pageSize: 10 }
+                    }
+                  }}
+                  pageSizeOptions={[10, 25, 50, 100]}
+                />
+              </Box>
+            </Box>
           </Box>
-        </Box>
+        ) : (
+          <NoDataImage />
+        )}
+
+        <WaitingModal
+          waitingModal={waitingModal}
+          waitingId={waitingId}
+          handleClose={() => setWaitingModal(false)}
+          handleOpen={() => setWaitingModal(true)}
+        />
+        <Checkout checkOutModal={checkOutModal} waitingId={waitingId} handleClose={() => setCheckOutModal(false)} />
       </MainCard>
     </Box>
   );

@@ -1,32 +1,115 @@
-import React from 'react';
-import { Box, Typography, Chip, OutlinedInput, InputAdornment, IconButton } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Box, Typography, OutlinedInput, InputAdornment, IconButton, Button } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
+import { useTheme } from '@mui/material/styles';
+import { useMediaQuery } from '@mui/material';
 import MainCard from 'components/MainCard';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-
-const columns = [
-  { field: 'id', headerName: 'SL' },
-  { field: 'receiverName', headerName: 'Receiver name', width: 180 },
-  { field: 'personName', headerName: 'Person name', width: 180 },
-  { field: 'parcelType', headerName: 'Parcel Type', width: 180 },
-  { field: 'status', headerName: 'Status', width: 180, renderCell: (params) => <Chip label={params.value} color="primary" /> },
-  { field: 'message', headerName: 'Message', width: 180 }
-];
-
-const rows = [
-  {
-    id: 1,
-    receiverName: 'Snow',
-    personName: 'Jon',
-    parcelType: 'Box',
-    status: 'Complete',
-    message: 'Delivered'
-  }
-];
-
+import axiosInstance from 'utils/axios.config';
+import { useAppContextReception } from 'AppContextReception';
+import TableChip from 'components/chips/TableChip';
+import NoDataImage from 'components/Image/NoDataImage';
+import { useNavigate } from 'react-router-dom';
 export default function CourierList() {
+  const { comId } = useAppContextReception();
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const [courier, setCourier] = useState([]);
+
+  useEffect(() => {
+    const fetchData = () => {
+      axiosInstance
+        .get(`https://api.hellokompass.com/reception/courier/${comId}`)
+        .then((res) => {
+          setCourier(res.data.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+
+    fetchData();
+  }, [comId]);
+
+  console.log(courier);
+
+  const adjustColumnWidths = () => {
+    const columns = [
+      { field: 'id', headerName: 'SL' },
+      {
+        field: 'receiver_name',
+        headerName: 'Receiver name',
+        headerAlign: 'center',
+        align: 'center',
+        width: 200,
+        renderCell: (params) => (
+          <Box>
+            <Typography variant="body2">{params.row.receiver_name}</Typography>
+            <Typography variant="body2">{params.row.receiver_phone}</Typography>
+          </Box>
+        )
+      },
+      {
+        field: 'name',
+        headerName: 'Person name',
+        headerAlign: 'center',
+        align: 'center',
+        width: 200,
+        renderCell: (params) => (
+          <Box>
+            <Typography variant="body2">{params.row.name}</Typography>
+            <Typography variant="body2">{params.row.phone}</Typography>
+          </Box>
+        )
+      },
+      { field: 'parcel_type', headerName: 'Parcel Type', headerAlign: 'center', align: 'center', flex: isSmallScreen ? 0 : 1 },
+      { field: 'percel_refno', headerName: 'Reference', headerAlign: 'center', align: 'center', width: 150 },
+      {
+        field: 'status',
+        headerName: 'Status',
+        headerAlign: 'center',
+        align: 'center',
+        flex: isSmallScreen ? 0 : 1,
+        renderCell: (params) => <TableChip>{params.value}</TableChip>
+      },
+      { field: 'message', headerName: 'Message', headerAlign: 'center', align: 'center', flex: isSmallScreen ? 0 : 1 }
+    ];
+    return columns;
+  };
+
+  const rowsWithCount = courier.map((courier, index) => ({
+    ...courier,
+    id: index + 1
+  }));
+
+  // Usage in your component
+  const adjustedColumns = adjustColumnWidths();
+  const navigate = useNavigate();
+  const courierNavigate = () => {
+    navigate('/courier');
+  };
+
   return (
     <Box>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: '-60px', pb: '10px' }}>
+        <Button
+          onClick={courierNavigate}
+          style={{
+            color: '#12A9B2',
+            borderColor: '#12A9B2',
+            '&:hover': {
+              color: '#12A9B2',
+              borderColor: '#12A9B2'
+            }
+          }}
+          variant="outlined"
+        >
+          <Box fontSize="20px" sx={{ pr: '4px' }}>
+            +
+          </Box>
+          Add Courier
+        </Button>
+      </Box>
       <MainCard>
         <Box>
           <Typography
@@ -38,36 +121,42 @@ export default function CourierList() {
             Today’s Courier List
           </Typography>
         </Box>
-        <Box sx={{ display: 'flex', justifyContent: 'end', py: 2 }}>
-          <OutlinedInput
-            id="outlined-adornment-weight"
-            aria-describedby="outlined-weight-helper-text"
-            placeholder="Search"
-            sx={{ border: 1, borderColor: '#12A9B2' }}
-            size="small"
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton>
-                  <SearchOutlinedIcon sx={{ color: '#12A9B2', mr: -2 }} />
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-        </Box>
-        <Box>
-          <Box style={{ width: '100%' }}>
-            <DataGrid
-              rows={rows}
-              columns={columns}
-              initialState={{
-                pagination: {
-                  paginationModel: { page: 0, pageSize: 10 }
+        {courier.length != 0 ? (
+          <Box>
+            <Box sx={{ display: 'flex', justifyContent: 'end', py: 2 }}>
+              <OutlinedInput
+                id="outlined-adornment-weight"
+                aria-describedby="outlined-weight-helper-text"
+                placeholder="Search"
+                sx={{ border: 1, borderColor: '#12A9B2' }}
+                size="small"
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton>
+                      <SearchOutlinedIcon sx={{ color: '#12A9B2', mr: -2 }} />
+                    </IconButton>
+                  </InputAdornment>
                 }
-              }}
-              pageSizeOptions={[10, 25, 50, 100]}
-            />
+              />
+            </Box>
+            <Box>
+              <Box style={{ width: '95%' }}>
+                <DataGrid
+                  rows={rowsWithCount}
+                  columns={adjustedColumns}
+                  initialState={{
+                    pagination: {
+                      paginationModel: { page: 0, pageSize: 10 }
+                    }
+                  }}
+                  pageSizeOptions={[10, 25, 50, 100]}
+                />
+              </Box>
+            </Box>
           </Box>
-        </Box>
+        ) : (
+          <NoDataImage />
+        )}
       </MainCard>
     </Box>
   );
