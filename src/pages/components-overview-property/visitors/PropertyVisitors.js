@@ -112,7 +112,6 @@ export default function PropertyVisitors() {
         </Grid>
       </MainCard>
 
-      {/* <FloorModal handleCloseFloor={handleCloseFloor} floor={floor}></FloorModal> */}
       <RentalLists handleCloseApartment={handleCloseApartment} apartmentList={apartmentList}></RentalLists>
     </Box>
   );
