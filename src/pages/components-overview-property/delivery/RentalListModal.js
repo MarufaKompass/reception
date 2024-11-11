@@ -33,7 +33,6 @@ export default function RentalListModal({ handleCloseRental, rentalListId }) {
         .get(`https://api.hellokompass.com/reception/aprtrentlist?aprt_id=${apartmentId}`)
         .then((res) => {
           setRentalIdLists(res.data.data);
-          console.log(res.data.data);
         })
         .catch((error) => console.error(error));
     };
@@ -54,8 +53,9 @@ export default function RentalListModal({ handleCloseRental, rentalListId }) {
               <Box key={rentalIdList.apartment_contactid}>
                 <RentalModalList
                   rentalIdList={rentalIdList}
-                  handleOpenDelivery={handleOpenDelivery}
-                  handleCloseDelivery={handleCloseDelivery}
+                   handleOpenDelivery={handleOpenDelivery}
+                   handleCloseDelivery={handleCloseDelivery}
+                   handleCloseRental={handleCloseRental}
                 ></RentalModalList>
               </Box>
             ))}

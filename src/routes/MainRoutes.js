@@ -25,7 +25,10 @@ import PropertyVisitors from 'pages/components-overview-property/visitors/Proper
 import PhoneBook from 'pages/components-overview-property/phoneBook/PhoneBook';
 import Scan from 'pages/components-overview-property/scan/Scan';
 import Delivery from 'pages/components-overview-property/delivery/Delivery';
-import PropertyList from 'pages/components-overview-property/propertyList/PropertyList';
+import PropertyList from 'pages/components-overview-property/visitors/propertyList/PropertyList';
+import DeliveryList from 'pages/components-overview-property/delivery/DeliveryList';
+import Emergency from 'pages/components-overview-property/phoneBook/emergency/Emergency';
+import Service from 'pages/components-overview-property/phoneBook/service/Service';
 const HotelView = Loadable(lazy(() => import('pages/components-overview-hotel/hotel/hotelBookingList/HotelView')));
 const HotelCheckIn = Loadable(lazy(() => import('pages/components-overview-hotel/hotel/hotel-checkIn/HotelCheckIn')));
 
@@ -290,6 +293,36 @@ const MainRoutes = {
         <Suspense fallback={<Typography>Loading...</Typography>}>
           <PrivateRoutes>
             <PropertyList />
+          </PrivateRoutes>
+        </Suspense>
+      )
+    },
+    {
+      path: 'listOfCourier',
+      element: (
+        <Suspense fallback={<Typography>Loading...</Typography>}>
+          <PrivateRoutes>
+            <DeliveryList />
+          </PrivateRoutes>
+        </Suspense>
+      )
+    },
+    {
+      path: 'emergency',
+      element: (
+        <Suspense fallback={<Typography>Loading...</Typography>}>
+          <PrivateRoutes>
+            <Emergency />
+          </PrivateRoutes>
+        </Suspense>
+      )
+    },
+    {
+      path: 'service',
+      element: (
+        <Suspense fallback={<Typography>Loading...</Typography>}>
+          <PrivateRoutes>
+            <Service />
           </PrivateRoutes>
         </Suspense>
       )

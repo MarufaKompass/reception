@@ -21,7 +21,7 @@ export default function PropertyDashboard() {
     navigate('/phoneBook');
   };
   const handlePropertyList = () => {
-    navigate('/PropertyList');
+    navigate('/propertyList');
   };
   return (
     <Box>

@@ -37,7 +37,6 @@ export default function FloorModal({ handleCloseFloor, floor }) {
       extra_visitor_phone: visitors.map((v) => v.extra_visitor_phone)
     };
 
-    console.log(formattedData);
     axiosInstance
       .post('https://api.hellokompass.com/reception/aprtmeetng', formattedData)
       .then((res) => {

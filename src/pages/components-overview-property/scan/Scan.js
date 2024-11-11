@@ -1,8 +1,8 @@
 import MainCard from 'components/MainCard';
 import React, { useEffect, useState } from 'react';
 import QrReader from 'react-qr-scanner';
-import { Box, OutlinedInput, Typography, Button, FormControl, Grid } from '@mui/material';
-import Image from '../../../assets/images/img/reception_background.png';
+import { Box, TextField, Typography, Button, FormControl, Grid } from '@mui/material';
+// import Image from '../../../assets/images/img/reception_background.png';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -82,22 +82,23 @@ export default function Scan() {
   const handleError = (error) => {
     console.log(error);
   };
-  const styles = {
-    paperContainer: {
-      backgroundImage: `url(${Image})`,
-      backgroundSize: '100% 80%',
-      backgroundPosition: 'center',
-      backgroundRepeat: 'no-repeat',
-      width: '100%',
-      height: '80%'
-    }
-  };
+  // const styles = {
+  //   paperContainer: {
+  //     backgroundImage: `url(${Image})`,
+  //     backgroundSize: '100% 80%',
+  //     backgroundPosition: 'center',
+  //     backgroundRepeat: 'no-repeat',
+  //     width: '100%',
+  //     height: '80%'
+  //   }
+  // };
 
   return (
+    // style={styles.paperContainer}
     <Box>
       <Box>
         <MainCard>
-          <Box style={styles.paperContainer}>
+          <Box>
             <Box>
               <Typography
                 variant="h5"
@@ -105,7 +106,7 @@ export default function Scan() {
                 backgroundColor="#12A9B2"
                 sx={{ px: 3, py: 2, borderRadius: 1, display: 'flex', justifyContent: 'center' }}
               >
-                Scanning Code/Enter Meeting Code For Check-In
+                Scanning Entry Code For Check-In
               </Typography>
             </Box>
             <Box display="flex" justifyContent="center" alignItems="center" height="80vh">
@@ -114,8 +115,8 @@ export default function Scan() {
                 sx={{
                   // height: { xs: '80%', xl: '50%' },
                   // width: { md: '80%', lg: '80%', xl: '60%' },
-                  height: '60%',
-                  width: '60%',
+                  height: '70%',
+                  width: '70%',
                   mt: -8,
                   p: { xs: 2, md: 4 },
                   border: 1,
@@ -131,72 +132,95 @@ export default function Scan() {
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <Box>
                     <Grid container spacing={6}>
-                      <Grid item xs={7}>
+                      <Grid item md={7} xs={12}>
                         <Box>
                           <Box sx={{ display: 'flex', mb: 1 }}>
                             <PuffLoader color="#12a9b2" size={38} />
                             <Typography sx={{ color: '#12A9B2', fontSize: 15, fontWeight: 'bold', mt: '8px', ml: '10px' }}>
-                              Scanning code for Check-In
+                              Scanning code
                             </Typography>
                           </Box>
                           <QrReader
                             delay={delay}
-                            style={{ height: '200px', width: '100%', border: 1, padding: 0, margin: 0, borderColor: '#12A9B2' }}
+                            style={{ height: '340px', width: '100%', border: 1, padding: 0, margin: 0, borderColor: '#12A9B2' }}
                             onError={handleError}
                             onScan={handleScan}
                           />
                         </Box>
                       </Grid>
-                      <Grid item xs={5}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-                          <Box>
-                            <Typography variant="h6" sx={{ font: 'poppins', fontSize: '14px', fontWeight: 'bolder' }}>
-                              Scan the QR code*
-                            </Typography>
-                            <FormControl sx={{ display: 'flex', justifyContent: 'center' }}>
-                              {resultQR && (
-                                <OutlinedInput
-                                  {...register('code', { required: true })}
-                                  name="code"
-                                  sx={{ border: 1, borderColor: '#12A9B2', mt: 1 }}
-                                  size="small"
-                                  value={resultQR}
-                                />
-                              )}
-                              {!resultQR && !errors.code && (
-                                <OutlinedInput
-                                  {...register('code', { required: true })}
-                                  name="code"
-                                  sx={{ border: 1, borderColor: '#12A9B2', mt: 1 }}
-                                  size="small"
-                                />
-                              )}
-                              <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.code?.message}</Typography>
-                            </FormControl>
+                      <Grid item md={5} xs={12}>
+                        <Box>
+                          <Box sx={{ mt: 18 }}>
+                            <Box>
+                              <Box>
+                                <Typography variant="h6" sx={{ fontFamily: 'poppins', fontSize: '14px', fontWeight: 'bold' }}>
+                                  Scan the QR code*
+                                </Typography>
+                              </Box>
 
-                            <Box sx={{ display: 'flex', justifyContent: 'end', mb: 2 }}>
-                              <Button
-                                variant="outlined"
-                                size="small"
-                                type="submit"
-                                sx={{
-                                  color: '#12A9B2',
-                                  borderColor: '#12A9B2',
-                                  '&:hover': { color: '#12A9B2', borderColor: '#12A9B2' },
-                                  mr: 1
-                                }}
-                              >
-                                Submit
-                              </Button>
-                              <Button
-                                onClick={handleCancelButton}
-                                variant="outlined"
-                                size="small"
-                                sx={{ color: '#FF0000', borderColor: '#FF0000', '&:hover': { color: '#FF0000', borderColor: '#FF0000' } }}
-                              >
-                                Cancel
-                              </Button>
+                              <Box>
+                                <FormControl fullWidth>
+                                  {resultQR && (
+                                    <TextField
+                                      {...register('code', { required: true })}
+                                      name="code"
+                                      sx={{ border: 1, borderColor: '#12A9B2', mt: 1 }}
+                                      size="small"
+                                      value={resultQR}
+                                    />
+                                  )}
+                                  {!resultQR && !errors.code && (
+                                    <TextField
+                                      {...register('code', { required: true })}
+                                      name="code"
+                                      sx={{ border: 1, borderColor: '#12A9B2', mt: 1 }}
+                                      size="small"
+                                    />
+                                  )}
+                                  <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.code?.message}</Typography>
+                                </FormControl>
+                              </Box>
                             </Box>
+                          </Box>
+
+                          <Box sx={{ display: 'flex', justifyContent: 'end', mb: 2 }}>
+                            <Button
+                              variant="outlined"
+                              size="small"
+                              type="submit"
+                              sx={{
+                                color: '#12A9B2',
+                                px: 4,
+                                py: 0.6,
+                                borderColor: '#12A9B2',
+                                borderRadius: 0,
+                                fontFamily: 'poppins',
+                                fontSize: '13px',
+                                fontWeight: 'medium',
+                                '&:hover': { color: '#12A9B2', borderColor: '#12A9B2' },
+                                mr: 1
+                              }}
+                            >
+                              Submit
+                            </Button>
+                            <Button
+                              onClick={handleCancelButton}
+                              variant="outlined"
+                              size="small"
+                              sx={{
+                                color: '#FF0000',
+                                borderColor: '#FF0000',
+                                px: 4,
+                                py: 0.6,
+                                borderRadius: 0,
+                                fontFamily: 'poppins',
+                                fontSize: '13px',
+                                fontWeight: 'medium',
+                                '&:hover': { color: '#FF0000', borderColor: '#FF0000' }
+                              }}
+                            >
+                              Cancel
+                            </Button>
                           </Box>
                         </Box>
                       </Grid>

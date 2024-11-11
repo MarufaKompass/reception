@@ -6,8 +6,6 @@ export default function FloorList({ propertyVisitor, handleOpenApartment }) {
   const { apartment_name, apartment_id } = propertyVisitor;
   const { setApartmentId } = useAppContextReception();
 
-  // console.log(apartmentId);
-
   const handleApartmentId = () => {
     setApartmentId(apartment_id);
     handleOpenApartment();
@@ -32,7 +30,7 @@ export default function FloorList({ propertyVisitor, handleOpenApartment }) {
           }
         }}
       >
-        <Typography sx={{ fontWeight: 'bold', font: 'poppins', fontSize: '16px', color: '#333' }}> {apartment_name}</Typography>
+        <Typography sx={{ fontWeight: 'bold', fontFamily: 'poppins', fontSize: '16px', color: '#333' }}> {apartment_name}</Typography>
       </Box>
     </>
   );
