@@ -54,8 +54,8 @@ export default function RentalListModal({ handleCloseRental, rentalListId }) {
               <Box key={rentalIdList.apartment_contactid}>
                 <RentalModalList
                   rentalIdList={rentalIdList}
-                   handleOpenDelivery={handleOpenDelivery}
-                   handleCloseDelivery={handleCloseDelivery}
+                  handleOpenDelivery={handleOpenDelivery}
+                  handleCloseDelivery={handleCloseDelivery}
                 ></RentalModalList>
               </Box>
             ))}
@@ -64,11 +64,8 @@ export default function RentalListModal({ handleCloseRental, rentalListId }) {
       </Modal>
       <AddDeliveryModal
         handleCloseDelivery={handleCloseDelivery}
-        // deliveryLists={deliveryLists}
         addDeliveryList={addDeliveryList}
       ></AddDeliveryModal>
-
-
     </Box>
   );
 }

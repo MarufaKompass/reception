@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Typography } from '@mui/material';
 import { useAppContextReception } from 'AppContextReception';
 
-export default function RentalModalList({ rentalIdList ,handleOpenDelivery,handleCloseDelivery}) {
+export default function RentalModalList({ rentalIdList, handleOpenDelivery, handleCloseDelivery }) {
   const { apartment_contactname, apartment_contactphone, krgid, building_id } = rentalIdList;
 
   const { setRentalId, setBuildingId } = useAppContextReception();
@@ -11,7 +11,7 @@ export default function RentalModalList({ rentalIdList ,handleOpenDelivery,handl
     setRentalId(krgid);
     setBuildingId(building_id);
     handleCloseDelivery();
-      handleOpenDelivery();
+    handleOpenDelivery();
   };
 
   return (
