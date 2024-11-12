@@ -45,8 +45,8 @@ export default function DeliveryList() {
         </Box>
 
         <Box>
-          <Box sx={{ display: 'flex', justifyContent: 'start' }}>
-            <Typography sx={{ fontSize: '18px', font: 'poppins', fontWeight: 'bold' }}>Visitor List</Typography>
+          <Box sx={{ display: 'flex', justifyContent: 'start', borderBottom: 1, borderColor: '#f1f1f1', mb: 2, mt: 1 }}>
+            <Typography sx={{ fontSize: '18px', font: 'poppins', fontWeight: 'bold' }}>Courier Lists</Typography>
           </Box>
         </Box>
 

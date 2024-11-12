@@ -9,7 +9,6 @@ import RentalListModal from './RentalListModal';
 import PropertyVisitorsLoader from 'loader/PropertyVisitorsLoader';
 export default function DeliveryFloorLists() {
   const [deliveryLists, setDeliveryLists] = useState([]);
-
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -21,7 +20,7 @@ export default function DeliveryFloorLists() {
           setDeliveryLists(res.data.data);
         })
         .catch((error) => console.error(error))
-        .finally(() => setLoading(false)); // Set loading to false when done
+        .finally(() => setLoading(false));
     };
 
     fetchData();
@@ -37,7 +36,7 @@ export default function DeliveryFloorLists() {
   return (
     <Box>
       <Box>
-        <Typography sx={{ fontSize: '20px', fontWeight: 'bold', font: 'poppins', pb: 4 }}> Floor and room Selection</Typography>
+        <Typography sx={{ fontSize: '20px', fontWeight: 'bold', font: 'poppins', pb: 4 }}>Floor and room Selection</Typography>
       </Box>
 
       {loading ? (
@@ -114,7 +113,6 @@ export default function DeliveryFloorLists() {
           </Grid>
         </>
       )}
-
       <RentalListModal handleCloseRental={handleCloseRental} rentalListId={rentalListId}></RentalListModal>
     </Box>
   );

@@ -4,20 +4,16 @@ import { Box, Typography } from '@mui/material';
 import { useAppContextReception } from 'AppContextReception';
 // import FloorModal from './FloorModal';
 
-export default function RentalList({ apartmentList, handleCloseApartment,handleOpenFloor }) {
-  const { apartment_contactname, apartment_contactphone, krgid,building_id  } = apartmentList;
+export default function RentalList({ apartmentList, handleCloseApartment, handleOpenFloor }) {
+  const { apartment_contactname, apartment_contactphone, krgid, building_id } = apartmentList;
 
-
-
-  const {setRentalId, setBuildingId } = useAppContextReception();
-
+  const { setRentalId, setBuildingId } = useAppContextReception();
 
   const handleRentalId = () => {
     setRentalId(krgid);
     setBuildingId(building_id);
     handleCloseApartment();
     handleOpenFloor();
-
   };
 
   return (
