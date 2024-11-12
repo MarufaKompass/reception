@@ -14,6 +14,7 @@ const Profile = () => {
     navigate('/login');
   };
   const { user } = useAppContextReception();
+
   return (
     <Box sx={{ ml: 0.75 }}>
       <Box sx={{ display: 'flex', justifyContent: 'center', itemsCenter: 'center', height: '100%', gap: 1 }}>

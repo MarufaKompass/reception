@@ -35,6 +35,7 @@ export default function RentalLists({ handleCloseApartment, apartmentList }) {
     };
     fetchData();
   }, [apartmentId]);
+
   const [floor, setFloor] = useState(false);
   const handleOpenFloor = () => setFloor(true);
   const handleCloseFloor = () => setFloor(false);
@@ -53,7 +54,11 @@ export default function RentalLists({ handleCloseApartment, apartmentList }) {
           <Box>
             {apartmentLists.map((apartmentList) => (
               <Box key={apartmentList.apartment_contactid}>
-                <RentalList apartmentList={apartmentList} handleCloseApartment={handleCloseApartment} handleOpenFloor={handleOpenFloor}></RentalList>
+                <RentalList
+                  apartmentList={apartmentList}
+                  handleCloseApartment={handleCloseApartment}
+                  handleOpenFloor={handleOpenFloor}
+                ></RentalList>
               </Box>
             ))}
           </Box>

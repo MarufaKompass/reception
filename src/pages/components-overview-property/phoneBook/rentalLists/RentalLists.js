@@ -3,10 +3,9 @@ import MainCard from 'components/MainCard';
 import { useAppContextReception } from 'AppContextReception';
 import axiosInstance from 'utils/axios.config';
 import { Box, Grid, Typography } from '@mui/material';
-import ServicePerList from './ServicePerList';
-
-export default function Service() {
-  const [servicesLists, setServiceLists] = useState([]);
+import RentalList from './RentalList';
+export default function RentalLists() {
+  const [rentalLists, setRentalLits] = useState([]);
 
   const { propertyUser } = useAppContextReception();
   const { building_id } = propertyUser;
@@ -16,12 +15,13 @@ export default function Service() {
       axiosInstance
         .get(`https://api.hellokompass.com/reception/aptrentalcontactlist/${building_id}`)
         .then((res) => {
-          setServiceLists(res.data.data);
+          setRentalLits(res.data.data);
         })
         .catch((error) => console.error(error));
     };
     fetchData();
   }, [building_id]);
+
   return (
     <Box>
       <MainCard>
@@ -30,14 +30,14 @@ export default function Service() {
           component="p"
           sx={{ fontSize: '18px', fontWeight: 'bolder', font: 'poppins', color: '#333', mb: 2, borderBottom: 1, borderColor: '#f1f1f1' }}
         >
-          Services Lists
+          Rental Lists
         </Typography>
 
         <Box>
           <Grid container spacing={2}>
-            {servicesLists.map((servicesList) => (
-              <Grid item xs={3} key={servicesList.apartment_contactid}>
-                <ServicePerList servicesList={servicesList}> </ServicePerList>
+            {rentalLists.map((rentalList) => (
+              <Grid item xs={3} key={rentalList.apartment_contactid}>
+                <RentalList rentalList={rentalList}> </RentalList>
               </Grid>
             ))}
           </Grid>
