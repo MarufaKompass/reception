@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box } from '@mui/material';
-export default function PerDeliveryList() {
+export default function PerDeliveryList({deliveryDate}) {
   return (
 <Box>
   sgsdgdgdfgfdgfdg

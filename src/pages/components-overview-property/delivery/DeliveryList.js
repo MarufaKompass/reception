@@ -11,15 +11,15 @@ import axiosInstance from 'utils/axios.config';
 import PerDeliveryList from './PerDeliveryList';
 
 export default function DeliveryList() {
-  const [useDates, setUseDates] = useState([]);
+  const [deliveryDates, setDeliveryDates] = useState([]);
   const [selectedDate, setSelectedDate] = useState(dayjs().format('YYYY-MM-DD'));
-  console.log('useDates', useDates);
+  console.log('deliveryDates', deliveryDates);
   useEffect(() => {
     const fetchData = () => {
       axiosInstance
         .get(`https://api.hellokompass.com/reception/aptcourierlist?date=${selectedDate}`)
         .then((res) => {
-          setUseDates(res.data.data);
+          setDeliveryDates(res.data.data);
         })
         .catch((error) => console.error(error));
     };
@@ -52,9 +52,9 @@ export default function DeliveryList() {
 
         <Box>
           <Grid container spacing={2}>
-            {useDates.map((useDate) => (
-              <Grid item xs={3} key={useDate.id}>
-                <PerDeliveryList></PerDeliveryList>
+            {deliveryDates.map((deliveryDate) => (
+              <Grid item xs={3} key={deliveryDate.id}>
+                <PerDeliveryList deliveryDate={deliveryDate}></PerDeliveryList>
               </Grid>
             ))}
           </Grid>
