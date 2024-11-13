@@ -35,6 +35,8 @@ export default function PropertyList() {
     setSelectedDate(dayjs(newDate).format('YYYY-MM-DD'));
   };
 
+
+
   return (
     <Box>
       <MainCard>
@@ -62,7 +64,7 @@ export default function PropertyList() {
             <Grid container spacing={2}>
               {usePropertyDates?.map((usePropertyDate) => (
                 <Grid item xs={3} key={usePropertyDate.id}>
-                  <PerGuestListInfo usePropertyDate={usePropertyDate} />
+                  <PerGuestListInfo usePropertyDate={usePropertyDate}/>
                 </Grid>
               ))}
             </Grid>

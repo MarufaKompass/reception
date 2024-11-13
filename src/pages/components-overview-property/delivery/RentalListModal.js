@@ -23,8 +23,6 @@ const style = {
 export default function RentalListModal({ handleCloseRental, rentalListId }) {
   const { apartmentId } = useAppContextReception();
   // ({handleCloseApartment,apartmentList}
-
-  console.log('apartmentId', apartmentId);
   const [rentalIdLists, setRentalIdLists] = useState([]);
 
   useEffect(() => {
