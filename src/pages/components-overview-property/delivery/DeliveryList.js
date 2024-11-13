@@ -13,15 +13,21 @@ import PerDeliveryList from './PerDeliveryList';
 export default function DeliveryList() {
   const [deliveryDates, setDeliveryDates] = useState([]);
   const [selectedDate, setSelectedDate] = useState(dayjs().format('YYYY-MM-DD'));
+  const [loading, setLoading] = useState(false);
   console.log('deliveryDates', deliveryDates);
+
   useEffect(() => {
     const fetchData = () => {
+      setLoading(true);
       axiosInstance
         .get(`https://api.hellokompass.com/reception/aptcourierlist?date=${selectedDate}`)
         .then((res) => {
           setDeliveryDates(res.data.data);
         })
-        .catch((error) => console.error(error));
+        .catch((error) => console.error(error))
+        .finally(() => {
+          setLoading(false);
+        });
     };
     fetchData();
   }, [selectedDate]);
@@ -50,14 +56,18 @@ export default function DeliveryList() {
           </Box>
         </Box>
 
-        <Box>
-          <Grid container spacing={2}>
-            {deliveryDates.map((deliveryDate) => (
-              <Grid item xs={3} key={deliveryDate.id}>
-                <PerDeliveryList deliveryDate={deliveryDate}></PerDeliveryList>
-              </Grid>
-            ))}
-          </Grid>
+        <Box sx={{ mt: 3 }}>
+          {loading || deliveryDates.length === 0 ? (
+            <Box sx={{ color: '#333', fontFamily: 'poppins', fontSize: '16px', fontWeight: 'bold' }}>No Courier Available </Box>
+          ) : (
+            <Grid container spacing={2}>
+              {deliveryDates.map((deliveryDate) => (
+                <Grid item xs={3} key={deliveryDate.id}>
+                  <PerDeliveryList deliveryDate={deliveryDate}></PerDeliveryList>
+                </Grid>
+              ))}
+            </Grid>
+          )}
         </Box>
       </MainCard>
     </Box>

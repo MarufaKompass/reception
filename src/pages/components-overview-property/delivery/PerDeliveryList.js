@@ -1,8 +1,8 @@
 import React from 'react';
 import { Box, Typography, Avatar } from '@mui/material';
 export default function PerDeliveryList({ deliveryDate }) {
-  const { host_name, host_profile_image, host_phone, apartment_name, status, time } = deliveryDate;
-  console.log('deliveryDate', deliveryDate);
+  const { host_name, host_profile_image, host_phone, apartment_name, status, time,end_time } = deliveryDate;
+  // console.log('deliveryDate', deliveryDate);
   return (
     <Box sx={{ boxShadow: '2', p: 2, borderRadius: '10px' }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -43,6 +43,7 @@ export default function PerDeliveryList({ deliveryDate }) {
                 <></>
               )}
             </Box>
+            <Typography sx={{ fontSize: '14px', font: 'poppins', fontWeight: 'bold', color: '#333' }}>{end_time}</Typography>
             <Typography sx={{ fontSize: '14px', font: 'poppins', fontWeight: 'bold', color: '#333' }}>{time}</Typography>
           </Box>
         </Box>

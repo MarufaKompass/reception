@@ -14,7 +14,6 @@ export default function PropertyList() {
   const [usePropertyDates, setUsePropertyDates] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedDate, setSelectedDate] = useState(dayjs().format('YYYY-MM-DD'));
-  console.log('usePropertyDates', usePropertyDates);
 
   useEffect(() => {
     const fetchData = () => {
