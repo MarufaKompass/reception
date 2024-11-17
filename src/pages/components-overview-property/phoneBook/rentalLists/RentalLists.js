@@ -4,21 +4,27 @@ import { useAppContextReception } from 'AppContextReception';
 import axiosInstance from 'utils/axios.config';
 import { Box, Grid, Typography } from '@mui/material';
 import RentalList from './RentalList';
+import RentListsLoader from 'loader/RentListsLoader';
 export default function RentalLists() {
-  const [rentalLists, setRentalLits] = useState([]);
+  const [rentalLists, setRentalLists] = useState([]);
 
   const { propertyUser } = useAppContextReception();
   const { building_id } = propertyUser;
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const fetchData = () => {
-      axiosInstance
-        .get(`https://api.hellokompass.com/reception/aptrentalcontactlist/${building_id}`)
-        .then((res) => {
-          setRentalLits(res.data.data);
-        })
-        .catch((error) => console.error(error));
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const response = await axiosInstance.get(`https://api.hellokompass.com/reception/aptrentalcontactlist/${building_id}`);
+        setRentalLists(response.data.data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
     };
+
     fetchData();
   }, [building_id]);
 
@@ -34,13 +40,22 @@ export default function RentalLists() {
         </Typography>
 
         <Box>
-          <Grid container spacing={2}>
-            {rentalLists.map((rentalList) => (
-              <Grid item xs={3} key={rentalList.apartment_contactid}>
-                <RentalList rentalList={rentalList}> </RentalList>
-              </Grid>
-            ))}
-          </Grid>
+          {loading ? (
+            <Box>
+              <RentListsLoader></RentListsLoader>
+              <RentListsLoader></RentListsLoader>
+              <RentListsLoader></RentListsLoader>
+              <RentListsLoader></RentListsLoader>
+            </Box>
+          ) : (
+            <Grid container spacing={2}>
+              {rentalLists.map((rentalList) => (
+                <Grid item xs={3} key={rentalList.apartment_contactid}>
+                  <RentalList rentalList={rentalList}> </RentalList>
+                </Grid>
+              ))}
+            </Grid>
+          )}
         </Box>
       </MainCard>
     </Box>

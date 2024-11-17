@@ -20,7 +20,7 @@ export default function PhoneBook() {
             <Grid item xs={3}>
               <Box sx={{ backgroundColor: '#e1dffc', py: 6, px: 4, borderRadius: '20px', cursor: 'pointer' }} onClick={handleEmergency}>
                 <Box>
-                  {' '}
+
                   <img src={rental} alt="rental" style={{ height: '88%', width: '85%' }} />
                 </Box>
                 <Box sx={{ display: 'flex', justifyContent: 'center', pt: 4 }}>
@@ -33,7 +33,7 @@ export default function PhoneBook() {
             <Grid item xs={3}>
               <Box sx={{ backgroundColor: '#fcdfe2', py: 6, px: 4, borderRadius: '20px', cursor: 'pointer' }} onClick={handleService}>
                 <Box>
-                  {' '}
+ 
                   <img src={services} alt="services" style={{ height: '100%', width: '100%' }} />
                 </Box>
                 <Box sx={{ display: 'flex', justifyContent: 'center', pt: 4 }}>
