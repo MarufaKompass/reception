@@ -55,6 +55,9 @@ export default function FloorModal({ handleCloseFloor, floor }) {
     <Box>
       <Modal open={floor} onClose={handleCloseFloor} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <Box sx={style}>
+          <Box sx={{ borderBottom: '1px solid #f1f1f1' }}>
+            <Typography sx={{ fontSize: '18px', fontFamily: 'poppins', fontWeight: 'bold',color: '#333',  }}>Selected Date</Typography>
+          </Box>
           <Box>
             <form onSubmit={handleSubmit(onSubmit)}>
               <Box>
@@ -92,7 +95,7 @@ export default function FloorModal({ handleCloseFloor, floor }) {
                     <Typography
                       variant="h6"
                       component="h2"
-                      sx={{ color: '#333', fontSize: '14px', font: 'poppins', fontWeight: 'bold', pb: '3px' }}
+                      sx={{ color: '#333', fontSize: '14px', fontFamily: 'poppins', fontWeight: 'medium', pb: '3px' }}
                     >
                       Guest Name*
                     </Typography>
@@ -114,7 +117,7 @@ export default function FloorModal({ handleCloseFloor, floor }) {
                           <Typography
                             variant="h6"
                             component="h2"
-                            sx={{ color: '#333', fontSize: '14px', font: 'poppins', fontWeight: 'bold', pb: '3px' }}
+                            sx={{ color: '#333', fontSize: '14px', fontFamily: 'poppins', fontWeight: 'medium', pb: '3px' }}
                           >
                             Code
                           </Typography>
@@ -134,7 +137,7 @@ export default function FloorModal({ handleCloseFloor, floor }) {
                           <Typography
                             variant="h6"
                             component="h2"
-                            sx={{ color: '#333', fontSize: '14px', font: 'poppins', fontWeight: 'bold', pb: '3px' }}
+                            sx={{ color: '#333', fontSize: '14px',fontFamily: 'poppins', fontWeight: 'medium', pb: '3px' }}
                           >
                             Guest Phone Number*
                           </Typography>
@@ -156,7 +159,7 @@ export default function FloorModal({ handleCloseFloor, floor }) {
                     <Typography
                       variant="h6"
                       component="h2"
-                      sx={{ color: '#333', fontSize: '14px', font: 'poppins', fontWeight: 'bold', pb: '3px' }}
+                      sx={{ color: '#333', fontSize: '14px', fontFamily: 'poppins', fontWeight: 'medium', pb: '3px' }}
                     >
                       Guest location
                     </Typography>
@@ -179,7 +182,7 @@ export default function FloorModal({ handleCloseFloor, floor }) {
                     onClick={addVisitor}
                     sx={{
                       py: 1,
-                      font: 'poppins',
+                      fontFamily: 'poppins',
                       borderRadius: '0',
                       fontSize: '16px',
                       fontWeight: 'bolder',
@@ -193,7 +196,6 @@ export default function FloorModal({ handleCloseFloor, floor }) {
                 {visitors.map((visitor, index) => (
                   <Box key={index} sx={{ mt: 2 }}>
                     <Box>
-                    
                       <FormHelperText sx={{ display: 'flex', mb: '3px' }}>
                         <Typography
                           variant="h6"

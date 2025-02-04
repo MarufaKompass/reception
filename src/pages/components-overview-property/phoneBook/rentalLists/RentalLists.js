@@ -8,8 +8,20 @@ import RentListsLoader from 'loader/RentListsLoader';
 export default function RentalLists() {
   const [rentalLists, setRentalLists] = useState([]);
 
-  const { propertyUser } = useAppContextReception();
+  const { propertyUser, setPropertyUser } = useAppContextReception();
   const { building_id } = propertyUser;
+
+  useEffect(() => {
+    axiosInstance
+      .get('https://api.hellokompass.com/reception/prtprofile')
+      .then((res) => {
+        setPropertyUser(res.data.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [setPropertyUser]);
+
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {

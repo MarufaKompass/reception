@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import axiosInstance from 'utils/axios.config';
+import React, { createContext, useContext, useState } from 'react';
+
 
 const userStorage = JSON.parse(sessionStorage.getItem('user'));
 const comStorage = JSON.parse(sessionStorage.getItem('com'));
@@ -19,16 +19,7 @@ export default function AppContextReception({ children }) {
   const [rentalId, setRentalId] = useState('');
   const [buildingId, setBuildingId] = useState('');
 
-  useEffect(() => {
-    axiosInstance
-      .get('https://api.hellokompass.com/reception/prtprofile')
-      .then((res) => {
-        setPropertyUser(res.data.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, [setPropertyUser]);
+ 
 
   return (
     <AppContext.Provider
