@@ -29,6 +29,8 @@ import PropertyList from 'pages/components-overview-property/visitors/propertyLi
 import DeliveryList from 'pages/components-overview-property/delivery/DeliveryList';
 import RentalLists from 'pages/components-overview-property/phoneBook/rentalLists/RentalLists';
 import Service from 'pages/components-overview-property/phoneBook/service/Service';
+import RestaurantBookingList from 'pages/components-overview-restuarant/restaurantBookingList/RestaurantBookingList';
+import RestaurantCheckIn from 'pages/components-overview-restuarant/restaurant-checkIn/RestaurantCheckIn';
 const HotelView = Loadable(lazy(() => import('pages/components-overview-hotel/hotel/hotelBookingList/HotelView')));
 const HotelCheckIn = Loadable(lazy(() => import('pages/components-overview-hotel/hotel/hotel-checkIn/HotelCheckIn')));
 
@@ -323,6 +325,26 @@ const MainRoutes = {
         <Suspense fallback={<Typography>Loading...</Typography>}>
           <PrivateRoutes>
             <Service />
+          </PrivateRoutes>
+        </Suspense>
+      )
+    },
+    {
+      path: 'restaurantBookingList',
+      element: (
+        <Suspense fallback={<Typography>Loading...</Typography>}>
+          <PrivateRoutes>
+            <RestaurantBookingList />
+          </PrivateRoutes>
+        </Suspense>
+      )
+    },
+    {
+      path: 'restaurantCheckIn',
+      element: (
+        <Suspense fallback={<Typography>Loading...</Typography>}>
+          <PrivateRoutes>
+            <RestaurantCheckIn />
           </PrivateRoutes>
         </Suspense>
       )

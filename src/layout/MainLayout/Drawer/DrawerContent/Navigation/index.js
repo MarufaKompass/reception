@@ -47,6 +47,18 @@ const Navigation = () => {
         );
     }
   });
+  const navGroupsRestaurants = menuItem.itemsRestaurant.map((item) => {
+    switch (item.type) {
+      case 'group':
+        return <NavGroup key={item.id} item={item} />;
+      default:
+        return (
+          <Typography key={item.id} variant="h6" color="error" align="center">
+            Fix - Navigation Group
+          </Typography>
+        );
+    }
+  });
 
   return (
     <>
@@ -56,6 +68,8 @@ const Navigation = () => {
         <Box sx={{ pt: 2 }}>{navGroupsHotel}</Box>
       ) : user.user_type === 'property' ? (
         <Box sx={{ pt: 2 }}>{navGroupsProperty}</Box>
+      ) : user.user_type === 'resturant' ? (
+        <Box sx={{ pt: 2 }}>{navGroupsRestaurants}</Box>
       ) : (
         <></>
       )}

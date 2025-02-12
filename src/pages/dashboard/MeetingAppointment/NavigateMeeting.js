@@ -4,7 +4,7 @@ import DashCourier from 'components/svg/DashCourier';
 import DashEvent from 'components/svg/DashEvent';
 import DashboardCheckIn from 'components/svg/DashboardCheckIn';
 import DashboardInstantMeeting from 'components/svg/DashboardInstantMeeting';
-import DoctorUser from 'components/svg/DoctorUser';
+// import DoctorUser from 'components/svg/DoctorUser';
 import DashboardCheckOut from 'components/svg/DashboardCheckOut';
 import { useState } from 'react';
 
@@ -27,9 +27,9 @@ const NavigateMeeting = () => {
     navigate('/instantMeeting');
   };
 
-  const handleInstantDoctor = () => {
-    navigate('/patientInstantMeeting');
-  };
+  // const handleInstantDoctor = () => {
+  //   navigate('/patientInstantMeeting');
+  // };
 
   const [isHoveredCheckIn, setIsHoveredCheckIn] = useState(false);
   const [isHoveredCheckOut, setIsHoveredCheckOut] = useState(false);
@@ -37,15 +37,15 @@ const NavigateMeeting = () => {
   const [isHoveredCourier, setIsHoveredCourier] = useState(false);
   const [isHoveredEvent, setIsHoveredEvent] = useState(false);
 
-  const [isHoveredDoctor, setIsHoveredDoctor] = useState(false);
+  // const [isHoveredDoctor, setIsHoveredDoctor] = useState(false);
 
-  const handleHoverInstantDoctor = () => {
-    setIsHoveredDoctor(true);
-  };
+  // const handleHoverInstantDoctor = () => {
+  //   setIsHoveredDoctor(true);
+  // };
 
-  const handleHoverInstantDoctorLeave = () => {
-    setIsHoveredDoctor(false);
-  };
+  // const handleHoverInstantDoctorLeave = () => {
+  //   setIsHoveredDoctor(false);
+  // };
 
   const handleHoverCheck = () => {
     setIsHoveredCheckIn(true);
@@ -110,7 +110,7 @@ const NavigateMeeting = () => {
           </Box>
 
           <Box sx={{ mt: 3 }}>
-            <Box
+            {/* <Box
               sx={{
                 display: 'block',
                 '&:hover': {
@@ -145,7 +145,7 @@ const NavigateMeeting = () => {
               >
                 <Typography variant="p">Instant Doctor Appointment </Typography>
               </Button>
-            </Box>
+            </Box> */}
 
             <Box
               sx={{

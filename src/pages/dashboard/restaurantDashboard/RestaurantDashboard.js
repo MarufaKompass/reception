@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import DashboardCheckIn from 'components/svg/DashboardCheckIn';
 import { useNavigate } from 'react-router-dom';
-export default function HotelDashboard() {
-  const [isHoveredHotel, setIsHoveredHotel] = useState(false);
-  const handleHoverHotelLeave = () => {
-    setIsHoveredHotel(false);
+export default function RestaurantDashboard() {
+  const [isHoveredRestaurant, setIsHoveredRestaurant] = useState(false);
+  const handleHoverRestaurantLeave = () => {
+    setIsHoveredRestaurant(false);
   };
 
   const navigate = useNavigate();
-  const handleHoverHotel = () => {
-    navigate('/hotelCheckIn');
+  const handleHoverRestaurant = () => {
+    navigate('/restaurantCheckIn');
   };
   return (
     <Box height="85vh" display="flex" justifyContent="center" alignItems="center">
@@ -26,6 +26,7 @@ export default function HotelDashboard() {
             KOMPASS
           </Typography>
         </Box>
+
         <Box
           sx={{
             display: 'block',
@@ -37,15 +38,15 @@ export default function HotelDashboard() {
             }
           }}
           // onMouseEnter={handleHoverCheck}
-          onMouseLeave={handleHoverHotelLeave}
+          onMouseLeave={handleHoverRestaurantLeave}
         >
           <Button
-            onClick={handleHoverHotel}
+            onClick={handleHoverRestaurant}
             variant="outlined"
             size="medium"
             sx={{
               my: 1,
-              color: isHoveredHotel ? '#fff' : '#12A9B2',
+              color: isHoveredRestaurant ? '#fff' : '#12A9B2',
               border: 1,
               borderColor: '#12A9B2',
               fontSize: 20,
@@ -54,12 +55,12 @@ export default function HotelDashboard() {
                 backgroundColor: '#12A9B2'
               },
               '& svg path': {
-                stroke: isHoveredHotel ? '#fff' : '#12A9B2'
+                stroke: isHoveredRestaurant ? '#fff' : '#12A9B2'
               }
             }}
             startIcon={<DashboardCheckIn></DashboardCheckIn>}
           >
-            <Typography variant="p">Hotel Check In</Typography>
+            <Typography variant="p">Check In</Typography>
           </Button>
         </Box>
       </Box>
