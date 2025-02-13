@@ -43,7 +43,7 @@ export default function RestaurantBookingList() {
   useEffect(() => {
     const fetchData = () => {
       axiosInstance
-        .get(`https://api.hellokompass.com/reception/restubookedlist?date=${handleDate}&status=${handleStatus}&offset=0&limit=30`)
+        .get(`https://api.hellokompass.com/reception/restubookedlist?date=${handleDate}&status=${handleStatus}&offset=0&limit=100`)
         .then((res) => {
           setRestaurantLists(res.data.data);
         })
