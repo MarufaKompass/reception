@@ -30,17 +30,26 @@ export default function RestaurantCheckIn() {
 
   useEffect(() => {
     if (resultQR) {
-      onSubmit({ code: resultQR, company_id: comId }); // Pass data to onSubmit
+      onSubmit({ code: resultQR, company_id: comId });
     }
   }, [resultQR, comId]);
 
+  const speak = (message) => {
+    const synth = window.speechSynthesis;
+    const utterance = new SpeechSynthesisUtterance(message);
+    utterance.lang = 'en-US';
+    synth.speak(utterance);
+  };
+
   const onSubmit = (data) => {
+    // console.log('data', data);
     axiosInstance
-      .post('https://api.hellokompass.com/reception/hotekcheckin', data)
+      .post('https://api.hellokompass.com/reception/restucheckin', data)
       .then((res) => {
         if (res.data.code === 200) {
-          toast.success(res.data.message);
-          console.log(res.data.message);
+          toast.success(res.data.data.message);
+          console.log(res.data.data.voice);
+          speak(res.data.data.voice);
           navigate('/dashboard');
           reset();
         } else {
@@ -73,7 +82,7 @@ export default function RestaurantCheckIn() {
   const styles = {
     paperContainer: {
       backgroundImage: `url(${Image})`,
-      backgroundSize: '100% 80%', // This will cover the entire container
+      backgroundSize: '100% 80%',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
       width: '100%',
@@ -152,13 +161,13 @@ export default function RestaurantCheckIn() {
                       <Typography sx={{ color: '#FF0000', fontSize: '13px', mb: 1 }}>{errors.code?.message}</Typography>
                     </FormControl>
 
-                    <OutlinedInput
+                    {/* <OutlinedInput
                       {...register('company_id', { required: true })}
                       name="company_id"
                       sx={{ display: 'none' }}
                       size="small"
                       value={comId}
-                    />
+                    /> */}
                     <Box sx={{ display: 'flex', justifyContent: 'end', mb: 2 }}>
                       <Button
                         variant="outlined"

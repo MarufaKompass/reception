@@ -37,11 +37,9 @@ export default function MeetingCode() {
   const speak = (message) => {
     const synth = window.speechSynthesis;
     const utterance = new SpeechSynthesisUtterance(message);
-    utterance.lang = 'en-US'; // Set the language
+    utterance.lang = 'en-US';
     synth.speak(utterance);
   };
-
-
 
   const onSubmit = (data) => {
     axiosInstance

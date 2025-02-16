@@ -1,40 +1,44 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, Grid } from '@mui/material';
-// import { DataGrid } from '@mui/x-data-grid';
-// import { useTheme } from '@mui/material/styles';
-// import { useMediaQuery } from '@mui/material';
 import MainCard from 'components/MainCard';
-// import Search from 'components/svg/Search';
 import { useAppContextReception } from 'AppContextReception';
 import axiosInstance from 'utils/axios.config';
-// import MeetingModal from 'components/modal/MeetingModal';
-// import TableChip from '../../../components/chips/TableChip';
-// import NoDataImage from 'components/Image/NoDataImage';
+import RestaurantView from '../../../components/svg/RestaurantView';
 import '../../../assets/styles.css';
-// import { useNavigate } from 'react-router-dom';
-import { DatePicker } from 'antd';
+
+import {
+  Box,
+  Typography,
+  Grid,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  MenuItem,
+  FormControl,
+  Select
+} from '@mui/material';
 import dayjs from 'dayjs';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import { DatePicker } from 'antd';
+import ModalUpdate from './ModalUpdate';
+
 export default function RestaurantBookingList() {
   const { restaurantLists, setRestaurantLists } = useAppContextReception();
   const [handleDate, setHandleDate] = useState('');
+  const [handleStatus, setHandleStatus] = useState('');
+  const [selectedRestaurant, setSelectedRestaurant] = useState(null); 
+  const [open, setOpen] = useState(false);
+  const handleOpen = (restaurant) =>{
+    setOpen(true)
+    setSelectedRestaurant(restaurant)
+  };
+  const handleClose = () => setOpen(false);
 
   const handleChange = (newDate) => {
     setHandleDate(dayjs(newDate).format('YYYY-MM-DD'));
   };
-
-  const [handleStatus, setHandleStatus] = useState('');
-  console.log('handleDate', handleDate);
-  console.log('handleStatus', handleStatus);
 
   const handleChangeStatus = (event) => {
     setHandleStatus(event.target.value);
@@ -43,7 +47,7 @@ export default function RestaurantBookingList() {
   useEffect(() => {
     const fetchData = () => {
       axiosInstance
-        .get(`https://api.hellokompass.com/reception/restubookedlist?date=${handleDate}&status=${handleStatus}&offset=0&limit=100`)
+        .get(`https://api.hellokompass.com/reception/restubookedlist?date=${handleDate}&status=${handleStatus}&offset=0&limit=30`)
         .then((res) => {
           setRestaurantLists(res.data.data);
         })
@@ -84,7 +88,7 @@ export default function RestaurantBookingList() {
                       value={handleStatus}
                       displayEmpty
                     >
-                      <MenuItem value="" >Selected Status</MenuItem>
+                      <MenuItem value="">Selected Status</MenuItem>
                       <MenuItem value="all">All</MenuItem>
                       <MenuItem value="pending">Pending</MenuItem>
                       <MenuItem value="booked">Booked</MenuItem>
@@ -123,13 +127,14 @@ export default function RestaurantBookingList() {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Company Name</TableCell>
+                <TableCell>Restaurant Name</TableCell>
                 <TableCell align="right">Phone Number</TableCell>
                 <TableCell align="right">Arrival Time</TableCell>
                 <TableCell align="right">Booking Status</TableCell>
                 <TableCell align="right">Booking For</TableCell>
                 <TableCell align="right">Present</TableCell>
                 <TableCell align="right">QR Code</TableCell>
+                <TableCell align="right">Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -144,11 +149,17 @@ export default function RestaurantBookingList() {
                   <TableCell align="right">{restaurantList.bokfor}</TableCell>
                   <TableCell align="right">{restaurantList.attncount}</TableCell>
                   <TableCell align="right">{restaurantList.bkcode}</TableCell>
+                  <TableCell align="right" sx={{ cursor: 'pointer' }}>
+                    <Box onClick={() => handleOpen(restaurantList)}>
+                      <RestaurantView></RestaurantView>
+                    </Box>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
+        <ModalUpdate handleClose={handleClose} open={open} restaurant={selectedRestaurant}></ModalUpdate>
       </MainCard>
     </Box>
   );

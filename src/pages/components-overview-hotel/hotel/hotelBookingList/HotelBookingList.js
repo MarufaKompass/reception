@@ -3,22 +3,21 @@ import { Box, Typography, Button, OutlinedInput, InputAdornment, IconButton } fr
 import { DataGrid } from '@mui/x-data-grid';
 import { useTheme } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+
 import MainCard from 'components/MainCard';
 import Search from 'components/svg/Search';
 import { useAppContextReception } from 'AppContextReception';
 import axiosInstance from 'utils/axios.config';
-// import MeetingModal from 'components/modal/MeetingModal';
 import TableChip from '../../../../components/chips/TableChip';
 import NoDataImage from 'components/Image/NoDataImage';
 import '../../../../assets/styles.css';
-import { useNavigate } from 'react-router-dom';
-export default function HotelBookingList() {
-  const { comId, lobbyData, setLobbyData, setHotelViewId } = useAppContextReception();
-  console.log(setHotelViewId);
 
+export default function HotelBookingList() {
   const theme = useTheme();
+  const { comId, lobbyData, setLobbyData, setHotelViewId } = useAppContextReception();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
-  // const [showMeetingModal, setShowMeetingModal] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = () => {
@@ -37,11 +36,10 @@ export default function HotelBookingList() {
     return () => clearInterval(interval);
   }, [comId]);
 
-  const navigate = useNavigate();
   const handleBookingView = (booking_id) => {
     sessionStorage.setItem('Book', JSON.stringify(booking_id));
-     setHotelViewId(booking_id);
-     navigate('/hotelView');
+    setHotelViewId(booking_id);
+    navigate('/hotelView');
   };
 
   const adjustColumnWidths = () => {
@@ -56,7 +54,6 @@ export default function HotelBookingList() {
         renderCell: (params) => (
           <Box>
             <Typography variant="body2">
-              {/* <Typography>{params.row.email}</Typography> */}
               <Typography> {params.row.first_name + params.row.last_name}</Typography>
               <Typography> {params.row.phone}</Typography>
             </Typography>
@@ -163,12 +160,6 @@ export default function HotelBookingList() {
     originalId: index + 1
   }));
 
-  // const handleBookingView = (id) => {
-  //   setSelectedMeetingId(id);
-  //   setShowMeetingModal(true);
-  // };
-
-  // Usage in your component
   const adjustedColumns = adjustColumnWidths();
   return (
     <Box>
@@ -219,16 +210,6 @@ export default function HotelBookingList() {
         ) : (
           <NoDataImage />
         )}
-
-        {/* {selectedMeetingId && (
-          <MeetingModal
-            selectedMeetingId={selectedMeetingId}
-            showMeetingModal={showMeetingModal}
-            handleClose={() => setShowMeetingModal(false)}
-          />
-
-          
-        )} */}
       </MainCard>
     </Box>
   );
