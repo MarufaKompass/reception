@@ -1,6 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, TextField, Typography, Box, Button, Select, FormControl, MenuItem } from '@mui/material';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+
 import axiosInstance from 'utils/axios.config';
 
 const style = {
@@ -18,10 +20,22 @@ const style = {
 export default function ModalUpdate({ handleClose, open, restaurant }) {
   //   console.log('restaurant', restaurant);
   const [handleStatus, setHandleStatus] = useState('');
+  const [handleStatusTable, setHandleStatusTable] = useState('');
+  const statuses = [
+    { id: 1, name: 'all', label: 'All' },
+    { id: 2, name: 'pending', label: 'Pending' },
+    { id: 3, name: 'booked', label: 'Booked' },
+    { id: 4, name: 'checkedin', label: 'Checked In' },
+    { id: 5, name: 'checkedout', label: 'Checked Out' },
+    { id: 6, name: 'canceled', label: 'Canceled' }
+  ];
+
+  const [tableIds, setTableIds] = useState([]);
+  // console.log(' tableIds', tableIds);
   const { register, handleSubmit, reset } = useForm({
     defaultValues: {
-      status: '',
-      table_id: '',
+      bkstatus: '',
+      tblid: '',
       numguests: '',
       attncount: ''
     }
@@ -29,18 +43,46 @@ export default function ModalUpdate({ handleClose, open, restaurant }) {
 
   useEffect(() => {
     if (restaurant) {
+      // Reset the form with restaurant data
       reset({
-        bkstatus: restaurant.status || '',
-        tblid: restaurant.table_id || '',
         numguests: restaurant.numguests || '',
         attncount: restaurant.attncount || ''
       });
+      setHandleStatus(restaurant.bkstatus || '');
+      setHandleStatusTable(restaurant.tblid || '');
     }
   }, [restaurant, open, reset]);
-
   const handleChangeStatus = (event) => {
     setHandleStatus(event.target.value);
   };
+
+  const handleChangeStatusTable = (event) => {
+    setHandleStatusTable(event.target.value);
+  };
+
+  useEffect(() => {
+    setHandleStatusTable(handleStatusTable);
+  }, [handleStatusTable]);
+  // useEffect(() => {
+  //   setHandleStatus(handleStatus);
+  // }, [handleStatus]);
+
+  useEffect(() => {
+    const fetchData = () => {
+      axiosInstance
+        .get('https://api.hellokompass.com/reception/restutable')
+        .then((res) => {
+          setTableIds(res.data.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+
+    fetchData();
+    const interval = setInterval(fetchData, 10000);
+    return () => clearInterval(interval);
+  }, []);
 
   const onSubmit = (data) => {
     console.log('Updated Data:', data);
@@ -55,18 +97,16 @@ export default function ModalUpdate({ handleClose, open, restaurant }) {
       }
     });
   };
+
   return (
     <Box>
       <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <Box sx={style}>
-          {/* <Typography id="modal-modal-title" variant="h6" component="h2">
-            {restaurant?.rboksl}
-          </Typography> */}
           <Typography sx={{ mb: 2, borderBottom: '1px solid #f1f1f1', pb: 1, fontSize: '20px', fontWeight: 'bold' }}>
             Update Restaurant
           </Typography>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Box>
+            <Box hidden>
               {restaurant?.rboksl && (
                 <TextField
                   name="id"
@@ -83,8 +123,7 @@ export default function ModalUpdate({ handleClose, open, restaurant }) {
                         borderColor: '#12a9b2'
                       }
                     },
-                    mb: 2,
-                    width: '100%'
+                    mb: 2
                   }}
                 />
               )}
@@ -92,25 +131,23 @@ export default function ModalUpdate({ handleClose, open, restaurant }) {
 
             <Box>
               <Typography sx={{ fontSize: '13px', fontWeight: 'bold', pb: '4px' }}>Status</Typography>
-            <Box sx={{ Width: '100%' }}>
+
+              <Box sx={{ width: '100%' }}>
                 <FormControl fullWidth>
                   <Select
-                    name="status"
-                    {...register('status')}
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
+                    name="bkstatus"
+                    {...register('bkstatus')}
                     onChange={handleChangeStatus}
-                    sx={{ borderRadius: '0', width: '100%', color: '#8f8f8e' }}
                     value={handleStatus}
+                    inputProps={{ 'aria-label': 'Without label' }}
+                    sx={{ borderRadius: '0', width: '100%', color: '#8f8f8e', mb: '10px' }}
                     displayEmpty
                   >
-                    <MenuItem value="">Selected Status</MenuItem>
-                    <MenuItem value="all">All</MenuItem>
-                    <MenuItem value="pending">Pending</MenuItem>
-                    <MenuItem value="booked">Booked</MenuItem>
-                    <MenuItem value="checkedin">Checked In </MenuItem>
-                    <MenuItem value="checkedout">Checked Out</MenuItem>
-                    <MenuItem value="canceled">Canceled</MenuItem>
+                    {statuses.map((status) => (
+                      <MenuItem key={status.id} value={status.name}>
+                        {status.label}
+                      </MenuItem>
+                    ))}
                   </Select>
                 </FormControl>
               </Box>
@@ -118,25 +155,29 @@ export default function ModalUpdate({ handleClose, open, restaurant }) {
 
             <Box>
               <Typography sx={{ fontSize: '13px', fontWeight: 'bold', pb: '4px' }}>Table No</Typography>
-              <TextField
-                name="table_id"
-                {...register('table_id')}
-                id="outlined-basic"
-                variant="outlined"
-                defaultValue={restaurant?.tblid}
-                sx={{
-                  '& .MuiOutlinedInput-root': {
-                    '&:hover .MuiOutlinedInput-notchedOutline': {
-                      borderColor: '#12a9b2'
-                    },
-                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                      borderColor: '#12a9b2'
-                    }
-                  },
-                  mb: 2,
-                  width: '100%'
-                }}
-              />
+              <Box sx={{ Width: '100%' }}>
+                <FormControl fullWidth>
+                  <Select
+                    name="tblid"
+                    {...register('tblid')}
+                    onChange={handleChangeStatusTable}
+                    value={handleStatusTable}
+                    sx={{ borderRadius: '0', width: '100%', color: '#8f8f8e', mb: '10px' }}
+                    displayEmpty
+                  >
+                    <MenuItem value="0">Selected table</MenuItem>
+                    {tableIds.length > 0 ? (
+                      tableIds.map((tableId) => (
+                        <MenuItem key={tableId.tblid} value={tableId.tblid}>
+                          {tableId.tblcode} ({tableId.tblprson} person)
+                        </MenuItem>
+                      ))
+                    ) : (
+                      <MenuItem disabled>No tables available</MenuItem>
+                    )}
+                  </Select>
+                </FormControl>
+              </Box>
             </Box>
             <Box>
               <Typography sx={{ fontSize: '13px', fontWeight: 'bold', pb: '4px' }}>Number Of Guests</Typography>
