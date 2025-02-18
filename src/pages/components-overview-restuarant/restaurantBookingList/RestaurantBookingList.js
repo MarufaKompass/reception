@@ -26,7 +26,6 @@ import ModalUpdate from './ModalUpdate';
 
 export default function RestaurantBookingList() {
   const { restaurantLists, setRestaurantLists } = useAppContextReception();
-  console.log('restaurantLists', restaurantLists);
   const [handleDate, setHandleDate] = useState('');
   const [handleStatus, setHandleStatus] = useState('');
   const [selectedRestaurant, setSelectedRestaurant] = useState(null); 
