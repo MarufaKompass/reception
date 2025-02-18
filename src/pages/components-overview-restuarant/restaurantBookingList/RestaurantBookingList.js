@@ -26,6 +26,7 @@ import ModalUpdate from './ModalUpdate';
 
 export default function RestaurantBookingList() {
   const { restaurantLists, setRestaurantLists } = useAppContextReception();
+  console.log('restaurantLists', restaurantLists);
   const [handleDate, setHandleDate] = useState('');
   const [handleStatus, setHandleStatus] = useState('');
   const [selectedRestaurant, setSelectedRestaurant] = useState(null); 
@@ -127,8 +128,9 @@ export default function RestaurantBookingList() {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Restaurant Name</TableCell>
+                <TableCell> Name</TableCell>
                 <TableCell align="right">Phone Number</TableCell>
+                <TableCell align="right">Email</TableCell>
                 <TableCell align="right">Arrival Time</TableCell>
                 <TableCell align="right">Booking Status</TableCell>
                 <TableCell align="right">Booking For</TableCell>
@@ -141,9 +143,10 @@ export default function RestaurantBookingList() {
               {restaurantLists.map((restaurantList) => (
                 <TableRow key={restaurantList.rboksl} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                   <TableCell component="th" scope="row">
-                    {restaurantList.company_name}
+                    {restaurantList.regname}
                   </TableCell>
                   <TableCell align="right">{restaurantList.phone_w_codex}</TableCell>
+                  <TableCell align="right">{restaurantList.regemail}</TableCell>
                   <TableCell align="right">{restaurantList.arrivaltime}</TableCell>
                   <TableCell align="right">{restaurantList.bkstatus}</TableCell>
                   <TableCell align="right">{restaurantList.bokfor}</TableCell>
